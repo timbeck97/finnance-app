@@ -1,0 +1,14 @@
+.container{
+    padding: 10px;
+}
+.header{
+    display: flex;
+    justify-content: center;
+}
+.body{
+    margin-top: 15px;
+    font-weight: 200;
+}
+p{
+    margin:10px 0px;
+}

@@ -1,0 +1,18 @@
+<ul class="nav nav-tabs justify-content-center" >
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="menu==='HOME'" aria-current="page"  (click)="menu='HOME'" href="#">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="menu==='PRODUCTS'" (click)="menu='PRODUCTS'" href="#">Products</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.active]="menu==='Help'" (click)="menu='Help'" href="#">Help</a>
+    </li>
+
+  </ul>
+  <div class="container" [ngSwitch]="menu" style="margin-top: 20px;">
+    <p style="margin-bottom: 15px;">Showing divs with switch case</p>
+    <p *ngSwitchCase="'PRODUCTS'">Products</p>
+    <p *ngSwitchCase="'HELP'">Help</p>
+    <p *ngSwitchDefault>Home</p>
+  </div>

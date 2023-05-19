@@ -1,0 +1,22 @@
+.container{
+    padding: 10px;
+}
+.header{
+    display: flex;
+    justify-content: center;
+}
+.body{
+    margin-top: 15px;
+    font-weight: 200;
+}
+p{
+    margin:10px 0px;
+}
+.input{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+.input input{
+    margin-top: 5px;
+}

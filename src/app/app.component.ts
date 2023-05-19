@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'angular-study';
+  valorContadorPai:number=0;
+  ngIfShowHide:boolean=false;
+  onMudaValor(evento:any){
+    this.valorContadorPai=evento.novoValor;
+  }
+  onShowHide(){
+    this.ngIfShowHide=!this.ngIfShowHide;
+  }
+
 }
