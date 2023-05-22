@@ -1,0 +1,8 @@
+
+.course{
+    padding: 5px 0px;
+}
+.course:hover {
+  background-color: azure;
+ 
+}

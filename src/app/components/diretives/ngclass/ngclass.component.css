@@ -1,0 +1,8 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.box{
+    font-size: 120px;
+    
+}
+.box i{
+    cursor: pointer;
+}
