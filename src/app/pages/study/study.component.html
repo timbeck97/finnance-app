@@ -1,0 +1,90 @@
+<!-- <app-header></app-header> -->
+<div class="main">
+  <div class="box">
+    <app-stylebinding></app-stylebinding>
+  </div>
+  <div class="box">
+    <app-eventbinding></app-eventbinding>
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>Event Propagation</span>
+    </div>
+    <div style="margin:15px 10px;">
+      <contador [valor]='valorContadorPai' (changeValue)="onMudaValor($event)" ></contador>
+    </div>
+    <div style="padding: 20px 10px;">
+      <span style="font-weight: 200;">
+      Contador elemento pai: {{valorContadorPai}}
+      </span>
+    </div>
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px;font-weight: bold;">
+      <span>*ngIf</span>
+    </div>
+    <div style="margin:15px 10px; text-align: center;">
+      <button class="btn btn-secondary" style="margin-bottom: 20px;"  (click)="onShowHide()">
+        Show / Hide
+      </button>
+      <contador *ngIf="ngIfShowHide" [valor]='valorContadorPai' (changeValue)="onMudaValor($event)" ></contador>
+    </div>
+   
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px;font-weight: bold;">
+      <span>*ngSwitchCase</span>
+    </div>
+    <div style="margin:15px 10px; text-align: center;">
+      <app-ngswitchcase></app-ngswitchcase>
+    </div>
+   
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>*ngFor</span>
+    </div>
+    <div style="text-align: center;">
+      <app-ngfor></app-ngfor>
+    </div>
+   
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>*ngClass</span>
+    </div>
+    <div style="text-align: center; margin-top: 50px;">
+      <app-ngclass></app-ngclass>
+    </div>
+    
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>*ngContent</span>
+    </div>
+    <div class="container" style="text-align: center; margin-top: 20px;">
+      <app-ngcontent [header]="'Header Content'">
+        <app-ngclass></app-ngclass>
+      </app-ngcontent>
+    </div>
+    
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>Personal Directive</span>
+    </div>
+    <div class="container" style="text-align: center; margin-top: 20px;">
+      <p Backgroundcolor   [defaultColor]="'gray'" [backgroundColor]="'red'"  style="border-radius: 10px;padding: 5px;" >With a personal directive you can access an element by its reference</p>
+    </div>
+    
+  </div>
+  <div class="box">
+    <div style="display: flex; justify-content: center;margin-top: 10px; font-weight: bold;">
+      <span>Pipes</span>
+    </div>
+    <div class="container" style="text-align: center; margin-top: 20px;">
+      <app-pipes></app-pipes>
+    </div>
+    
+  </div>
+</div>
