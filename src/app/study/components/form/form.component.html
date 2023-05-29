@@ -1,0 +1,39 @@
+<div>
+    <form #f="ngForm"   (submit)="onSubmit(f)">
+        <div class="row input">
+            <div class="col-md-6">
+                <div class="form-group" >
+                    <label for="idxName">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="pessoa.nome" id="idxName" [class.is-invalid]="!nome.valid && nome.touched" name="nome" required #nome="ngModel">
+                    <span class="spanRequired" *ngIf="!nome.valid && nome.touched">Required Field</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="idxSalary">Salary</label>
+                    <input type="text" class="form-control" [(ngModel)]="pessoa.salario" name="salario" id="idxSalary" [class.is-invalid]="!salary.valid && salary.touched" #salary="ngModel" required >
+                    <span class="spanRequired" *ngIf="!salary.valid && salary.touched">Required Field</span>
+                </div>
+            </div>
+        </div>
+        <div class="row input">
+            <div class="col-md-12">
+                <div class="form-group" >
+                    <label for="idxEmail">Email</label>
+                    <input type="text" class="form-control"  [(ngModel)]="pessoa.email" name="email" id="idxEmail" [class.is-invalid]="!email.valid && email.touched" #email="ngModel" required >
+                    <span class="spanRequired" *ngIf="!email.valid && email.touched">Required Field</span>
+                </div>
+            </div>
+        </div>
+        <div class="row input">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="idxCpf">Cpf/CNPJ</label>
+                    <input type="text" class="form-control"  [(ngModel)]="pessoa.cpfCnpj" name="cpfCnpj" id="idxCpf" [class.is-invalid]="!cpfCnpj.valid && cpfCnpj.touched" #cpfCnpj="ngModel" required >
+                    <span class="spanRequired" *ngIf="!cpfCnpj.valid && cpfCnpj.touched">Required Field</span>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

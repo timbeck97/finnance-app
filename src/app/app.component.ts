@@ -9,6 +9,8 @@ export class AppComponent {
   title = 'angular-study';
   valorContadorPai:number=0;
   ngIfShowHide:boolean=false;
+  menuSelecionado:string='STUDY';
+
   onMudaValor(evento:any){
     this.valorContadorPai=evento.novoValor;
   }

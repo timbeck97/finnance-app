@@ -1,44 +1,19 @@
-<app-header></app-header>
-<div class="main">
-  <div class="box">
-    <app-stylebinding></app-stylebinding>
+<nav class="navcontainer">
+  <div class="logo">
+    <img src="../assets/logo-nav@2x.png" title="Home" alt="Home" class="ng-star-inserted" width="150" height="40">
   </div>
-  <div class="box">
-    <app-eventbinding></app-eventbinding>
+  <div class="menus">
+    <a  routerLink="/study" [routerLinkActive]="['active-link']" >Study</a>
+    <a routerLink="/finances" [routerLinkActive]="['active-link']" >Finances</a>
+    <a routerLink="/info" [routerLinkActive]="['active-link']">INFO</a>
   </div>
-  <div class="box">
-    <div style="display: flex; justify-content: center;margin-top: 10px;">
-      <span>Event Propagation</span>
-    </div>
-    <div style="margin:15px 10px;">
-      <contador [valor]='valorContadorPai' (changeValue)="onMudaValor($event)" ></contador>
-    </div>
-    <div style="padding: 20px 10px;">
-      <span style="font-weight: 200;">
-      Contador elemento pai: {{valorContadorPai}}
-      </span>
-    </div>
-  </div>
-  <div class="box">
-    <div style="display: flex; justify-content: center;margin-top: 10px;">
-      <span>*ngIf</span>
-    </div>
-    <div style="margin:15px 10px; text-align: center;">
-      <button class="btn btn-secondary" style="margin-bottom: 20px;"  (click)="onShowHide()">
-        Show / Hide
-      </button>
-      <contador *ngIf="ngIfShowHide" [valor]='valorContadorPai' (changeValue)="onMudaValor($event)" ></contador>
-    </div>
-   
-  </div>
-  <div class="box">
-    <div style="display: flex; justify-content: center;margin-top: 10px;">
-      <span>*ngSwitchCase</span>
-    </div>
-    <div style="margin:15px 10px; text-align: center;">
-      <app-ngswitchcase></app-ngswitchcase>
-    </div>
-   
-  </div>
- 
+
+
+  <a routerLink="/login">
+    <i class="bi bi-person-circle"></i>
+  </a>
+
+</nav>
+<div style="overflow-y: scroll;height: 100vh;">
+  <router-outlet></router-outlet>
 </div>

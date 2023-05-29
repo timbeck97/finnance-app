@@ -1,0 +1,16 @@
+
+ 
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <ng-content select="[body]"></ng-content>
+  </div>
+  <div class="modal-footer">
+    <ng-content select="[footer]"></ng-content>
+  </div>
+</ng-template>

@@ -27,6 +27,9 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	font-weight: 200 !important;
+	font-family: 'Poppins', sans-serif;
+	overflow-y: hidden;
 }
 ol, ul {
 	list-style: none;
