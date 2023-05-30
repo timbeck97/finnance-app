@@ -10,7 +10,8 @@ import { FormatterDirective } from '../util/formatter.directive';
 export class FinancesComponent {
 
   formulario:FormGroup;
-
+  
+  conta:any;
 
   constructor() {
     this.formulario = new FormGroup({
@@ -21,5 +22,8 @@ export class FinancesComponent {
   }
   verificaValidTouched(campo:string){
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
+  }
+  setConta(conta:any){
+    this.conta = conta;
   }
 }
