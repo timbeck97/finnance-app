@@ -10,32 +10,47 @@
         <div class="card">
             <div class="card-header filtro" (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed"
                 aria-controls="collapseExample">
-                <i [ngClass]="{'bi bi-arrow-down':!isCollapsed,'bi bi-arrow-right':isCollapsed}" ></i>
+                <i [ngClass]="{'bi bi-chevron-double-right':true,'filtroIcon':!isCollapsed}" title="icon"></i>
                 <span>Filtro</span>
             </div>
-            <div class="card-body" #collapse="ngbCollapse"  [(ngbCollapse)]="isCollapsed">
-                <div class="row">
-                    <div class="col-md-2">
-                        <label for="dataInicio">Data Início</label>
-                        <input type="date" class="form-control" id="dataInicio" placeholder="Data Início">
-                    </div>
-                    <div class="col-md-2">
-                        <label for="dataInicio">Data Fim</label>
-                        <input type="date" class="form-control" id="dadaFim" placeholder="Data Fim">
-                    </div>
+            <div class="card-body filtroBody" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                <div style="padding: 15px;">
+                    <form body [formGroup]="formFiltro">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label  for="tipoIdx">Mês</label>
+                                    <select class="form-select" id="tipoIdx" formControlName="mes" required >
+                                        <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="tipoIdx">Ano</label>
+                                    <select class="form-select" id="tipoIdx" formControlName="ano" required>
+                                        <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                
-
-
             </div>
 
-            <div class="card-footer" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-                <div class="row">
-                    <div class="col-md-3">
-                        <button class="btn btn-primary">Filtrar</button>
+
+            <div class="card-footer filtroFooter" [(ngbCollapse)]="isCollapsed">
+                <div style="padding: 8px;">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <button class="btn btn-primary">Filtrar</button>
+                        </div>
                     </div>
                 </div>
             </div>
+
 
         </div>
 
@@ -50,7 +65,7 @@
             </thead>
             <tbody>
 
-                <tr *ngFor="let gasto of gastos; index as i">
+                <tr class="tableRow" *ngFor="let gasto of gastos; index as i" (click)="onRowClick(gasto)">
                     <td scope="row">{{gasto.descricao}}</td>
                     <td>{{gasto.categoria}}</td>
                     <td>{{gasto.formaPagamento}}</td>

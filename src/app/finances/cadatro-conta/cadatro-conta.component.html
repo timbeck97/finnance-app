@@ -20,13 +20,26 @@
           </div>
         </div>
       </div>
-      <div class="row input">
+      <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label for="tipoIdx">Forma de pagamento</label>
             <select class="form-select" id="tipoIdx"  formControlName="formaPagamento" required>
               <option [value]="'CARTAO'">Cartão</option>
               <option [value]="'PIX'">PIX</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="row input">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="classificacaoIdx">Categoria</label>
+            <select class="form-select" id="tipoIdx"  formControlName="categoria" required>
+              <option [value]="'LASER'">Laser</option>
+              <option [value]="'GASOLINA'">Gasolina</option>
+              <option [value]="'SAUDE'">Saúde</option>
+              <option [value]="'OUTROS'">Outros</option>
             </select>
           </div>
         </div>

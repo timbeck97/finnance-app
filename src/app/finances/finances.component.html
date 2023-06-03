@@ -1,37 +1,4 @@
-<div class="container main" >
-  <!-- <div class="row">
-    <div class="col-12">
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div> -->
+<div class="container main">
   <div class="row">
     <div class="col-md-6">
       <app-card-gasto titulo="Saldo Conta Corrente" [saldo]=1250.20 infoRight="02/06/2023"></app-card-gasto>
@@ -42,16 +9,14 @@
   </div>
   <div class="row" style="margin-top: 20px;">
     <div class="col-md-12">
-      <app-table-gasto [gastos]="contas" titulo="Contas"></app-table-gasto>
+      <app-table-gasto [gastos]="contas" titulo="Gastos" (clickRow)="editConta($event)"></app-table-gasto>
     </div>
   </div>
   <div class="row" style="margin-top: 30px;">
-    <button class="btn btn-success" (click)="crud.openCadastro()">Abir Modal</button>
-
-    <app-cadatro-conta #crud (save)="setConta($event)"></app-cadatro-conta>
-
+    <button class="btn btn-success" (click)="cadastroConta?.openCadastro()">Abir Modal</button>
+    <app-cadatro-conta (save)="adicionaConta($event)" [conta]="conta" ></app-cadatro-conta>
   </div>
-  <div class="row">
+  <!-- <div class="row">
     <p>{{conta | json}}</p>
-  </div>
+  </div> -->
 </div>
