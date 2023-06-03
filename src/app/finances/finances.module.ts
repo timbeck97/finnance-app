@@ -6,6 +6,9 @@ import { FormReactiveComponent } from '../study/components/form-reactive/form-re
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormatterDirective } from '../util/formatter.directive';
 import { CadatroContaComponent } from './cadatro-conta/cadatro-conta.component';
+import { CardGastoComponent } from './card-gasto/card-gasto.component';
+import { TableGastoComponent } from './table-gasto/table-gasto.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -14,13 +17,16 @@ import { CadatroContaComponent } from './cadatro-conta/cadatro-conta.component';
     FinancesComponent,
     ModalComponent,
     FormatterDirective,
-    CadatroContaComponent
+    CadatroContaComponent,
+    CardGastoComponent,
+    TableGastoComponent
   ],
   exports: [],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    NgbCollapseModule
   ]
 })
 export class FinancesModule { }

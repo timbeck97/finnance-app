@@ -1,0 +1,43 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.table th, .table td { border: 1px solid #ddd!important }
+.head{
+    background-color: #f3f3f3;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+table{
+    font-family: 'Nunito', sans-serif;
+}
+table th{
+    font-weight: bold;
+    font-size: 1.1em;
+}
+table thead{
+    border-bottom: 3px solid #ddd;
+    background-color: #f3f3f3;
+}
+.card{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.filtro{
+    padding: 7px;
+    cursor: pointer;
+}
+.filtro i{
+    font-size: 1.3em;
+    
+}
+.filtro span{
+    margin-left: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+.filtroBody{
+    padding: 10px;
+}
+.collapsing
+{
+    -webkit-transition: none;
+    transition: none;
+    display: none;
+}

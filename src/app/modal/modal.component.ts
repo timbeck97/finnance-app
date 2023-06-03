@@ -21,13 +21,13 @@ export class ModalComponent {
   constructor(private modalService: BsModalService) {
 
   }
-  openModal() {
+  public openModal() {
     this.modalRef = this.modalService.show(
       this.template,
       Object.assign({}, { class: 'gray modal-md' })
     );
   }
-  closeModal() {
+  public closeModal() {
     this.modalRef?.hide();
   }
 }

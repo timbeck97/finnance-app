@@ -10,8 +10,17 @@ import { FormatterDirective } from '../util/formatter.directive';
 export class FinancesComponent {
 
   formulario:FormGroup;
-  
   conta:any;
+
+  contas:any[] = [
+    {descricao:'Xis campeiro', categoria:'Laser', valor: 25.00, formaPagamento:'CARTAO'},
+    {descricao:'Cerveja BDL', categoria:'Laser', valor: 40.0, formaPagamento:'CARTAO'},
+    {descricao:'Gasolina', categoria:'Gasolina', valor: 80.00, formaPagamento:'CARTAO'},
+    {descricao:'Kabum 1/4', categoria:'Outros', valor: 129.57, formaPagamento:'CARTAO'},
+    {descricao:'Spotify', categoria:'Laser', valor: 33.50, formaPagamento:'PIX'},
+    {descricao:'Whisky Aniver', categoria:'Laser', valor: 45.50, formaPagamento:'PIX'},
+    {descricao:'Cerveja BDL', categoria:'Laser', valor: 30.00, formaPagamento:'PIX'},
+  ]
 
   constructor() {
     this.formulario = new FormGroup({

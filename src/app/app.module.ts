@@ -2,7 +2,7 @@ import { NgModule,DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbAlertModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 
@@ -16,7 +16,7 @@ import { routing } from './app.routing';
 import { FinancesModule } from './finances/finances.module';
 import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { FormatterDirective } from './util/formatter.directive';
+
 
 
 registerLocaleData(ptBr);
@@ -30,6 +30,8 @@ registerLocaleData(ptBr);
   imports: [
     BrowserModule,
     NgbModule,
+    NgbPaginationModule,
+    NgbAlertModule,
     FormsModule,
     StudyModule,
     FinancesModule,

@@ -1,0 +1,76 @@
+<div class="card">
+    <div class="card-header head">{{titulo}}</div>
+    <div class="card-body">
+        <!-- <div class="filtro">
+            <i class="bi bi-arrow-right"></i>
+            <span>Filtro</span>
+        </div> -->
+
+
+        <div class="card">
+            <div class="card-header filtro" (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed"
+                aria-controls="collapseExample">
+                <i [ngClass]="{'bi bi-arrow-down':!isCollapsed,'bi bi-arrow-right':isCollapsed}" ></i>
+                <span>Filtro</span>
+            </div>
+            <div class="card-body" #collapse="ngbCollapse"  [(ngbCollapse)]="isCollapsed">
+                <div class="row">
+                    <div class="col-md-2">
+                        <label for="dataInicio">Data Início</label>
+                        <input type="date" class="form-control" id="dataInicio" placeholder="Data Início">
+                    </div>
+                    <div class="col-md-2">
+                        <label for="dataInicio">Data Fim</label>
+                        <input type="date" class="form-control" id="dadaFim" placeholder="Data Fim">
+                    </div>
+                </div>
+                
+
+
+            </div>
+
+            <div class="card-footer" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                <div class="row">
+                    <div class="col-md-3">
+                        <button class="btn btn-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <table class="table table-bordered table-hover" style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th scope="col" class="col-md-6">Descrição</th>
+                    <th scope="col" class="col-md-2">Categoria</th>
+                    <th scope="col" class="col-md-2">Pagamento</th>
+                    <th scope="col" class="col-md-2">Valor</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr *ngFor="let gasto of gastos; index as i">
+                    <td scope="row">{{gasto.descricao}}</td>
+                    <td>{{gasto.categoria}}</td>
+                    <td>{{gasto.formaPagamento}}</td>
+                    <td>{{gasto.valor}}</td>
+                </tr>
+
+            </tbody>
+        </table>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-end">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

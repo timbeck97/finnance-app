@@ -7,4 +7,18 @@ import { Component } from '@angular/core';
 })
 export class LoginComponent {
 
+
+  username: string='';
+  password: string='';
+
+  constructor() { }
+
+  login() {
+    // Lógica de autenticação aqui
+    if (this.username === 'admin' && this.password === 'senha') {
+      console.log('Login bem-sucedido!');
+    } else {
+      console.log('Login falhou!');
+    }
+  }
 }
