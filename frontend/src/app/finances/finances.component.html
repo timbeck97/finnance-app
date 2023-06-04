@@ -1,0 +1,22 @@
+<div class="container main">
+  <div class="row">
+    <div class="col-md-6">
+      <app-card-gasto titulo="Saldo Conta Corrente" [saldo]=1000.00 infoRight="02/06/2023"></app-card-gasto>
+    </div>
+    <div class="col-md-6">
+      <app-card-gasto titulo="Saldo Poupança" [saldo]=1000.0></app-card-gasto>
+    </div>
+  </div>
+  <div class="row" style="margin-top: 20px;">
+    <div class="col-md-12">
+      <app-table-gasto></app-table-gasto>
+    </div>
+  </div>
+  <!-- <div class="row" style="margin-top: 30px;">
+    <button class="btn btn-success" (click)="openModalAdicionalConta()">Abir Modal</button>
+    <app-cadatro-conta #cadastroConta (save)="adicionaConta($event)" [conta]="conta" ></app-cadatro-conta>
+  </div> -->
+  <div class="row">
+    <p>{{conta | json}}</p>
+  </div>
+</div>
