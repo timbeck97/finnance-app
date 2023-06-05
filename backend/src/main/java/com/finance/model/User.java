@@ -9,6 +9,7 @@ package com.finance.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -20,14 +21,24 @@ import java.util.Set;
 public class User implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="user_sequence")
+    @SequenceGenerator(name="user_sequence", sequenceName="user_seq")
     private Long id;
     private String name;
     @Column(unique = true)
     private String username;
     private String password;
+
+    @Column(columnDefinition = "varchar(11) not null")
+    private String cpf;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles = new HashSet<>();
+
+    //---------------------------------------------------------
+
+
+
 
     public User() {
     }
@@ -79,6 +90,11 @@ public class User implements Serializable{
     }
 
 
+    public String getCpf() {
+      return cpf;
+    }
 
-
+    public void setCpf(String cpf) {
+      this.cpf = cpf;
+    }
 }

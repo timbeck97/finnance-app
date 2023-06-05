@@ -5,10 +5,7 @@
  */
 package com.finance.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -19,7 +16,8 @@ import java.io.Serializable;
 public class Role implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="role_sequence")
+    @SequenceGenerator(name="role_sequence", sequenceName="role_seq")
     private Long id;
     private String name;
 
