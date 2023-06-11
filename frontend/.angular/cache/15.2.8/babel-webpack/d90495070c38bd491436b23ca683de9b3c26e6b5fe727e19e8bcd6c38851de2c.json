@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const URL = '127.0.0.1:8080';","map":{"version":3,"mappings":"AAAA,OAAO,MAAMA,GAAG,GAAC,gBAAgB","names":["URL"],"sourceRoot":"","sources":["/home/tim/Tim/angular/angular-topics-study/frontend/src/app/util/environment.ts"],"sourcesContent":["export const URL='127.0.0.1:8080'"]},"metadata":{},"sourceType":"module","externalDependencies":[]}

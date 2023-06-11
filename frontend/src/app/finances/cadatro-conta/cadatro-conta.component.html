@@ -1,58 +1,64 @@
-<app-modal title="Adicionar Gasto" #element>
-    <form body [formGroup]="formulario">
-      <div class="row input">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="idxDescricao">Descrição</label>
-            <input type="text" class="form-control" id="idxDescricao"
-              [ngClass]="{'is-invalid':verificaValidTouched('descricao')}" formControlName="descricao">
-            <span class="spanRequired" *ngIf="verificaValidTouched('descricao')">Required Field</span>
-          </div>
+<div class="modal-header">
+  <h4 class="modal-title titleM">Adicionar Gasto</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+<div class="modal-body">
+  <form body [formGroup]="formulario">
+    <div class="row input">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="idxDescricao">Descrição</label>
+          <input type="text" class="form-control" id="idxDescricao"
+            [ngClass]="{'is-invalid':verificaValidTouched('descricao')}" formControlName="descricao">
+          <span class="spanRequired" *ngIf="verificaValidTouched('descricao')">Required Field</span>
         </div>
       </div>
-      <div class="row input">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="idxValor">Valor</label>
-            <input type="text" class="form-control" id="idxValor" formatterDirective tipo="double2Decimal"
-              [ngClass]="{'is-invalid':verificaValidTouched('valor')}" formControlName="valor">
-            <span class="spanRequired" *ngIf="verificaValidTouched('valor')">Required Field</span>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="tipoIdx">Forma de pagamento</label>
-            <select class="form-select" id="tipoIdx"  formControlName="formaPagamento" required>
-              <option [value]="'CARTAO'">Cartão</option>
-              <option [value]="'PIX'">PIX</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div class="row input">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="classificacaoIdx">Categoria</label>
-            <select class="form-select" id="tipoIdx"  formControlName="categoria" required>
-              <option [value]="'LASER'">Laser</option>
-              <option [value]="'GASOLINA'">Gasolina</option>
-              <option [value]="'SAUDE'">Saúde</option>
-              <option [value]="'OUTROS'">Outros</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="row">
-        <div class="col-md-12">
-          <pre>
-            {{formulario.value | json}}
-          </pre>
-        </div>
-      </div> -->
-    </form>
-    <div footer class="row">
-      <button class="btn btn-primary" (click)="onSubmit()">Salvar</button>
     </div>
-  </app-modal>
+    <div class="row input">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="idxValor">Valor</label>
+          <input type="text" class="form-control" id="idxValor" formatterDirective tipo="double2Decimal"
+            [ngClass]="{'is-invalid':verificaValidTouched('valor')}" formControlName="valor">
+          <span class="spanRequired" *ngIf="verificaValidTouched('valor')">Required Field</span>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="tipoIdx">Forma de pagamento</label>
+          <select class="form-select" id="tipoIdx" formControlName="formaPagamento" required>
+            <option [value]="'CARTAO'">Cartão</option>
+            <option [value]="'PIX'">PIX</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row input">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="classificacaoIdx">Categoria</label>
+          <select class="form-select" id="tipoIdx" formControlName="categoria" required>
+            <option [value]="'LASER'">Laser</option>
+            <option [value]="'GASOLINA'">Gasolina</option>
+            <option [value]="'SAUDE'">Saúde</option>
+            <option [value]="'OUTROS'">Outros</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="row">
+      <div class="col-md-12">
+        <pre>
+          {{formulario.value | json}}
+        </pre>
+      </div>
+    </div> -->
+  </form>
+</div>
+<div class="modal-footer">
+  <div footer class="row">
+    <button class="btn btn-primary" (click)="onSubmit()">Salvar</button>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 import { NgModule,DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbAlertModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -36,7 +37,8 @@ registerLocaleData(ptBr);
     StudyModule,
     FinancesModule,
     routing,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    HttpClientModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },

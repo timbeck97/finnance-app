@@ -53,7 +53,7 @@
                 <button class="btn btn-secondary ms-1">
                     <i class="bi bi-printer"></i>
                 </button>
-                <button class="btn btn-success" (click)="openModalAdicionalConta()">
+                <button class="btn btn-success" (click)="adicionarConta()" >
                     <span>Adicionar</span>
                 </button>
             </div>
@@ -91,6 +91,6 @@
                 </li>
             </ul>
         </nav>
-        <app-cadatro-conta #cadastroConta (save)="adicionaConta($event)" [gasto]="gasto" ></app-cadatro-conta>
+        <!-- <app-cadatro-conta #cadastroConta (save)="adicionaConta($event)" [gasto]="gasto" ></app-cadatro-conta> -->
     </div>
 </div>

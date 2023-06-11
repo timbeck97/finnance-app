@@ -13,3 +13,8 @@ select{
     color:red;
     font-size: 12px;
 }
+
+.titleM{
+    font-size: 1.2em;
+    font-weight: bold;
+}

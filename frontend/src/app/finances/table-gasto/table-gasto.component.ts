@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CadatroContaComponent } from '../cadatro-conta/cadatro-conta.component';
+import { CadatroContaService } from '../cadatro-conta/cadatro-conta.service';
 
 @Component({
   selector: 'app-table-gasto',
@@ -8,10 +8,6 @@ import { CadatroContaComponent } from '../cadatro-conta/cadatro-conta.component'
   styleUrls: ['./table-gasto.component.css']
 })
 export class TableGastoComponent {
-
-    //referencia a outro componeente
-    @ViewChild(CadatroContaComponent)
-    cadastroConta:CadatroContaComponent | undefined;
 
   formFiltro: FormGroup;
 
@@ -48,7 +44,7 @@ export class TableGastoComponent {
   ]
   anos: any = []
 
-  constructor() {
+  constructor(private cadastroContaService:CadatroContaService) {
     for (let i = 2020; i <= new Date().getFullYear(); i++) {
       this.anos.push(String(i));
     }
@@ -62,22 +58,10 @@ export class TableGastoComponent {
   }
   onRowClick(row: any) {
     this.gasto=row;
-    this.cadastroConta?.openCadastro();
+    this.cadastroContaService.openModal(row)
   }
-  adicionaConta(gasto:any){
-    this.gastos.push(gasto);
+  adicionarConta(){
+    this.cadastroContaService.openModal(null)
   }
-  editConta(conta:any){
-    this.gasto= conta;
-    this.cadastroConta?.openCadastro();
-  }
-  openModalAdicionalConta(){
-    this.gasto={
-      descricao:'',
-      valor:0,
-      categoria:'LASER',
-      classificacao:'CARTAO'
-    };
-    this.cadastroConta?.openCadastro()
-  }
+
 }

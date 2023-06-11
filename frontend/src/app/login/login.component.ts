@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-login',
@@ -11,14 +12,10 @@ export class LoginComponent {
   username: string='';
   password: string='';
 
-  constructor() { }
+  constructor(private auth:AuthenticationService) { }
 
   login() {
-    // Lógica de autenticação aqui
-    if (this.username === 'admin' && this.password === 'senha') {
-      console.log('Login bem-sucedido!');
-    } else {
-      console.log('Login falhou!');
-    }
+    this.auth.login(this.username, this.password)
+    .subscribe(resp=>console.log(resp))
   }
 }

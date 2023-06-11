@@ -17,6 +17,9 @@
     <app-cadatro-conta #cadastroConta (save)="adicionaConta($event)" [conta]="conta" ></app-cadatro-conta>
   </div> -->
   <div class="row">
+    <button class="btn btn-default" (click)="adicionaConta()">TESTE</button>
+  </div>
+  <div class="row">
     <p>{{conta | json}}</p>
   </div>
 </div>
