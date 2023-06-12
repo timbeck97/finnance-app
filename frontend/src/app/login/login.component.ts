@@ -16,6 +16,5 @@ export class LoginComponent {
 
   login() {
     this.auth.login(this.username, this.password)
-    .subscribe(resp=>console.log(resp))
   }
 }

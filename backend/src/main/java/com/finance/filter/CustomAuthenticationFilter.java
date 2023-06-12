@@ -128,6 +128,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         if(response.getHeader("Access-Control-Allow-Methods")==null){
             response.addHeader("Access-Control-Allow-Methods", "*");
         }
+        response.addHeader("Access-Control-Expose-Headers","X-Total-Count");
 
     }
 

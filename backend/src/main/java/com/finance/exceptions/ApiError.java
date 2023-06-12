@@ -23,6 +23,8 @@ public class    ApiError {
     private HttpStatus status;
     private int code;
 
+    private int customCode;
+
     private String message;
 
     private List erros;
@@ -37,7 +39,14 @@ public class    ApiError {
         this.erros = erros;
         this.code=status.value();
     }
-
+    public ApiError(LocalDateTime timestamp, HttpStatus status, String message, List erros, int customCode) {
+      this.timestamp = timestamp;
+      this.status = status;
+      this.message = message;
+      this.erros = erros;
+      this.code=status.value();
+      this.customCode=customCode;
+    }
     public LocalDateTime getTimestamp() {
         return timestamp;
     }
@@ -76,5 +85,13 @@ public class    ApiError {
 
     public void setCode(int code) {
         this.code = code;
+    }
+
+    public int getCustomCode() {
+      return customCode;
+    }
+
+    public void setCustomCode(int customCode) {
+      this.customCode = customCode;
     }
 }

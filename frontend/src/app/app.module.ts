@@ -1,6 +1,6 @@
 import { NgModule,DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbAlertModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
@@ -17,6 +17,8 @@ import { routing } from './app.routing';
 import { FinancesModule } from './finances/finances.module';
 import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { InterceptorService } from './authentication/interceptor/interceptor.service';
+
 
 
 
@@ -26,6 +28,7 @@ registerLocaleData(ptBr);
     AppComponent,
     InfoComponent,
     LoginComponent,
+
 
   ],
   imports: [
@@ -42,6 +45,12 @@ registerLocaleData(ptBr);
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },
+    InterceptorService,
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:InterceptorService,
+      multi:true
+    }
   ],
   bootstrap: [AppComponent]
 })

@@ -77,6 +77,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
 
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
+                    response.addHeader("Access-Control-Expose-Headers","X-Total-Count");
                     filterChain.doFilter(request, response);
 
                 }catch(SignatureVerificationException e){

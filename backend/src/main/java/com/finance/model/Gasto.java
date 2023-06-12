@@ -6,6 +6,7 @@ import com.finance.enums.ECategoriaGasto;
 import com.finance.enums.EFormaPagamento;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -30,9 +31,8 @@ public class Gasto {
     @Column(columnDefinition = "numeric(14,2) not null")
     private double valor;
 
-    @Temporal(TemporalType.DATE)
     @Column(columnDefinition = "date default current_date")
-    private Date data;
+    private LocalDate data;
 
     @ManyToOne
     private User usuario;
@@ -41,7 +41,7 @@ public class Gasto {
 
   }
 
-  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, Date data, User usuario) {
+  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, LocalDate data, User usuario) {
     this.id = id;
     this.descricao = descricao;
     this.categoria = categoria;
@@ -99,11 +99,11 @@ public class Gasto {
     this.usuario = usuario;
   }
 
-  public Date getData() {
+  public LocalDate getData() {
     return data;
   }
 
-  public void setData(Date data) {
+  public void setData(LocalDate data) {
     this.data = data;
   }
 }

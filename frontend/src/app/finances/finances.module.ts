@@ -9,6 +9,8 @@ import { CadatroContaComponent } from './cadatro-conta/cadatro-conta.component';
 import { CardGastoComponent } from './card-gasto/card-gasto.component';
 import { TableGastoComponent } from './table-gasto/table-gasto.component';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
+import { CustomPipe } from '../util/custom.pipe';
 
 
 
@@ -20,14 +22,16 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
     FormatterDirective,
     CadatroContaComponent,
     CardGastoComponent,
-    TableGastoComponent
+    TableGastoComponent,
+    CustomPipe
   ],
   exports: [],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    CurrencyMaskModule
   ]
 })
 export class FinancesModule { }

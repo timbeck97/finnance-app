@@ -24,7 +24,9 @@ export class FormatterDirective {
     this.el.value = this.formatValue(value);
   }
 
-  formatValue(value:string):string {
+  formatValue(value:any):string {
+    console.log(value);
+    
     if (this.tipo == 'double2Decimal'){
       return this.formatValorNumeroInput(String(value),2);
     }
@@ -32,8 +34,7 @@ export class FormatterDirective {
     return value
   }
   formatValorNumeroInput(v:string, casasDecimais:number):string {
-    //Remove tudo o que não é dígito
-    //console.log('formatValorNumeroInput(' + v + ', ' + casasDecimais + ')');
+    
     var negativo = false;
     if (v.charAt(0) == '-') {
         negativo = true;
@@ -71,5 +72,6 @@ export class FormatterDirective {
 
     return (negativo ? "-" : "") + v;
 }
+ 
 
 }

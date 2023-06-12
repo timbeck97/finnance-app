@@ -55,7 +55,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<?> TokenExpiredException(Exception ex, WebRequest request) {
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
-		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.valueOf(419), "Token Expirado" ,details);
+		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Expirado" ,details, 666);
 		return ResponseEntityBuilder.build(err);
 	}
         @ExceptionHandler(DataNotFoundException.class)

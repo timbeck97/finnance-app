@@ -18,9 +18,19 @@
       <div class="col-md-12">
         <div class="form-group">
           <label for="idxValor">Valor</label>
-          <input type="text" class="form-control" id="idxValor" formatterDirective tipo="double2Decimal"
+          <input type="text" class="form-control" id="idxValor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
             [ngClass]="{'is-invalid':verificaValidTouched('valor')}" formControlName="valor">
           <span class="spanRequired" *ngIf="verificaValidTouched('valor')">Required Field</span>
+        </div>
+      </div>
+    </div>
+    <div class="row input">
+      <div class="col-md-12">
+        <div class="form-group">
+          <label for="idxData">Data</label>
+          <input type="date" class="form-control" id="idxData" 
+            [ngClass]="{'is-invalid':verificaValidTouched('data')}" formControlName="data">
+          <span class="spanRequired" *ngIf="verificaValidTouched('data')">Required Field</span>
         </div>
       </div>
     </div>
