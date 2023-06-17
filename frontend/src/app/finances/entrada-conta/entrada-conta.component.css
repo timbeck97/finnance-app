@@ -1,0 +1,23 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.table th, .table td { border: 1px solid #ddd!important }
+.head{
+    background-color: #f3f3f3;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+table{
+    font-family: 'Nunito', sans-serif;
+}
+table th{
+    font-weight: bold;
+    font-size: 1.1em;
+}
+table thead{
+    border-bottom: 3px solid #ddd;
+    background-color: #f3f3f3;
+}
+.icon-info{
+    position: absolute;
+    top: 0.3em;
+    right: 0.3em;
+}

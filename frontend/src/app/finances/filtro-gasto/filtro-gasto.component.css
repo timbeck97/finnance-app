@@ -1,0 +1,30 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+.filtro{
+    cursor: pointer;
+    margin-bottom: 0;
+}
+.filtro i{
+    font-size: 1.3em;
+    transition: all 0.5s;
+    
+}
+.filtroIcon{
+    display: inline-block;
+    transform: rotate(90deg);
+}
+
+
+.filtro span{
+    font-family: 'Nunito', sans-serif;
+    margin-left: 5px;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.filtroBody{
+    padding: 0 !important;
+    font-weight: bold;
+
+}
+.filtroFooter{
+    padding: 0 !important;
+}

@@ -20,11 +20,14 @@ import java.util.List;
 @RequestMapping("/gastos")
 public class GastoController {
 
-  @Autowired
-  private Utils util;
+  private final Utils util;
+  private final GastoRepository gastoRepository;
 
-  @Autowired
-  private GastoRepository gastoRepository;
+  public GastoController(GastoRepository gastoRepository, Utils util) {
+    this.gastoRepository = gastoRepository;
+    this.util = util;
+  }
+
   @GetMapping
   public ResponseEntity<List<GastoDTO>> findAll(
     @RequestParam(required = false) String anoMes,

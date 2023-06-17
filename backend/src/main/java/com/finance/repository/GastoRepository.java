@@ -13,6 +13,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
-  @Query(value = "Select new com.finance.dto.GastoDTO(g) from Gasto g where to_char(g.data,'yyyyMM')=:data and usuario=:usuario")
+  @Query(value = "Select new com.finance.dto.GastoDTO(g) from Gasto g where to_char(g.data,'yyyyMM')=:data and usuario=:usuario order by g.data desc, g.id desc")
   Page<GastoDTO> findByData(@Param("data")String data, @Param("usuario") User user, Pageable pageable);
 }

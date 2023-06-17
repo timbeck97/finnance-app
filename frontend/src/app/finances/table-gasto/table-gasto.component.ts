@@ -6,6 +6,7 @@ import { Gasto } from '../model/Gasto';
 import { take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
 import { Util } from 'src/app/util/util';
+import { Filtro } from '../model/Filtro';
 
 @Component({
   selector: 'app-table-gasto',
@@ -14,92 +15,99 @@ import { Util } from 'src/app/util/util';
 })
 export class TableGastoComponent {
 
-  formFiltro: FormGroup;
-
-  titulo: string = '';
-
   gastos: Gasto[] | null = []
 
-  gasto:{};
+  @Input()
+  filtro: Filtro
 
-  pageNumber:number=1;
-  pageSize:number=5;
-  maxElements:number=1;
-  maxPages:number=1;
+  loading:boolean=true;
 
-  isCollapsed = true;
+  constructor(private cadastroContaService: CadatroContaService, private http: HttpClient) {
 
-  meses: any = Util.getMeses();
-  anos: any = []
-
-  constructor(private cadastroContaService:CadatroContaService, private http:HttpClient) {
-    for (let i = 2020; i <= new Date().getFullYear(); i++) {
-      this.anos.push(String(i));
-    }
+  }
+  ngOnInit() {
     let mes = new Date().getMonth() + 1;
     let mesString = mes < 10 ? '0' + mes : String(mes);
-    this.formFiltro = new FormGroup({
-      ano: new FormControl(new Date().getFullYear(), Validators.required),
-      mes: new FormControl(mesString, Validators.required),
-
-    })
-    console.log(this.formFiltro.get('ano'))
-  }
-  ngOnInit(){
+    this.filtro = {
+      pageNumber: 1,
+      pageSize: 5,
+      maxPages: 1,
+      ano: String(new Date().getFullYear()),
+      mes: mesString
+    }
     this.findGastos()
   }
-  filtrar(){
-    this.pageNumber=1;
-    this.findGastos();
+  ngOnChanges(param: any) {
+    if (param.filtro.currentValue) {
+      this.findGastos()
+    }
   }
-  findGastos(){
-    let params=new HttpParams({
-      fromObject:{
-        anoMes:this.formFiltro.get('ano')?.value+this.formFiltro.get('mes')?.value,
-        pageSize:this.pageSize,
-        pageNumber:this.pageNumber
+  findGastos() {
+    this.loading=true;
+    let params = new HttpParams({
+      fromObject: {
+        anoMes: this.filtro.ano + this.filtro.mes,
+        pageSize: this.filtro.pageSize,
+        pageNumber: this.filtro.pageNumber
       }
     })
-    this.http.get<Gasto[]>(URL+'/gastos',{params:params, observe:'response'})
+    this.http.get<Gasto[]>(URL + '/gastos', { params: params, observe: 'response' })
       .pipe(
-        
+
         take(1)
       )
-      .subscribe((result)=>{
-        this.maxPages=Math.ceil(Number(result.headers.get('X-Total-Count'))/this.pageSize);
-        this.gastos=result.body
+      .subscribe((result) => {
+        this.filtro.maxPages = Math.ceil(Number(result.headers.get('X-Total-Count')) / this.filtro.pageSize);
+        this.gastos = result.body
+        if(this.loading){
+          this.loading=false;
+        }
       })
   }
   onRowClick(row: any) {
-    this.gasto=row;
-    this.cadastroContaService.openModal(row)
+    this.cadastroContaService.openModal(row, this.findGastos.bind(this))
   }
-  adicionarConta(){
-    this.cadastroContaService.openModal(null)
+  adicionarConta() {
+    this.cadastroContaService.openModal(null, this.findGastos.bind(this))
   }
-  handlePagination(next:boolean){
-    if(next){
-      if(this.pageNumber<this.maxPages){
-        this.pageNumber++;
+  handlePagination(next: boolean) {
+    if (next) {
+      if (this.filtro.pageNumber < this.filtro.maxPages) {
+        this.filtro.pageNumber++;
         this.findGastos();
       }
-    }else{
-      if(this.pageNumber>1){
-        this.pageNumber--;
+    } else {
+      if (this.filtro.pageNumber > 1) {
+        this.filtro.pageNumber--;
         this.findGastos();
       }
     }
   }
-  selectPage(page:number){
-    this.pageNumber=page;
+  selectPage(page: number) {
+    this.filtro.pageNumber = page;
     this.findGastos();
   }
-  getPages(){
-    let array=[];
-    for(let i=1;i<=this.maxPages;i++){
+  getPages() {
+    let array = [];
+    for (let i = 1; i <= this.filtro.maxPages; i++) {
       array.push(i)
     }
     return array;
+  }
+  handlePageSizeChange(add: boolean) {
+    if (add) {
+      this.filtro.pageSize++;
+    } else {
+      if (this.filtro.pageSize > 5) {
+        this.filtro.pageSize--;
+      }
+    }
+    this.filtro.pageNumber = 1;
+    this.findGastos();
+
+  }
+  generateReport() {
+    alert('todo: GENERATE REPORT')
   }
 
 }

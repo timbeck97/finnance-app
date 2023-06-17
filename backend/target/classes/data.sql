@@ -17,6 +17,14 @@ insert into gasto(id, descricao, categoria, forma_pagamento, valor, usuario_id, 
 (nextval('gasto_seq'),'Farmacia','SAUDE','CARTAO',30.50, 666, now()),
 (nextval('gasto_seq'),'Cerveja BDL','LASER','PIX',40.40, 666, now());
 
+insert into deposito(id, descricao, valor, usuario_id, data) values
+(nextval('deposito_seq'),'Pix Cerveja',30.50, 666, now()),
+(nextval('deposito_seq'),'Churrasco Aniver',50, 666, now()),
+(nextval('deposito_seq'),'Internet',27, 666, now()),
+(nextval('deposito_seq'),'Cerveja BDL',35, 666, now());
+
+
+
 
 
 

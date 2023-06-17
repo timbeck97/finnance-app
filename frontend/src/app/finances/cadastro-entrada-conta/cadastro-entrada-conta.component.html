@@ -1,0 +1,51 @@
+<div class="modal-header">
+    <h4 class="modal-title titleM">Adicionar Valor de Entrada</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+  </div>
+  <div class="modal-body">
+    <form body [formGroup]="formulario">
+      <div class="row input">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="idxDescricao">Descrição</label>
+            <input type="text" class="form-control" id="idxDescricao"
+              [ngClass]="{'is-invalid':verificaValidTouched('descricao')}" formControlName="descricao">
+            <span class="spanRequired" *ngIf="verificaValidTouched('descricao')">Required Field</span>
+          </div>
+        </div>
+      </div>
+      <div class="row input">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="idxValor">Valor</label>
+            <input type="text" class="form-control" id="idxValor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"
+              [ngClass]="{'is-invalid':verificaValidTouched('valor')}" formControlName="valor">
+            <span class="spanRequired" *ngIf="verificaValidTouched('valor')">Required Field</span>
+          </div>
+        </div>
+      </div>
+      <div class="row input">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="idxData">Data</label>
+            <input type="date" class="form-control" id="idxData" 
+              [ngClass]="{'is-invalid':verificaValidTouched('data')}" formControlName="data">
+            <span class="spanRequired" *ngIf="verificaValidTouched('data')">Required Field</span>
+          </div>
+        </div>
+      </div>
+    
+      <!-- <div class="row">
+        <div class="col-md-12">
+          <pre>
+            {{formulario.value | json}}
+          </pre>
+        </div>
+      </div> -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div footer class="row">
+      <button class="btn btn-primary" (click)="onSubmit()">Salvar</button>
+    </div>
+  </div>

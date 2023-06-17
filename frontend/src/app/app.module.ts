@@ -18,6 +18,7 @@ import { FinancesModule } from './finances/finances.module';
 import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { InterceptorService } from './authentication/interceptor/interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -41,7 +42,8 @@ registerLocaleData(ptBr);
     FinancesModule,
     routing,
     ModalModule.forRoot(),
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },

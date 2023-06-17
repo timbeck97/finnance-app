@@ -17,6 +17,7 @@
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/model/Role.java
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/enums/ECategoriaGasto.java
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/exceptions/DataNotFoundException.java
+/home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/dto/GastoDTO.java
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/service/Utils.java
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/dto/UserDTO.java
 /home/tim/Tim/angular/angular-topics-study/backend/src/main/java/com/finance/enums/EFormaPagamento.java

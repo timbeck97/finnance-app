@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { URL } from '../util/environment';
 import { take } from 'rxjs';
 import { Gasto } from './model/Gasto';
+import { Filtro } from './model/Filtro';
 @Component({
   selector: 'app-finances',
   templateUrl: './finances.component.html',
@@ -18,6 +19,8 @@ export class FinancesComponent{
 
   formulario:FormGroup;
   conta:{};
+
+  filtro:Filtro;
 
   constructor(private service:CadatroContaService) {
     this.formulario = new FormGroup({
@@ -30,9 +33,9 @@ export class FinancesComponent{
   verificaValidTouched(campo:string){
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
   }
- 
-  adicionaConta(){
-   this.service.openModal(null); 
-   
+  filtrar(filtro:Filtro){
+    this.filtro=filtro;
   }
+ 
+
 }

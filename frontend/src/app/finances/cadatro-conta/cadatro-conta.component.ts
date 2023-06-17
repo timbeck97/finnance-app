@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Util } from 'src/app/util/util';
 import { Gasto } from '../model/Gasto';
-import { take } from 'rxjs';
+import { Observable, take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
 
 @Component({
@@ -16,12 +16,13 @@ export class CadatroContaComponent{
 
   formulario: FormGroup;
 
-
-  @Output()
-  save = new EventEmitter();
+  @Input() onSave:()=>void | null
 
   @Input()
   gasto: any;
+
+  
+
   constructor(private modalRef: NgbActiveModal, private http: HttpClient) {
     this.formulario = new FormGroup({
       descricao: new FormControl(null, Validators.required),
@@ -41,11 +42,20 @@ export class CadatroContaComponent{
   }
   saveGasto(){
     const url=URL;
-     this.http.post<Gasto>(url+'/gastos',this.formulario.value)
+    let request:Observable<Gasto> | null =null;
+    if(this.gasto && this.gasto.id){
+      request=this.http.put<Gasto>(url+'/gastos/'+this.gasto.id,this.formulario.value);
+    }else{
+      request=this.http.post<Gasto>(url+'/gastos',this.formulario.value);
+    }
+    request
     .pipe(take(1))
     .subscribe(result=>{
       this.formulario.reset();
       this.modalRef.close();
+      console.log('on save: ',this.onSave);
+      
+      this.onSave();
  
       
     });
@@ -53,7 +63,6 @@ export class CadatroContaComponent{
 
   onSubmit() {
     if (this.formulario.valid) {
-      //this.save.emit(this.formulario.value);
       this.saveGasto();
 
     } else {

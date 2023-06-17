@@ -1,95 +1,76 @@
 <div class="card">
-    <div class="card-header head">{{titulo}}</div>
+    <div class="card-header head">Gastos</div>
     <div class="card-body">
 
-        <div class="card">
-            <div class="card-header filtro" (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed"
-                aria-controls="collapseExample">
-                <i [ngClass]="{'bi bi-chevron-double-right':true,'filtroIcon':!isCollapsed}" title="icon"></i>
-                <span>Filtro</span>
-            </div>
-            <div class="card-body filtroBody" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-                <div style="padding: 15px;">
-                    <form body [formGroup]="formFiltro">
-
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label  for="tipoIdx">Mês</label>
-                                    <select class="form-select" id="tipoIdx" formControlName="mes" required >
-                                        <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
-
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="tipoIdx">Ano</label>
-                                    <select class="form-select" id="tipoIdx" formControlName="ano" required>
-                                        <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+        <div>
+            <div class="row" style="margin: 10px 0px 5px 0px;">
+                <div class="col-md-12 d-flex flex-row-reverse">
+                    <button class="btn btn-secondary ms-1" (click)="generateReport()">
+                        <i class="bi bi-printer"></i>
+                    </button>
+                    <button class="btn btn-primary" (click)="adicionarConta()">
+                        <span>Adicionar</span>
+                    </button>
                 </div>
             </div>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-md-6">Descrição</th>
+                        <th scope="col" class="col-md-2">Categoria</th>
+                        <th scope="col" class="col-md-2">Pagamento</th>
+                        <th scope="col" class="col-md-2">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                    <tr class="tableRow" *ngFor="let gasto of gastos; index as i" (click)="onRowClick(gasto)">
+                        <td scope="row">{{gasto.descricao}}</td>
+                        <td>{{gasto.categoria | CustomPipe:'categoria'}}</td>
+                        <td>{{gasto.formaPagamento | CustomPipe:'pagamento'}}</td>
+                        <td style="text-align: right;">{{gasto.valor | currency:"BRL":"symbol"}}</td>
+                    </tr>
 
-            <div class="card-footer filtroFooter" [(ngbCollapse)]="isCollapsed">
-                <div style="padding: 8px;">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <button class="btn btn-primary" (click)="filtrar()">Filtrar</button>
+                </tbody>
+            </table>
+            <nav aria-label="Page navigation example">
+
+                <ul class="pagination justify-content-between">
+                    <div style="width: 12em;">
+                        <div class="input-group">
+                            <div class="input-group-prepend" style="height: '30px';">
+                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                    (click)="handlePageSizeChange(false)">-</button>
+                            </div>
+
+                            <input type="text" class="form-control" placeholder=""
+                                [value]="filtro.pageSize+' registros'"
+                                style="height: 1.9em !important; font-weight: 200;" aria-label=""
+                                aria-describedby="basic-addon1">
+                            <div class="input-group-prepend" style="height: '30px';">
+                                <button class="btn btn-outline-primary btn-sm" type="button"
+                                    (click)="handlePageSizeChange(true)">+</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
+                    <div style="display: flex;">
+                        <li class="page-item" [class.disabled]="filtro.pageNumber==1">
+                            <span class="page-link" (click)="handlePagination(false)">Previous</span>
+                        </li>
+                        <li class="page-item" *ngFor="let pagina of getPages()"
+                            [class.active]="pagina==filtro.pageNumber" (click)="selectPage(pagina)"><span
+                                class="page-link">{{pagina}}</span></li>
+                        <li class="page-item" [class.disabled]="filtro.pageNumber==filtro.maxPages">
+                            <span class="page-link" (click)="handlePagination(true)">Next</span>
+                        </li>
+                    </div>
+                </ul>
+            </nav>
         </div>
-        <div class="row" style="margin-top: 10px;">
-            <div class="col-md-12 d-flex flex-row-reverse">
-                <button class="btn btn-secondary ms-1">
-                    <i class="bi bi-printer"></i>
-                </button>
-                <button class="btn btn-success" (click)="adicionarConta()" >
-                    <span>Adicionar</span>
-                </button>
-            </div>
-        </div>
-        <table class="table table-bordered table-hover" >
-            <thead>
-                <tr>
-                    <th scope="col" class="col-md-6">Descrição</th>
-                    <th scope="col" class="col-md-2">Categoria</th>
-                    <th scope="col" class="col-md-2">Pagamento</th>
-                    <th scope="col" class="col-md-2">Valor</th>
-                </tr>
-            </thead>
-            <tbody>
+        <!-- <div *ngIf="loading" style="display: flex;justify-content: center;">
+            <mat-spinner></mat-spinner>
+        </div> -->
 
-                <tr class="tableRow" *ngFor="let gasto of gastos; index as i" (click)="onRowClick(gasto)">
-                    <td scope="row">{{gasto.descricao}}</td>
-                    <td>{{gasto.categoria | CustomPipe:'categoria'}}</td>
-                    <td>{{gasto.formaPagamento | CustomPipe:'pagamento'}}</td>
-                    <td>{{gasto.valor | currency:"BRL":"symbol"}}</td>
-                </tr>
 
-            </tbody>
-        </table>
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-end">
-                <li class="page-item" [class.disabled]="pageNumber==1">
-                    <span class="page-link"  (click)="handlePagination(false)">Previous</span>
-                </li>
-                <li class="page-item" *ngFor="let pagina of getPages()" [class.active]="pagina==pageNumber"  (click)="selectPage(pagina)"><span class="page-link">{{pagina}}</span></li>
-                <li class="page-item"  [class.disabled]="pageNumber==maxPages" >
-                    <span class="page-link"(click)="handlePagination(true)">Next</span>
-                </li>
-            </ul>
-        </nav>
-     
-   
     </div>
 </div>

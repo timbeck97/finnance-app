@@ -23,6 +23,7 @@ export class InterceptorService implements HttpInterceptor{
     .pipe(
       catchError((error:any)=>{
           if(error.error.customCode==666){
+            this.auth.logout();
             console.log('TODO: Handle refresh token logic')
           }else if(error.error.code==403){
             alert('SEM AUTORIZAÇÃO PARA ESSE RECURSO: '+error.url)

@@ -7,10 +7,17 @@
       <app-card-gasto titulo="Saldo Poupança" [saldo]=1000.0></app-card-gasto>
     </div>
   </div>
-  <div class="row" style="margin-top: 20px;">
-    <div class="col-md-12">
-      <app-table-gasto></app-table-gasto>
+  <div class="row" style="margin-top: 1em;">
+    <app-filtro-gasto (eventFiltro)="filtrar($event)"></app-filtro-gasto>
+  </div>
+  <div class="row box-container" style="margin-top: 20px;">
+    <div class="col-md-4">
+      <app-entrada-conta [filtro]="filtro"></app-entrada-conta>
+    </div>
+    <div class="col-md-8" >
+      <app-table-gasto [filtro]="filtro"></app-table-gasto>
     </div>
   </div>
+ 
 
 </div>

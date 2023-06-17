@@ -8,10 +8,13 @@ import { FormatterDirective } from '../util/formatter.directive';
 import { CadatroContaComponent } from './cadatro-conta/cadatro-conta.component';
 import { CardGastoComponent } from './card-gasto/card-gasto.component';
 import { TableGastoComponent } from './table-gasto/table-gasto.component';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCollapseModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { CustomPipe } from '../util/custom.pipe';
-
+import { EntradaContaComponent } from './entrada-conta/entrada-conta.component';
+import {ProgressSpinnerMode, MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { FiltroGastoComponent } from './filtro-gasto/filtro-gasto.component';
+import { CadastroEntradaContaComponent } from './cadastro-entrada-conta/cadastro-entrada-conta.component';
 
 
 
@@ -23,7 +26,10 @@ import { CustomPipe } from '../util/custom.pipe';
     CadatroContaComponent,
     CardGastoComponent,
     TableGastoComponent,
-    CustomPipe
+    CustomPipe,
+    EntradaContaComponent,
+    FiltroGastoComponent,
+    CadastroEntradaContaComponent,
   ],
   exports: [],
   imports: [
@@ -31,7 +37,11 @@ import { CustomPipe } from '../util/custom.pipe';
     FormsModule,
     ReactiveFormsModule,
     NgbCollapseModule,
-    CurrencyMaskModule
+    CurrencyMaskModule,
+    MatProgressSpinnerModule,
+    NgbTooltipModule
+    
+    
   ]
 })
 export class FinancesModule { }

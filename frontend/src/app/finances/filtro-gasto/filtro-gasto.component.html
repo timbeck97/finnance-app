@@ -1,0 +1,43 @@
+<div class="card">
+    <div class="card-header filtro" (click)="isCollapsed = ! isCollapsed" [attr.aria-expanded]="!isCollapsed"
+        aria-controls="collapseExample">
+        <i [ngClass]="{'bi bi-chevron-double-right':true,'filtroIcon':!isCollapsed}" title="icon"></i>
+        <span>Filtro</span>
+    </div>
+    <div class="card-body filtroBody" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div style="padding: 15px;">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="tipoIdx">Mês</label>
+                        <select class="form-select" id="tipoIdx" [(ngModel)]="filtro.mes">
+                            <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="tipoIdx">Ano</label>
+                        <select class="form-select" id="tipoIdx" [(ngModel)]="filtro.ano">
+                            <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card-footer filtroFooter" [(ngbCollapse)]="isCollapsed">
+        <div style="padding: 8px;">
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-primary" (click)="filtrar()">Filtrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>

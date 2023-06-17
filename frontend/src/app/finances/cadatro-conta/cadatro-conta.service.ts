@@ -9,13 +9,11 @@ export class CadatroContaService {
 
   constructor(private modalService: NgbModal) { }
 
-  
 
-
-  openModal(gasto:any|null){
+  openModal(gasto:any|null, callback:()=>void){
     const modalRef=this.modalService.open(CadatroContaComponent);
     modalRef.componentInstance.gasto=gasto;
-    modalRef.componentInstance.save.subscribe((e:any)=>console.log(e))
+    modalRef.componentInstance.onSave=callback
 
   }
 }

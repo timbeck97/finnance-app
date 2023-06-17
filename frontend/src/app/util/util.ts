@@ -21,7 +21,7 @@ export class Util {
   static getDate(date: Date): string {
     let day = date.getDate();
     let stringDay=day<10?"0"+day:day;
-    let month = date.getMonth();
+    let month = date.getMonth()+1;
     let stringMonth=month<10?"0"+month:month
     let year = date.getFullYear();
 
