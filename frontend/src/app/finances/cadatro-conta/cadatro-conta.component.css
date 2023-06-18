@@ -1,6 +1,6 @@
-input{
+.input{
     font-weight: 200;
-    margin: 5px 0px;
+    margin-top: 10px;
 }
 label{
     font-weight: 400;
@@ -16,5 +16,5 @@ select{
 
 .titleM{
     font-size: 1.2em;
-    font-weight: bold;
+    font-weight: 400;
 }

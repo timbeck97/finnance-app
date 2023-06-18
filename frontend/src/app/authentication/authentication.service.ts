@@ -22,18 +22,48 @@ export class AuthenticationService {
       
     });
   }
+  refreshToken(){
+    const url=URL;
+    let refreshToken=this.getRefreshToken();
+    this.http.get<Token>(url+'/token/refreshtoken',{headers:{'Authorization':'Bearer '+refreshToken}})
+    .pipe(take(1))
+    .subscribe(result=>{
+      this.setTokenRefresh(result)
+      //this.router.navigate(['/finances'])
+      
+    },error=>{
+      console.log(error)
+    });
+  }
+  validadeTokenExpiration(){
+    let tokenExpiration=Number(this.getTokenExpiration());
+    let now=new Date().getTime();
+    return now>tokenExpiration;
+  }
+ 
   logout(){
     localStorage.clear();
     this.router.navigate(['/login'])
   }
+  getRefreshToken(){
+    return localStorage.getItem("refresh_token")
+  }
   getToken(){
     return localStorage.getItem("access_token")
+  }
+  getTokenExpiration(){
+    return localStorage.getItem("access_token_expiration")
   }
   setToken(token:Token){
     localStorage.setItem('access_token', token.access_token);
     localStorage.setItem('access_token_expiration', String(token.access_token_expiration));
     localStorage.setItem('refresh_token_expiration', String(token.refresh_token_expiration));
     localStorage.setItem('refresh_token', token.refresh_token);
+  }
+  setTokenRefresh(token:Token){
+    localStorage.clear();
+    localStorage.setItem('access_token', token.access_token);
+    localStorage.setItem('access_token_expiration', String(token.access_token_expiration));
   }
   isLogged(){
     return this.getToken()!==null && this.getToken()!==undefined;

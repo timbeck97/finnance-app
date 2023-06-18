@@ -15,6 +15,7 @@ import com.finance.dto.UserDTO;
 import com.finance.model.Role;
 import com.finance.model.User;
 import com.finance.service.UserService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -38,6 +39,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class LoginController {
 
     private final UserService userService;
+
+    @Value("${token.expiration.minutes}")
+    private String tokenExpiration;
 
     public LoginController(UserService userService) {
         this.userService = userService;
@@ -77,7 +81,7 @@ public class LoginController {
 
     @GetMapping(value = "/token/refreshtoken")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException{
-            Long token_exp=System.currentTimeMillis()+(Integer.valueOf(30)*1*1000);
+            Long token_exp=System.currentTimeMillis()+(Integer.valueOf(4)*60*1000);
 
             String refresh_token=request.getHeader("Authorization");
             String token=refresh_token.split("Bearer")[1].trim();

@@ -1,0 +1,20 @@
+.input{
+    font-weight: 200;
+    margin-top: 10px;
+}
+label{
+    font-weight: 400;
+}
+select{
+    font-weight: 200;
+    margin-top: 5px;
+}
+.spanRequired{
+    color:red;
+    font-size: 12px;
+}
+
+.titleM{
+    font-size: 1.2em;
+    font-weight: 400;
+}

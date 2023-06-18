@@ -19,6 +19,7 @@ import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { InterceptorService } from './authentication/interceptor/interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AlertComponent } from './util/alert/alert.component';
 
 
 
@@ -29,6 +30,7 @@ registerLocaleData(ptBr);
     AppComponent,
     InfoComponent,
     LoginComponent,
+    AlertComponent,
 
 
   ],

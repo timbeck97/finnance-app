@@ -7,6 +7,8 @@ import { take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
 import { Util } from 'src/app/util/util';
 import { Filtro } from '../model/Filtro';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AlertComponent } from 'src/app/util/alert/alert.component';
 
 @Component({
   selector: 'app-table-gasto',
@@ -22,7 +24,7 @@ export class TableGastoComponent {
 
   loading:boolean=true;
 
-  constructor(private cadastroContaService: CadatroContaService, private http: HttpClient) {
+  constructor(private cadastroContaService: CadatroContaService, private http: HttpClient, private modalService: NgbModal) {
 
   }
   ngOnInit() {
@@ -107,7 +109,13 @@ export class TableGastoComponent {
 
   }
   generateReport() {
-    alert('todo: GENERATE REPORT')
+    //alert('todo: GENERATE REPORT')
+    const modalRef=this.modalService.open(AlertComponent);
+    modalRef.componentInstance.titleText='Relatório';
+    modalRef.componentInstance.bodyText='TODO: Generate report';
+    modalRef.dismissed.subscribe(()=>{
+      alert('DISMISSED')
+    })
   }
 
 }
