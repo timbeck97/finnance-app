@@ -9,6 +9,7 @@ import { Util } from 'src/app/util/util';
 import { Filtro } from '../model/Filtro';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/util/alert/alert.component';
+import { ETipoGasto } from '../model/ETipoGasto';
 
 @Component({
   selector: 'app-table-gasto',
@@ -22,10 +23,22 @@ export class TableGastoComponent {
   @Input()
   filtro: Filtro
 
+  @Input()
+  titulo:string='Gastos Variáveis';
+
+  @Input()
+  tipoGasto:ETipoGasto=ETipoGasto.VARIAVEL;
+
   loading:boolean=true;
 
-  constructor(private cadastroContaService: CadatroContaService, private http: HttpClient, private modalService: NgbModal) {
+  url: string = URL;
 
+  constructor(private cadastroContaService: CadatroContaService, private http: HttpClient, private modalService: NgbModal) {
+    if(this.tipoGasto===ETipoGasto.FIXO){
+      this.url+='/gastos/fixos'
+    }else{
+      this.url+='/gastos'
+    }
   }
   ngOnInit() {
     let mes = new Date().getMonth() + 1;
@@ -38,6 +51,8 @@ export class TableGastoComponent {
       mes: mesString
     }
     this.findGastos()
+   
+    
   }
   ngOnChanges(param: any) {
     if (param.filtro.currentValue) {
@@ -49,13 +64,13 @@ export class TableGastoComponent {
     let params = new HttpParams({
       fromObject: {
         anoMes: this.filtro.ano + this.filtro.mes,
-        pageSize: this.filtro.pageSize,
-        pageNumber: this.filtro.pageNumber
+        pageSize: this.isGastoVariavel()?this.filtro.pageSize:99999,
+        pageNumber: this.isGastoVariavel()?this.filtro.pageNumber:1,
+        tipoGasto:this.tipoGasto
       }
     })
     this.http.get<Gasto[]>(URL + '/gastos', { params: params, observe: 'response' })
       .pipe(
-
         take(1)
       )
       .subscribe((result) => {
@@ -67,49 +82,12 @@ export class TableGastoComponent {
       })
   }
   onRowClick(row: any) {
-    this.cadastroContaService.openModal(row, this.findGastos.bind(this))
+    this.cadastroContaService.openModal(row, this.tipoGasto, this.findGastos.bind(this))
   }
   adicionarConta() {
-    this.cadastroContaService.openModal(null, this.findGastos.bind(this))
-  }
-  handlePagination(next: boolean) {
-    if (next) {
-      if (this.filtro.pageNumber < this.filtro.maxPages) {
-        this.filtro.pageNumber++;
-        this.findGastos();
-      }
-    } else {
-      if (this.filtro.pageNumber > 1) {
-        this.filtro.pageNumber--;
-        this.findGastos();
-      }
-    }
-  }
-  selectPage(page: number) {
-    this.filtro.pageNumber = page;
-    this.findGastos();
-  }
-  getPages() {
-    let array = [];
-    for (let i = 1; i <= this.filtro.maxPages; i++) {
-      array.push(i)
-    }
-    return array;
-  }
-  handlePageSizeChange(add: boolean) {
-    if (add) {
-      this.filtro.pageSize++;
-    } else {
-      if (this.filtro.pageSize > 5) {
-        this.filtro.pageSize--;
-      }
-    }
-    this.filtro.pageNumber = 1;
-    this.findGastos();
-
+    this.cadastroContaService.openModal(null,this.tipoGasto, this.findGastos.bind(this))
   }
   generateReport() {
-    //alert('todo: GENERATE REPORT')
     const modalRef=this.modalService.open(AlertComponent);
     modalRef.componentInstance.titleText='Relatório';
     modalRef.componentInstance.bodyText='TODO: Generate report';
@@ -117,5 +95,11 @@ export class TableGastoComponent {
       alert('DISMISSED')
     })
   }
-
+  handleFiltro(filtro: Filtro) {
+    this.filtro = filtro;
+    this.findGastos();
+  }
+  isGastoVariavel(){
+    return this.tipoGasto===ETipoGasto.VARIAVEL;
+  }
 }

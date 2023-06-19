@@ -7,15 +7,23 @@ insert into user_table(id, name, password, username, cpf) values (777, 'Usuario 
 insert into user_table_roles(user_id, roles_id) values (666,3), (666,4);
 insert into user_table_roles(user_id, roles_id) values (777,3), (777,4);
 
-insert into gasto(id, descricao, categoria, forma_pagamento, valor, usuario_id, data) values
-(nextval('gasto_seq'),'Cerveja BDL','LASER','CARTAO',30.50, 666, now()),
-(nextval('gasto_seq'),'Gasolina','GASOLINA','CARTAO',50, 666, now()),
-(nextval('gasto_seq'),'Corte Cabelo','OUTROS','PIX',27, 666, now()),
-(nextval('gasto_seq'),'Spotify','OUTROS','CARTAO',35, 666, now()),
-(nextval('gasto_seq'),'Mega xis','LASER','CARTAO',21.50, 666, now()),
-(nextval('gasto_seq'),'Prime Video','OUTROS','CARTAO',14.50, 666, now()),
-(nextval('gasto_seq'),'Farmacia','SAUDE','CARTAO',30.50, 666, now()),
-(nextval('gasto_seq'),'Cerveja BDL','LASER','PIX',40.40, 666, now());
+insert into gasto(id, descricao, categoria, forma_pagamento,tipo_gasto, valor, usuario_id, data) values
+(nextval('gasto_seq'),'Cerveja BDL','LASER','CARTAO','VARIAVEL', 30.50, 666, now()),
+(nextval('gasto_seq'),'Gasolina','GASOLINA','CARTAO', 'VARIAVEL',50, 666, now()),
+(nextval('gasto_seq'),'Corte Cabelo','OUTROS','PIX','VARIAVEL',27, 666, now()),
+(nextval('gasto_seq'),'Spotify','OUTROS','CARTAO','VARIAVEL',35, 666, now()),
+(nextval('gasto_seq'),'Mega xis','LASER','CARTAO','VARIAVEL',21.50, 666, now()),
+(nextval('gasto_seq'),'Prime Video','OUTROS','CARTAO','VARIAVEL',14.50, 666, now()),
+(nextval('gasto_seq'),'Farmacia','SAUDE','CARTAO','VARIAVEL',30.50, 666, now()),
+(nextval('gasto_seq'),'Cerveja BDL','LASER','PIX','VARIAVEL',40.40, 666, now()),
+(nextval('gasto_seq'),'Faculdade','OUTROS','PIX','FIXO',815.00, 666, now()),
+(nextval('gasto_seq'),'Academia','OUTROS','PIX','FIXO',97.00, 666, now()),
+(nextval('gasto_seq'),'Tarifa Banco','OUTROS','PIX','FIXO',14.90, 666, now()),
+(nextval('gasto_seq'),'GASTO MES ANTERIOR 1','OUTROS','PIX','FIXO',49.50, 666, '2023-05-05'),
+(nextval('gasto_seq'),'GASTO MES ANTERIOR 2','OUTROS','PIX','FIXO',49.50, 666, '2023-05-05'),
+(nextval('gasto_seq'),'Claro','OUTROS','PIX','FIXO',49.50, 666, now());
+
+
 
 insert into deposito(id, descricao, valor, usuario_id, data) values
 (nextval('deposito_seq'),'Pix Cerveja',30.50, 666, now()),

@@ -24,6 +24,8 @@ import { AlertComponent } from './util/alert/alert.component';
 
 
 
+
+
 registerLocaleData(ptBr);
 @NgModule({
   declarations: [
@@ -31,6 +33,7 @@ registerLocaleData(ptBr);
     InfoComponent,
     LoginComponent,
     AlertComponent,
+
 
 
   ],
@@ -46,6 +49,7 @@ registerLocaleData(ptBr);
     ModalModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
+
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' },

@@ -10,6 +10,7 @@ import { URL } from '../util/environment';
 import { take } from 'rxjs';
 import { Gasto } from './model/Gasto';
 import { Filtro } from './model/Filtro';
+import { ETipoGasto } from './model/ETipoGasto';
 @Component({
   selector: 'app-finances',
   templateUrl: './finances.component.html',
@@ -19,7 +20,7 @@ export class FinancesComponent{
 
   formulario:FormGroup;
   conta:{};
-
+  gastosFixos:ETipoGasto=ETipoGasto.FIXO;
   filtro:Filtro;
 
   constructor(private service:CadatroContaService) {
@@ -35,6 +36,7 @@ export class FinancesComponent{
   }
   filtrar(filtro:Filtro){
     this.filtro=filtro;
+    
   }
  
 

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.finance.enums.ECategoriaGasto;
 import com.finance.enums.EFormaPagamento;
+import com.finance.enums.ETipoGasto;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -28,6 +29,10 @@ public class Gasto {
     @Column(columnDefinition = "varchar(30) not null")
     private EFormaPagamento formaPagamento;
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "varchar(30) not null default 'VARIAVEL'")
+    private ETipoGasto tipoGasto;
+
     @Column(columnDefinition = "numeric(14,2) not null")
     private double valor;
 
@@ -41,7 +46,7 @@ public class Gasto {
 
   }
 
-  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, LocalDate data, User usuario) {
+  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, LocalDate data, User usuario, ETipoGasto tipoGasto) {
     this.id = id;
     this.descricao = descricao;
     this.categoria = categoria;
@@ -49,6 +54,7 @@ public class Gasto {
     this.valor = valor;
     this.data = data;
     this.usuario = usuario;
+    this.tipoGasto=tipoGasto;
   }
 
   public Long getId() {
@@ -105,5 +111,13 @@ public class Gasto {
 
   public void setData(LocalDate data) {
     this.data = data;
+  }
+
+  public ETipoGasto getTipoGasto() {
+    return tipoGasto;
+  }
+
+  public void setTipoGasto(ETipoGasto tipoGasto) {
+    this.tipoGasto = tipoGasto;
   }
 }

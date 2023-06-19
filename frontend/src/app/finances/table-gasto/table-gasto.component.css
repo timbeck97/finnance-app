@@ -2,8 +2,9 @@
 .table th, .table td { border: 1px solid #ddd!important }
 .head{
     background-color: #f3f3f3;
-    font-weight: bold;
+    font-weight: 400;
     font-size: 1.1em;
+    height: 2em;
 }
 table{
     font-family: 'Nunito', sans-serif;

@@ -2,6 +2,7 @@ package com.finance.dto;
 
 import com.finance.enums.ECategoriaGasto;
 import com.finance.enums.EFormaPagamento;
+import com.finance.enums.ETipoGasto;
 import com.finance.model.Gasto;
 import com.finance.model.User;
 
@@ -17,6 +18,8 @@ public class GastoDTO {
   private ECategoriaGasto categoria;
 
   private EFormaPagamento formaPagamento;
+
+  private ETipoGasto tipoGasto;
 
   private double valor;
 
@@ -44,6 +47,7 @@ public class GastoDTO {
     this.valor = g.getValor();
     this.data = g.getData();
     this.userName = g.getUsuario().getName();
+    this.tipoGasto=g.getTipoGasto();
   }
 
   public Long getId() {
@@ -100,5 +104,13 @@ public class GastoDTO {
 
   public void setUserName(String userName) {
     this.userName = userName;
+  }
+
+  public ETipoGasto getTipoGasto() {
+    return tipoGasto;
+  }
+
+  public void setTipoGasto(ETipoGasto tipoGasto) {
+    this.tipoGasto = tipoGasto;
   }
 }

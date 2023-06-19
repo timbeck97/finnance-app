@@ -6,6 +6,7 @@ import { Util } from 'src/app/util/util';
 import { Gasto } from '../model/Gasto';
 import { Observable, take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
+import { ETipoGasto } from '../model/ETipoGasto';
 
 @Component({
   selector: 'app-cadatro-conta',
@@ -21,6 +22,8 @@ export class CadatroContaComponent{
   @Input()
   gasto: any;
 
+  @Input()
+  tipoGasto:ETipoGasto=ETipoGasto.VARIAVEL;
   
 
   constructor(private modalRef: NgbActiveModal, private http: HttpClient) {
@@ -29,6 +32,7 @@ export class CadatroContaComponent{
       valor: new FormControl(null, Validators.required),
       formaPagamento: new FormControl('CARTAO', Validators.required),
       categoria: new FormControl('LASER', Validators.required),
+      tipoGasto: new FormControl(this.tipoGasto, Validators.required),
       data: new FormControl(Util.getDate(new Date()), Validators.required),
     })
 
@@ -37,6 +41,8 @@ export class CadatroContaComponent{
   ngOnInit(): void {
     if(this.gasto){
       this.formulario.patchValue(this.gasto);
+    }else{
+      this.formulario.get('tipoGasto')?.setValue(this.tipoGasto);
     }
   
   }
@@ -77,4 +83,7 @@ export class CadatroContaComponent{
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
   }
 
+  isGastoVariavel(){
+    return this.tipoGasto===ETipoGasto.VARIAVEL;
+  }
 }
