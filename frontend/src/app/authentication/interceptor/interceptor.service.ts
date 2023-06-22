@@ -10,7 +10,7 @@ import { AlertComponent } from 'src/app/util/alert/alert.component';
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
-
+  
   constructor(private auth: AuthenticationService, private router: Router, private modalService: NgbModal) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login');
@@ -25,8 +25,10 @@ export class InterceptorService implements HttpInterceptor {
     let tokenExpired = this.auth.validadeTokenExpiration();
     let refreshToken=this.auth.getRefreshToken();
     if(tokenExpired && refreshToken){
-      this.auth.refreshToken();
-      return EMPTY;
+      if(!this.auth.validateRefreshTokenExpiration()){
+        this.auth.refreshToken();
+        return EMPTY;
+      }
     }
 
     const authReq = req.clone({
@@ -48,6 +50,12 @@ export class InterceptorService implements HttpInterceptor {
 
           } else if (error.error.code == 403) {
             alert('SEM AUTORIZAÇÃO PARA ESSE RECURSO: ' + error.url)
+          }else if(error.error.code==404){
+            alert('RECURSO NÃO ENCONTRADO: '+error.url)
+          }else if(error.error.code==500){
+            alert('ERRO INTERNO: '+error.url)
+          }else if(error.error.code==400){
+            alert('ERRO DE REQUISIÇÃO: '+error.url)
           }
 
           return EMPTY;

@@ -9,9 +9,39 @@
   </div>
 
 
-  <a routerLink="/login">
+  <!-- <a routerLink="/login">
     <i class="bi bi-person-circle" [style.color]="logado()?'#2de32d':'white'"></i>
-  </a>
+  </a> -->
+  <div style="display: flex;align-items: center;">
+    <span class="logado">
+      {{logado()?getUser().name:''}}
+    </span>
+    <div class="dropdown no-arrow" >
+      <!-- <button class="btn btn-secondary" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Dropdown button
+      </button> -->
+      <i class="bi bi-person-circle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ></i>
+      <ul class="dropdown-menu box-user" aria-labelledby="dropdownMenuButton1" >
+        <li *ngIf="logado()">
+          <a class="dropdown-item user-item" (click)="logout()">
+            <i class="bi bi-person-fill-gear"></i> Configurações
+          </a>
+        </li>
+        <li *ngIf="logado()">
+          <a class="dropdown-item user-item" (click)="logout()">
+            <i class="bi bi-box-arrow-right"></i> Sair
+          </a>
+        </li>
+        <li *ngIf="!logado()">
+          <a class="dropdown-item user-item" (click)="logout()">
+            <i class="bi bi-person-check-fill"></i> Login
+          </a>
+        </li>
+      
+       
+      </ul>
+    </div>
+  </div>
 
 </nav>
 <div style="overflow-y: scroll;height: 100vh;">

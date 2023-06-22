@@ -31,5 +31,24 @@ i{
     align-self:stretch;
     font-size: 40px;
     padding: 10px;
+    cursor: pointer;
+}
+.box-user{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    right: .5em !important;
+}
+.user-item{
+    color:#000;
+    font-size: 0.8em;
+    cursor: pointer;
+   
+}
+.user-item i{
+    color: #000;
+    font-size: 1.6em;
+}
+.nameLogin{
+    border-bottom: 1px solid #FFF;
+    padding-bottom: 0.2em;
 }
 

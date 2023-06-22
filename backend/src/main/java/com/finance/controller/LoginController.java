@@ -15,8 +15,8 @@ import com.finance.dto.UserDTO;
 import com.finance.model.Role;
 import com.finance.model.User;
 import com.finance.service.UserService;
+import com.finance.service.Utils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +40,14 @@ public class LoginController {
 
     private final UserService userService;
 
+     private final Utils util;
+
     @Value("${token.expiration.minutes}")
     private String tokenExpiration;
 
-    public LoginController(UserService userService) {
+    public LoginController(UserService userService, Utils util) {
         this.userService = userService;
+      this.util = util;
     }
 
     @GetMapping(value = "/users")
@@ -52,9 +55,10 @@ public class LoginController {
        List<UserDTO> dtos= userService.getUsers().stream().map(user->new UserDTO(user)).collect(Collectors.toList());
        return ResponseEntity.ok().body(dtos);
     }
-    @GetMapping(value = "/users/{login}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String login){
-       UserDTO dtos= Optional.of(userService.getUser(login)).map(user->new UserDTO(user)).orElse(null);
+    @GetMapping(value = "/users/me")
+    public ResponseEntity<UserDTO> getUser(){
+      User usuarioLogado = util.getUsuarioLogado();
+      UserDTO dtos= Optional.of(userService.getUser(usuarioLogado.getUsername())).map(user->new UserDTO(user)).orElse(null);
        return ResponseEntity.ok().body(dtos);
     }
     @PostMapping(value = "/signin")
@@ -82,13 +86,12 @@ public class LoginController {
     @GetMapping(value = "/token/refreshtoken")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException{
             Long token_exp=System.currentTimeMillis()+(Integer.valueOf(4)*60*1000);
-
             String refresh_token=request.getHeader("Authorization");
             String token=refresh_token.split("Bearer")[1].trim();
 
 
             if(refresh_token !=null){
-                try{
+//                try{
                     Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
                     JWTVerifier verifier=JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
@@ -112,14 +115,15 @@ public class LoginController {
                     response.setContentType(APPLICATION_JSON_VALUE);
                     new ObjectMapper().writeValue(response.getOutputStream(), tokens);
 
-                }catch(Exception e){
-                    response.setHeader("error", e.getMessage());
-                    response.setStatus(HttpStatus.FORBIDDEN.value());
-                    Map<String, String> erros=new HashMap<>();
-                    erros.put("error_message", e.getMessage());
-                    response.setContentType(APPLICATION_JSON_VALUE);
-                    new ObjectMapper().writeValue(response.getOutputStream(), erros);
-                }
+//                }catch(Exception e){
+////                    response.setHeader("error", e.getMessage());
+////                    response.setStatus(HttpStatus.FORBIDDEN.value());
+////                    Map<String, String> erros=new HashMap<>();
+////                    erros.put("error_message", e.getMessage());
+////                    response.setContentType(APPLICATION_JSON_VALUE);
+////                    new ObjectMapper().writeValue(response.getOutputStream(), erros);
+//
+//                }
             }else{
                 throw new RuntimeException("Refresh token is missing");
             }

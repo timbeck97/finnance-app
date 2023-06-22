@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication/authentication.service';
+import { User } from './authentication/model/User';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,7 @@ export class AppComponent {
   ngIfShowHide:boolean=false;
   menuSelecionado:string='STUDY';
 
-  constructor(private auth:AuthenticationService){
+  constructor(private auth:AuthenticationService, private router:Router){
 
   }
   onMudaValor(evento:any){
@@ -23,6 +25,15 @@ export class AppComponent {
   }
   logado(){
     return this.auth.isLogged();
+  }
+  logout(){
+    this.auth.logout();
+  }
+  login(){
+    this.router.navigate(['/login'])
+  }
+  getUser():User{
+     return this.auth.getUser();
   }
 
 }
