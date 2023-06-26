@@ -23,6 +23,8 @@ export class FinancesComponent{
   gastosFixos:ETipoGasto=ETipoGasto.FIXO;
   filtro:Filtro;
 
+  showGastosMensais:boolean=true;
+
   constructor(private service:CadatroContaService) {
     this.formulario = new FormGroup({
       descricao: new FormControl(null,Validators.required),
@@ -38,6 +40,6 @@ export class FinancesComponent{
     this.filtro=filtro;
     
   }
- 
+  
 
 }

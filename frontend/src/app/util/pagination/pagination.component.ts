@@ -17,7 +17,9 @@ export class PaginationComponent {
   constructor() {
 
   }
-
+  ngOnInit(): void {
+    this.handleFiltro.emit(this.filtro);
+  }
   handlePagination(next: boolean) {
     if (next) {
       if (this.filtro.pageNumber < this.filtro.maxPages) {

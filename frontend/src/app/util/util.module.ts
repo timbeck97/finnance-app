@@ -10,6 +10,7 @@ import { PaginationComponent } from './pagination/pagination.component';
   ],
   imports: [
     CommonModule,
+    NgModule,
   ]
 })
 export class UtilModule { }

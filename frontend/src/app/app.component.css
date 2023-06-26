@@ -47,8 +47,10 @@ i{
     color: #000;
     font-size: 1.6em;
 }
-.nameLogin{
-    border-bottom: 1px solid #FFF;
-    padding-bottom: 0.2em;
-}
 
+
+@media (max-width:600px){
+	.name-login{
+        display: none;
+    }
+}

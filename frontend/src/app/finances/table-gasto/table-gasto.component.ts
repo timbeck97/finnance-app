@@ -45,12 +45,12 @@ export class TableGastoComponent {
     let mesString = mes < 10 ? '0' + mes : String(mes);
     this.filtro = {
       pageNumber: 1,
-      pageSize: 5,
+      pageSize: 10,
       maxPages: 1,
       ano: String(new Date().getFullYear()),
       mes: mesString
     }
-    this.findGastos()
+    //this.findGastos()
    
     
   }

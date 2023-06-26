@@ -32,8 +32,8 @@ export class AppComponent {
   login(){
     this.router.navigate(['/login'])
   }
-  getUser():User{
-     return this.auth.getUser();
+  getUserName():string{
+     return this.auth.getUser()?this.auth.getUser().name:'';
   }
 
 }

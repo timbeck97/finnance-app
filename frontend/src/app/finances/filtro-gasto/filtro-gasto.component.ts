@@ -27,7 +27,7 @@ export class FiltroGastoComponent {
     
     this.filtro={
       pageNumber:1,
-      pageSize:5,
+      pageSize:10,
       maxPages:1,
       ano:String(new Date().getFullYear()),
       mes:mesString
