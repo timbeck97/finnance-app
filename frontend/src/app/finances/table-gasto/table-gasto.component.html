@@ -32,6 +32,10 @@
                         <td *ngIf="isGastoVariavel()">{{gasto.formaPagamento | CustomPipe:'pagamento'}}</td>
                         <td style="text-align: right;">{{gasto.valor | currency:"BRL":"symbol"}}</td>
                     </tr>
+                    <tr class="tableRow" *ngIf="gastos?.length===0">
+                        <td colspan="4" style="text-align: center;padding: 0.5em;">Nenhum registro para a data selecionada</td>
+                        
+                    </tr>
 
                 </tbody>
             </table>

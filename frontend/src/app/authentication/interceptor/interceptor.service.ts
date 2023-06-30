@@ -15,8 +15,17 @@ export class InterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login');
     if (isRefreshTokenRequest) {
-
-      return next.handle(req);
+      return next.handle(req)
+      .pipe(
+        catchError((error: any) => {
+          if(error.error.code==401){
+            alert('SEM AUTORIZACAO')
+          }else{
+            alert('ERRO INTERNO')
+          }
+          return EMPTY;
+        }
+      ));
     }
     let token = this.auth.getToken();
     if (!token) {
@@ -54,10 +63,10 @@ export class InterceptorService implements HttpInterceptor {
             alert('RECURSO NÃO ENCONTRADO: '+error.url)
           }else if(error.error.code==500){
             alert('ERRO INTERNO: '+error.url)
-          }else if(error.error.code==400){
+          }else if(error.error.code==401){
             alert('ERRO DE REQUISIÇÃO: '+error.url)
           }
-
+          console.log('aaaaaaaaaaaaaaa')
           return EMPTY;
         })
       )

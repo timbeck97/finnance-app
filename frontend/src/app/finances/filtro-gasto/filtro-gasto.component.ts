@@ -19,6 +19,10 @@ export class FiltroGastoComponent {
   @Output() eventFiltro = new EventEmitter<Filtro>();
 
   constructor() {
+    
+    
+  }
+  ngOnInit() {
     for (let i = 2020; i <= new Date().getFullYear(); i++) {
       this.anos.push(String(i));
     }
@@ -32,7 +36,7 @@ export class FiltroGastoComponent {
       ano:String(new Date().getFullYear()),
       mes:mesString
     }
-    
+    this.eventFiltro.emit(JSON.parse(JSON.stringify(this.filtro)));
   }
   filtrar(){
     this.filtro.pageNumber=1;

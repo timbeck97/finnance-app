@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CadatroContaService } from '../cadatro-conta/cadatro-conta.service';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
@@ -16,7 +16,7 @@ import { ETipoGasto } from '../model/ETipoGasto';
   templateUrl: './table-gasto.component.html',
   styleUrls: ['./table-gasto.component.css']
 })
-export class TableGastoComponent {
+export class TableGastoComponent implements OnDestroy {
 
   gastos: Gasto[] | null = []
 
@@ -41,18 +41,23 @@ export class TableGastoComponent {
     }
   }
   ngOnInit() {
-    let mes = new Date().getMonth() + 1;
-    let mesString = mes < 10 ? '0' + mes : String(mes);
-    this.filtro = {
-      pageNumber: 1,
-      pageSize: 10,
-      maxPages: 1,
-      ano: String(new Date().getFullYear()),
-      mes: mesString
+    // let mes = new Date().getMonth() + 1;
+    // let mesString = mes < 10 ? '0' + mes : String(mes);
+    // this.filtro = {
+    //   pageNumber: 1,
+    //   pageSize: 10,
+    //   maxPages: 1,
+    //   ano: String(new Date().getFullYear()),
+    //   mes: mesString
+    // }
+    if(this.filtro!==undefined){
+      this.findGastos()
     }
-    //this.findGastos()
    
     
+  }
+  ngOnDestroy(): void {
+    console.log('DESTROY')
   }
   ngOnChanges(param: any) {
     if (param.filtro.currentValue) {
