@@ -15,9 +15,9 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import com.finance.exceptions.InvalidTokenException;
-import com.finance.service.UserServiceImp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -40,15 +40,17 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
  *
  * @author tim
  */
-@Configuration
+
 public class CustomAuthorizationFilter extends OncePerRequestFilter{
 
     private final HandlerExceptionResolver handlerExceptionResolver;
 
-    private final String SECRET="finnanceAppTimMorgenstern";
-  private static Logger log = LoggerFactory.getLogger(CustomAuthorizationFilter.class);
-    public CustomAuthorizationFilter(HandlerExceptionResolver handlerExceptionResolver){
+    @Value("${jwt.secret}")
+    private String secret;
+    private static Logger log = LoggerFactory.getLogger(CustomAuthorizationFilter.class);
+    public CustomAuthorizationFilter(HandlerExceptionResolver handlerExceptionResolver, String secret){
         this.handlerExceptionResolver=handlerExceptionResolver;
+        this.secret=secret;
     }
 
     @Override
@@ -61,7 +63,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
             if(authorizationHeader !=null && authorizationHeader.startsWith("Bearer ")){
                 try{
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256(SECRET.getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
                     JWTVerifier verifier=JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String username=decodedJWT.getSubject();

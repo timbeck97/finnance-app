@@ -11,6 +11,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.dto.LoginDTO;
 import com.finance.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,14 +45,17 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
      private final AuthenticationManager authenticationManager;
      private final HandlerExceptionResolver handlerExceptionResolver;
 
+     private String secret;
+
 
      private String tokenExpiration;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, HandlerExceptionResolver handlerExceptionResolver, String tokenExpiration) {
+    public CustomAuthenticationFilter(AuthenticationManager authenticationManager, UserRepository userRepository, HandlerExceptionResolver handlerExceptionResolver, String tokenExpiration, String secret) {
         this.authenticationManager = authenticationManager;
         this.userRepository=userRepository;
         this.handlerExceptionResolver=handlerExceptionResolver;
         this.tokenExpiration=tokenExpiration;
+        this.secret=secret;
     }
 
 
@@ -81,7 +85,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
-        Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+        Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
         System.out.println("token expiration: "+tokenExpiration);
         //Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
         Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);

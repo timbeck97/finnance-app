@@ -39,6 +39,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Value("${token.expiration.minutes}")
     private String tokenExpiration;
+
+    @Value("${jwt.secret}")
+    private String SECRET;
     private UserRepository userRepository;
     private final HandlerExceptionResolver handlerExceptionResolver;
     private final UserDetailsService userDetailsService;
@@ -72,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        CustomAuthenticationFilter customAuthenticationFilter=new CustomAuthenticationFilter(authenticationManagerBean(), userRepository,handlerExceptionResolver,tokenExpiration);
+        CustomAuthenticationFilter customAuthenticationFilter=new CustomAuthenticationFilter(authenticationManagerBean(), userRepository,handlerExceptionResolver,tokenExpiration,SECRET);
         customAuthenticationFilter.setFilterProcessesUrl("/login");
         http.cors();
         http.csrf().disable();
@@ -86,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET,"api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
         http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(handlerExceptionResolver),UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomAuthorizationFilter(handlerExceptionResolver, SECRET),UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests().anyRequest().authenticated();
 
