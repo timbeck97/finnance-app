@@ -1,4 +1,4 @@
-<div class="main">
+<!-- <div class="main">
 
     <div class="login-container">
         <div class="header">
@@ -24,4 +24,80 @@
             </div>
         </form>
     </div>
+</div> -->
+<div class="container" style="height: 100%;">
+    <div class="row justify-content-center" style="height: 100%;">
+        <div class="col-xl-10 col-lg-12 col-md-9 my-5">
+            <div class="card o-hidden border-0 shadow-lg my-5 p-5 h-75 justify-content-center">
+                <div class="row justify-content-center">
+                    <div class="col-md-6 mt-5">
+                        <h1 class="text-center h1 titulo">Finances App</h1>
+                        <p class="text-center h6">Obtenha o controle de sua vida financeira</p>
+                    </div>
+                    <div class="col-md-6" *ngIf="loginScreen">
+                        <div class="header mb-4">
+                            <h1>Login</h1>
+                        </div>
+                        <form>
+                            <div class="form-floating mb-4">
+                                <input type="email" class="form-control" id="floatingInput1" name="username"
+                                    placeholder="name@example.com" [(ngModel)]="username">
+                                <label for="floatingInput1">Email address</label>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingInput2" name="password"
+                                    placeholder="name@example.com" [(ngModel)]="password">
+                                <label for="floatingInput2">Password</label>
+                            </div>
+
+
+                            <div class="d-grid gap-2 input divbutton">
+                                <button class="btn btn-primary " type="button" (click)="login()">Log in</button>
+                            </div>
+                            <div class="signup my-3">
+                                <p>Create account <a href="" (click)="signIn($event)">here</a></p>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-md-6" *ngIf="!loginScreen">
+                        <div class="header mb-4">
+                            <h1>Sign In</h1>
+                        </div>
+                        <form body [formGroup]="formulario">
+                           
+                                <div class="form-floating mb-4">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                        formControlName="name" [ngClass]="{'is-invalid':verificaValidTouched('name')}">
+                                    <label for="name">Name</label>
+                                </div>
+                                <div class="form-floating mb-4">
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        formControlName="email" [ngClass]="{'is-invalid':verificaValidTouched('email')}">
+                                    <label for="email">Email address</label>
+                                </div>
+                                <div class="form-floating mb-4">
+                                    <input type="text" class="form-control" id="username" name="username"
+                                        formControlName="username" [ngClass]="{'is-invalid':verificaValidTouched('username')}">
+                                    <label for="username">Login</label>
+                                </div>
+                                <div class="form-floating mb-4">
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        formControlName="password" [ngClass]="{'is-invalid':verificaValidTouched('password')}">
+                                    <label for="password">Password</label>
+                                </div>
+                                <div class="d-grid gap-2 input divbutton">
+                                    <button class="btn btn-primary " type="button" (click)="confirmCreateUser()">Confirm</button>
+                                </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
 </div>

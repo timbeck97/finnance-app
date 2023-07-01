@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NgbAlertModule, NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import ptBr from '@angular/common/locales/pt';
@@ -43,6 +43,7 @@ registerLocaleData(ptBr);
     NgbPaginationModule,
     NgbAlertModule,
     FormsModule,
+    ReactiveFormsModule,
     StudyModule,
     FinancesModule,
     routing,

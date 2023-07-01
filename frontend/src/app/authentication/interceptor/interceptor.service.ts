@@ -18,10 +18,8 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(req)
       .pipe(
         catchError((error: any) => {
-          if(error.error.code==401){
-            alert('SEM AUTORIZACAO')
-          }else{
-            alert('ERRO INTERNO')
+          if(error.error.customCode==999){
+            alert('Usuário ou senha inválidos');
           }
           return EMPTY;
         }

@@ -41,7 +41,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	public ResponseEntity<?> handleBadCretendial(Exception ex, WebRequest request) {
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
-		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Login ou senha incorreto" ,details);
+		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Login ou senha incorreto" ,details,999);
 		return ResponseEntityBuilder.build(err);
 	}
         @ExceptionHandler(InvalidTokenException.class)
