@@ -13,13 +13,14 @@ import { StudyComponent } from './study/study.component';
 import { InfoComponent } from './info/info.component';
 
 import { LoginComponent } from './login/login.component';
-import { routing } from './app.routing';
+import { Routing } from './app.routing';
 import { FinancesModule } from './finances/finances.module';
 import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { InterceptorService } from './authentication/interceptor/interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './util/alert/alert.component';
+import { UtilModule } from './util/util.module';
 
 
 
@@ -46,10 +47,11 @@ registerLocaleData(ptBr);
     ReactiveFormsModule,
     StudyModule,
     FinancesModule,
-    routing,
+    Routing,
     ModalModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
+    UtilModule
 
   ],
   providers: [

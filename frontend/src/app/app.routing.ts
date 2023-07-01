@@ -15,4 +15,4 @@ const APP_ROUTES: Routes = [
     {path:'finances', component: FinancesComponent, canActivate: [AuthGuardService]}
 ]
 
-export const routing:ModuleWithProviders<RouterModule>=RouterModule.forRoot(APP_ROUTES);
+export const Routing:ModuleWithProviders<RouterModule>=RouterModule.forRoot(APP_ROUTES);

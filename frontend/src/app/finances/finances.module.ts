@@ -14,6 +14,7 @@ import { EntradaContaComponent } from './entrada-conta/entrada-conta.component';
 import { FiltroGastoComponent } from './filtro-gasto/filtro-gasto.component';
 import { CadastroEntradaContaComponent } from './cadastro-entrada-conta/cadastro-entrada-conta.component';
 import { PaginationComponent } from '../util/pagination/pagination.component';
+import { UtilModule } from '../util/util.module';
 
 
 
@@ -24,11 +25,10 @@ import { PaginationComponent } from '../util/pagination/pagination.component';
     CadatroContaComponent,
     CardGastoComponent,
     TableGastoComponent,
-    CustomPipe,
+
     EntradaContaComponent,
     FiltroGastoComponent,
-    CadastroEntradaContaComponent,
-    PaginationComponent
+    CadastroEntradaContaComponent
   ],
   exports: [],
   imports: [
@@ -38,6 +38,7 @@ import { PaginationComponent } from '../util/pagination/pagination.component';
     NgbCollapseModule,
     CurrencyMaskModule,
     NgbTooltipModule,
+    UtilModule
     
     
   ]

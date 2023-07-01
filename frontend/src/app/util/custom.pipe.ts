@@ -12,6 +12,8 @@ export class CustomPipe implements PipeTransform {
       return this.formatCategoria(value);
     }else if(args[0]=='pagamento'){
       return this.formatPagameto(value);
+    }else if(args[0]=='nomeUsuario'){
+      return this.formatNomeIniciais(value);
     }
   }
   formatCategoria(categoria:ECategoria){
@@ -32,5 +34,15 @@ export class CustomPipe implements PipeTransform {
       case EPagamento.PIX: descricao='Pix'; break;
     }
     return descricao;
+  }
+  formatNomeIniciais(nome:string){
+    let palavras=nome.split(' ');
+    let novaPalavra='';
+    for(let i=0;i<palavras.length;i++){
+      let p=palavras[i];
+      p=p.charAt(0).toUpperCase()+p.slice(1);
+      novaPalavra=novaPalavra+" "+p;
+    }
+    return novaPalavra;
   }
 }
