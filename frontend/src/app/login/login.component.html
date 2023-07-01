@@ -28,15 +28,18 @@
 <div class="container" style="height: 100%;">
     <div class="row justify-content-center" style="height: 100%;">
         <div class="col-xl-10 col-lg-12 col-md-9 my-5">
-            <div class="card o-hidden border-0 shadow-lg my-5 p-5 h-75 justify-content-center">
+            <div class="card o-hidden border-0 shadow-lg my-5 p-5 h-75 justify-content-center" style="background-color: #734bfe;">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 mt-5">
-                        <h1 class="text-center h1 titulo">Finances App</h1>
-                        <p class="text-center h6">Obtenha o controle de sua vida financeira</p>
+                    <div class="col-md-6 d-flex justify-content-center align-itens-center flex-column">
+                        <div class="d-flex justify-content-center">
+                            <img src="../../assets/finance.png">
+                        </div>
+                        <h1 class="text-center h1 titulo text-white">Finances App</h1>
+                        <p class="text-center h6 text-white">Obtenha o controle de sua vida financeira</p>
                     </div>
                     <div class="col-md-6" *ngIf="loginScreen">
                         <div class="header mb-4">
-                            <h1>Login</h1>
+                            <h1 class="text-white">Login</h1>
                         </div>
                         <form>
                             <div class="form-floating mb-4">
@@ -53,16 +56,16 @@
 
 
                             <div class="d-grid gap-2 input divbutton">
-                                <button class="btn btn-primary " type="button" (click)="login()">Log in</button>
+                                <button class="btn btn-light" type="button" (click)="login()">Log in</button>
                             </div>
                             <div class="signup my-3">
-                                <p>Create account <a href="" (click)="signIn($event)">here</a></p>
+                                <p class="text-white">Create account <a href="" class="text-white" (click)="signIn($event)">here</a></p>
                             </div>
                         </form>
                     </div>
                     <div class="col-md-6" *ngIf="!loginScreen">
                         <div class="header mb-4">
-                            <h1>Sign In</h1>
+                            <h1 class="text-white">Sign In</h1>
                         </div>
                         <form body [formGroup]="formulario">
                            
@@ -87,7 +90,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div class="d-grid gap-2 input divbutton">
-                                    <button class="btn btn-primary " type="button" (click)="confirmCreateUser()">Confirm</button>
+                                    <button class="btn btn-light " type="button" (click)="confirmCreateUser()">Confirm</button>
                                 </div>
 
                         </form>
