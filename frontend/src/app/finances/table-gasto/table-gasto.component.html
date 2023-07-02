@@ -42,9 +42,13 @@
             <div class="row" style="margin: 0px 5px" *ngIf="!isGastoVariavel()">
                 <div class="col-md-12">
                     <div class="row">
-                        <button class="btn btn-primary" (click)="adicionarConta()">
-                            <span>Adicionar</span>
-                        </button>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary" style="flex:6"  (click)="adicionarConta()">Adicionar</button>
+                            <button type="button" title="Copiar registros do mês anterior" class="btn btn-outline-primary" (click)="copiarRegistros()">
+                                <i class="bi bi-clipboard-check"></i>
+                            </button>
+                           
+                          </div>
                     </div>
                 </div>
             </div>

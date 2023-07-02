@@ -70,6 +70,8 @@ export class InterceptorService implements HttpInterceptor {
             alert('ERRO INTERNO: '+error.url)
           }else if(error.error.code==401){
             alert('ERRO DE REQUISIÇÃO: '+error.url)
+          }else{
+            alert('Erro na comunicação com o servidor')
           }
        
           return EMPTY;

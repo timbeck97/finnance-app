@@ -92,6 +92,15 @@ export class TableGastoComponent implements OnDestroy {
   adicionarConta() {
     this.cadastroContaService.openModal(null,this.tipoGasto, this.findGastos.bind(this))
   }
+  copiarRegistros(){
+    this.http.post(URL+'/gastos/fixos/copiar', {})
+    .pipe(
+      take(1)
+    )
+    .subscribe(result=>{
+     this.findGastos()
+    })
+  }
   generateReport() {
     const modalRef=this.modalService.open(AlertComponent);
     modalRef.componentInstance.titleText='Relatório';
