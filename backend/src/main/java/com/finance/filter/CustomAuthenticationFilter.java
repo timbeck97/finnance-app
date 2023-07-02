@@ -86,8 +86,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         User user = (User)authentication.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
-        System.out.println("token expiration: "+tokenExpiration);
-        //Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
         Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
         Long token_ref_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*2*60*1000);
 
