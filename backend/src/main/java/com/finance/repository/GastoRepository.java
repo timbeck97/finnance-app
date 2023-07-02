@@ -19,9 +19,10 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
   @Query(value = "Select new com.finance.dto.GastoDTO(g) from Gasto g where " +
     " to_char(g.data,'yyyyMM')=:data " +
     "and usuario=:usuario " +
-    "and g.tipoGasto=:tipoGasto  " +
+    "and g.tipoGasto=:tipoGasto " +
+    "and (:filtro is null or lower(g.descricao) like lower(concat('%',:filtro,'%'))) " +
     "order by g.data desc, g.id asc")
-  Page<GastoDTO> findByData(@Param("data")String data, @Param("usuario") User user, @Param("tipoGasto") ETipoGasto tipoGasto, Pageable pageable);
+  Page<GastoDTO> findByData(@Param("data")String data,@Param("filtro")String filtro, @Param("usuario") User user, @Param("tipoGasto") ETipoGasto tipoGasto, Pageable pageable);
 
   @Query(value = "Select g from Gasto g where " +
     " to_char(g.data,'yyyyMM')=:data " +

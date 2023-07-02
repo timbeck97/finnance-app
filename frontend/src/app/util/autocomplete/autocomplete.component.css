@@ -1,0 +1,14 @@
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+li:hover{
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+label{
+    font-weight: 400;
+}
+.icon-info{
+    position: absolute;
+    top: 0.0em; 
+    right: 0.3em;
+    font-size: 0.8em;
+}

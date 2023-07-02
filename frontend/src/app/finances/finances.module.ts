@@ -28,7 +28,7 @@ import { UtilModule } from '../util/util.module';
 
     EntradaContaComponent,
     FiltroGastoComponent,
-    CadastroEntradaContaComponent
+    CadastroEntradaContaComponent,
   ],
   exports: [],
   imports: [

@@ -72,7 +72,11 @@ export class CadatroContaComponent{
       this.saveGasto();
 
     } else {
-      //this.verificaValidacoesForm(this.formulario);
+      for(let x in this.formulario.controls){
+        this.formulario.get(x)?.markAsTouched();
+        this.formulario.get(x)?.markAsDirty(); 
+        
+      }
     }
   }
   close(){

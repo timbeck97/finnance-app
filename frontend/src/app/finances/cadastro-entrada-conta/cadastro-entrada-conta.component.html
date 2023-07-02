@@ -34,6 +34,16 @@
           </div>
         </div>
       </div>
+      <div class="row input">
+        <div class="col-md-12">
+          <app-autocomplete
+            label='Vincular Gasto'
+            msgToolTip="Definir um tipo de gasto para abater com o valor do depósito cadastrado"
+            (event)="onAutoCompleteEvent($event)"
+            [data]='getGastoVinculado()'
+          ></app-autocomplete>
+        </div>
+      </div>
     
       <!-- <div class="row">
         <div class="col-md-12">
@@ -41,7 +51,7 @@
             {{formulario.value | json}}
           </pre>
         </div>
-      </div> -->
+      </div>    -->
     </form>
   </div>
   <div class="modal-footer">

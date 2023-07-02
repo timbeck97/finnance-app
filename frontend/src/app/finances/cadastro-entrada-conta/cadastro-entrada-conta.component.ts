@@ -25,6 +25,7 @@ export class CadastroEntradaContaComponent {
       descricao: new FormControl(null, Validators.required),
       valor: new FormControl(null, Validators.required),
       data: new FormControl(Util.getDate(new Date()), Validators.required),
+      gastoVinculado:new FormControl(null)
     })
   }
   ngOnInit(): void {
@@ -48,16 +49,23 @@ export class CadastroEntradaContaComponent {
       this.modalRef.close();
       this.onSave();
  
-      
     });
   }
   onSubmit() {
     if (this.formulario.valid) {
       this.saveDeposito();
-
     } else {
-      //this.verificaValidacoesForm(this.formulario);
+      for(let x in this.formulario.controls){
+        this.formulario.get(x)?.markAsTouched();
+        this.formulario.get(x)?.markAsDirty(); 
+        
+      }
     }
+  }
+  onAutoCompleteEvent(value:any){
+    this.formulario.patchValue({
+      gastoVinculado:value
+    })
   }
   close(){
 
@@ -65,5 +73,8 @@ export class CadastroEntradaContaComponent {
   }
   verificaValidTouched(campo: string) {
     return !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched;
+  }
+  getGastoVinculado(){
+    return this.formulario.get('gastoVinculado')?.value;
   }
 }

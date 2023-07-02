@@ -10,6 +10,8 @@ public class DepositoDTO {
   private double valor;
   private LocalDate data;
 
+  private long gastoVinculado;
+
   public DepositoDTO() {
   }
 
@@ -18,6 +20,9 @@ public class DepositoDTO {
     this.descricao = d.getDescricao();
     this.valor = d.getValor();
     this.data = d.getData();
+    if(d.getGastoVinculado()!=null){
+      this.gastoVinculado=d.getGastoVinculado().getId();
+    }
   }
 
   public long getId() {
@@ -50,5 +55,13 @@ public class DepositoDTO {
 
   public void setData(LocalDate data) {
     this.data = data;
+  }
+
+  public long getGastoVinculado() {
+    return gastoVinculado;
+  }
+
+  public void setGastoVinculado(long gastoVinculado) {
+    this.gastoVinculado = gastoVinculado;
   }
 }

@@ -23,15 +23,20 @@ public class Deposito {
   @ManyToOne
   private User usuario;
 
+  @ManyToOne(optional = true)
+  private Gasto gastoVinculado;
+
   public Deposito() {
 
   }
-  public Deposito(Long id, String descricao, double valor, LocalDate data, User usuario) {
+
+  public Deposito(Long id, String descricao, double valor, LocalDate data, User usuario, Gasto gastoVinculado) {
     this.id = id;
     this.descricao = descricao;
     this.valor = valor;
     this.data = data;
     this.usuario = usuario;
+    this.gastoVinculado = gastoVinculado;
   }
 
   public Long getId() {
@@ -72,5 +77,13 @@ public class Deposito {
 
   public void setUsuario(User usuario) {
     this.usuario = usuario;
+  }
+
+  public Gasto getGastoVinculado() {
+    return gastoVinculado;
+  }
+
+  public void setGastoVinculado(Gasto gastoVinculado) {
+    this.gastoVinculado = gastoVinculado;
   }
 }

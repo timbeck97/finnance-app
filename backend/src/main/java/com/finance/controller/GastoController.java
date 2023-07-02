@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -37,12 +38,13 @@ public class GastoController {
     @RequestParam(required = false, defaultValue = "1")int pageNumber,
     @RequestParam(required = false, defaultValue = "5")int pageSize,
     @RequestParam(required = false, defaultValue = "VARIAVEL") ETipoGasto tipoGasto,
+    @RequestParam(required = false) String filtro,
     HttpServletResponse resp){
     if(anoMes==null){
       anoMes=util.getAnoMesAtual();
     }
     Pageable page=PageRequest.of(pageNumber-1, pageSize);
-    Page<GastoDTO> gastos=gastoRepository.findByData(anoMes,util.getUsuarioLogado(),tipoGasto, page);
+    Page<GastoDTO> gastos=gastoRepository.findByData(anoMes,filtro,util.getUsuarioLogado(),tipoGasto, page);
     resp.setHeader("X-Total-Count",String.valueOf(gastos.getTotalElements()));
     return ResponseEntity.ok(gastos.getContent());
 
@@ -94,5 +96,21 @@ public class GastoController {
     gasto.setValor(dto.getValor());
     gasto.setTipoGasto(dto.getTipoGasto());
     return ResponseEntity.ok(new GastoDTO(gastoRepository.save(gasto)));
+  }
+  @GetMapping(value = "/autocomplete")
+  public ResponseEntity<List<GastoDTO>> findAllAutoComplete(
+    @RequestParam(required = false) String filtro,
+    @RequestParam(required = false) Long id,
+    HttpServletResponse resp){
+    List<GastoDTO> gastos=null;
+    if(id!=null){
+      gastos= Arrays.asList(new GastoDTO(gastoRepository.findById(id).get()));
+    }else{
+      String anoMes=util.getAnoMesAtual();
+      Pageable page=PageRequest.of(0, 5);
+      gastos=gastoRepository.findByData(anoMes,filtro,util.getUsuarioLogado(),ETipoGasto.VARIAVEL, page).getContent();
+    }
+    return ResponseEntity.ok(gastos);
+
   }
 }

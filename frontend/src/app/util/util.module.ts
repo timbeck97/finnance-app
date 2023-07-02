@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CustomPipe } from './custom.pipe';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ConfirmComponent } from './confirm/confirm.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
@@ -10,14 +12,18 @@ import { ConfirmComponent } from './confirm/confirm.component';
   declarations: [
     CustomPipe,
     PaginationComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    AutocompleteComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    NgbTooltipModule,
+    
   ],
   exports:[
     CustomPipe,
-    PaginationComponent
+    PaginationComponent,
+    AutocompleteComponent
   ]
 })
 export class UtilModule { }
