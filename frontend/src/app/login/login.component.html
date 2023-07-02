@@ -30,14 +30,14 @@
         <div class="col-xl-10 col-lg-12 col-md-9 my-5">
             <div class="card o-hidden border-0 shadow-lg my-5 p-5 h-75 justify-content-center" style="background-color: #734bfe;">
                 <div class="row justify-content-center">
-                    <div class="col-md-6 d-flex justify-content-center align-itens-center flex-column">
+                    <div class="d-flex justify-content-center align-itens-center flex-column" [ngClass]="{'col-md-6':loginScreen, 'col-md-4':!loginScreen}">
                         <div class="d-flex justify-content-center">
                             <img src="../../assets/finance.png">
                         </div>
                         <h1 class="text-center h1 titulo text-white">Finances App</h1>
                         <p class="text-center h6 text-white">Obtenha o controle de sua vida financeira</p>
                     </div>
-                    <div class="col-md-6" *ngIf="loginScreen">
+                    <div [ngClass]="{'col-md-6':loginScreen}" *ngIf="loginScreen">
                         <div class="header mb-4">
                             <h1 class="text-white">Login</h1>
                         </div>
@@ -63,21 +63,26 @@
                             </div>
                         </form>
                     </div>
-                    <div class="col-md-6" *ngIf="!loginScreen">
+                    <div [ngClass]="{'col-md-8':!loginScreen}"  *ngIf="!loginScreen">
                         <div class="header mb-4">
                             <h1 class="text-white">Sign In</h1>
                         </div>
                         <form body [formGroup]="formulario">
-                           
-                                <div class="form-floating mb-4">
-                                    <input type="text" class="form-control" id="name" name="name"
-                                        formControlName="name" [ngClass]="{'is-invalid':verificaValidTouched('name')}">
-                                    <label for="name">Name</label>
-                                </div>
-                                <div class="form-floating mb-4">
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        formControlName="email" [ngClass]="{'is-invalid':verificaValidTouched('email')}">
-                                    <label for="email">Email address</label>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-4">
+                                            <input type="text" class="form-control" id="name" name="name"
+                                                formControlName="name" [ngClass]="{'is-invalid':verificaValidTouched('name')}">
+                                            <label for="name">Name</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-4">
+                                            <input type="email" class="form-control" id="email" name="email"
+                                                formControlName="email" [ngClass]="{'is-invalid':verificaValidTouched('email')}">
+                                            <label for="email">Email address</label>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="form-floating mb-4">
                                     <input type="text" class="form-control" id="username" name="username"
@@ -90,7 +95,7 @@
                                     <label for="password">Password</label>
                                 </div>
                                 <div class="d-grid gap-2 input divbutton">
-                                    <button class="btn btn-light " type="button" (click)="confirmCreateUser()">Confirm</button>
+                                    <button class="btn btn-light " type="button" (click)="confirmCreateUser()">Cadastrar</button>
                                 </div>
 
                         </form>
