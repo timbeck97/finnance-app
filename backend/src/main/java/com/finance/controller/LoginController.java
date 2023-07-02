@@ -44,6 +44,8 @@ public class LoginController {
 
     @Value("${token.expiration.minutes}")
     private String tokenExpiration;
+    @Value("${jwt.secret}")
+    private String secret;
 
     public LoginController(UserService userService, Utils util) {
         this.userService = userService;
@@ -92,7 +94,7 @@ public class LoginController {
 
             if(refresh_token !=null){
 //                try{
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
                     JWTVerifier verifier=JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
 

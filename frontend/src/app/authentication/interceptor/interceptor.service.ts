@@ -1,17 +1,19 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EMPTY, Observable, catchError } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/util/alert/alert.component';
+import { CancelrequestService } from '../cancelrequest/cancelrequest.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
   
-  constructor(private auth: AuthenticationService, private router: Router, private modalService: NgbModal) { }
+  constructor(private auth: AuthenticationService, private router: Router, private modalService: NgbModal, private cancelReq:CancelrequestService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login');
     if (isRefreshTokenRequest) {
@@ -20,7 +22,10 @@ export class InterceptorService implements HttpInterceptor {
         catchError((error: any) => {
           if(error.error.customCode==999){
             alert('Usuário ou senha inválidos');
+          }else if(error.status==0){
+            alert('Erro no servidor')
           }
+         
           return EMPTY;
         }
       ));
@@ -43,7 +48,9 @@ export class InterceptorService implements HttpInterceptor {
     });
     return next.handle(authReq)
       .pipe(
+        takeUntil(this.cancelReq.onCancelPendingRequests()),
         catchError((error: any) => {
+          this.cancelReq.cancelPendingRequests()
           if (error.error.customCode == 666) {
 
 
@@ -64,7 +71,7 @@ export class InterceptorService implements HttpInterceptor {
           }else if(error.error.code==401){
             alert('ERRO DE REQUISIÇÃO: '+error.url)
           }
-          console.log('aaaaaaaaaaaaaaa')
+       
           return EMPTY;
         })
       )

@@ -65,4 +65,11 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.NOT_FOUND, "Dado não encontrado" ,details);
 		return ResponseEntityBuilder.build(err);
 	}
+     @ExceptionHandler(Exception.class)
+  public ResponseEntity<?> defaultException(Exception ex, WebRequest request) {
+    List<String> details = new ArrayList<String>();
+    details.add(ex.getMessage());
+    ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno do servidor" ,details);
+    return ResponseEntityBuilder.build(err);
+  }
 }
