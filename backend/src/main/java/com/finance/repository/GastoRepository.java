@@ -34,4 +34,12 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
 
   @Query(value = "SELECT g from Gasto g where g.descricao=:descricao and to_char(g.data,'yyyyMM')=to_char(now(),'yyyyMM')")
   List<Gasto> findByDescricao(String descricao);
+
+
+  @Query(value = "select " +
+    " sum(case when g.forma_pagamento='PIX' then g.valor else 0 end) as total_pix, " +
+    " sum(case when g.forma_pagamento='CARTAO' then g.valor else 0 end) as total_cartao" +
+    " from gasto g where to_char(g.data, 'YYYYMM') = :anoMes and g.tipo_gasto='VARIAVEL'" +
+    " ",nativeQuery = true)
+  List findGastosMensais(@Param("anoMes")String anoMes);
 }

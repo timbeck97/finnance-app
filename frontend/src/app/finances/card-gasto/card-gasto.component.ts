@@ -11,7 +11,7 @@ export class CardGastoComponent {
     titulo:string='';
 
     @Input()
-    saldo:number = 0;
+    saldo:string|null = '0';
 
     @Input()
     infoRight:string;

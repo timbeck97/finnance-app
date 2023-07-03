@@ -15,10 +15,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/gastos")
@@ -49,7 +48,23 @@ public class GastoController {
     return ResponseEntity.ok(gastos.getContent());
 
   }
+  @GetMapping(value = "/mensal")
+  public ResponseEntity<Map<String, Double>> findAllMensal(@RequestParam(required = false) String anoMes){
+    if(anoMes==null){
+      anoMes=util.getAnoMesAtual();
+    }
+    List result=gastoRepository.findGastosMensais(anoMes);
+    Map<String, Double> values=new HashMap<>();
+    for(Object o: result){
+      Object[] columns=(Object[])o;
+      if(columns[0]==null)break;
+      values.put("totalPix", ((BigDecimal)columns[0]).doubleValue());
+      values.put("totalCartao", ((BigDecimal)columns[1]).doubleValue());
+    }
 
+    return ResponseEntity.ok(values);
+
+  }
   @PostMapping
   public ResponseEntity<GastoDTO> save(@RequestBody GastoDTO dto){
     Gasto gasto=new Gasto();
