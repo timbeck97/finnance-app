@@ -11,6 +11,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.finance.dto.ChangePasswordDTO;
 import com.finance.dto.UserDTO;
 import com.finance.model.Role;
 import com.finance.model.User;
@@ -67,6 +68,16 @@ public class LoginController {
     public ResponseEntity<UserDTO> saveUser(@RequestBody User user){
         URI uri=URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         return ResponseEntity.created(uri).body(new UserDTO(userService.saveUser(user)));
+    }
+    @PutMapping(value = "/users")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody User user){
+      return ResponseEntity.ok(new UserDTO(userService.updateUser(user)));
+    }
+    @PostMapping(value = "/users/changePassword")
+    public ResponseEntity<UserDTO> changePassword(@RequestBody ChangePasswordDTO dto){
+      URI uri=URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/changePassword").toUriString());
+
+      return ResponseEntity.created(uri).body(new UserDTO(userService.changePassword(dto)));
     }
 
 

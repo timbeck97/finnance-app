@@ -67,7 +67,7 @@ export class InterceptorService implements HttpInterceptor {
           }else if(error.error.code==404){
             alert('RECURSO NÃO ENCONTRADO: '+error.url)
           }else if(error.error.code==500){
-            alert('ERRO INTERNO: '+error.url)
+            alert(error.error.erros[0])
           }else if(error.error.code==401){
             alert('ERRO DE REQUISIÇÃO: '+error.url)
           }else{

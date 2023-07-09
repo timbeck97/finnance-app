@@ -6,6 +6,7 @@
 package com.finance.service;
 
 
+import com.finance.dto.ChangePasswordDTO;
 import com.finance.model.Role;
 import com.finance.model.User;
 
@@ -17,8 +18,12 @@ import java.util.List;
  */
 public interface UserService {
     User saveUser(User user);
+
+    User updateUser(User user);
     Role saveRole(Role role);
     void addRoleToUser(String username, String roleName);
     List<User> getUsers();
     User getUser(String username);
+
+    User changePassword(ChangePasswordDTO dto);
 }

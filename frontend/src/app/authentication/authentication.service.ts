@@ -11,7 +11,7 @@ import { UserComplete } from './model/UserComplete';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  user: User;
+  user: UserComplete;
   constructor(private http: HttpClient, private router: Router) {
     if (localStorage.getItem('user')) {
       this.user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -31,16 +31,17 @@ export class AuthenticationService {
       .pipe(take(1))
       .subscribe(result => {
         this.setToken(result)
-        //this.router.navigate(['/finances'])
         this.loadUser(true);
       });
   }
   loadUser(redirecionar: boolean = false) {
     const url = URL;
-    this.http.get<User>(url + '/users/me')
+    this.http.get<UserComplete>(url + '/users/me')
       .pipe(take(1))
       .subscribe(result => {
         this.user = result;
+        console.log(this.user);
+        
         this.setUser(result);
         if (redirecionar) {
           this.router.navigate(['/finances'])
@@ -58,6 +59,14 @@ export class AuthenticationService {
 
       }, error => {
         console.log(error)
+      });
+  }
+  alterarSenha(dto:any){
+    const url = URL;
+    this.http.post(url + '/users/changePassword', dto)
+      .pipe(take(1))
+      .subscribe(result => {
+        alert('Senha alterada com sucesso')
       });
   }
   validadeTokenExpiration() {
@@ -89,7 +98,7 @@ export class AuthenticationService {
   getRefreshTokenExpiration() {
     return localStorage.getItem("refresh_token_expiration")
   }
-  setUser(user: User) {
+  setUser(user: UserComplete) {
     localStorage.setItem('user', JSON.stringify(user));
   }
   setToken(token: Token) {

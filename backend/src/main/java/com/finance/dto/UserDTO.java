@@ -15,9 +15,9 @@ import java.util.stream.Collectors;
  */
 public class UserDTO {
 
+  private long id;
     private String name;
 
-    private String lastName;
     private String username;
 
     private String email;
@@ -25,9 +25,10 @@ public class UserDTO {
     private String roles="";
 
     public UserDTO(User user) {
-
+        this.id=user.getId();
         this.name = user.getName();
         this.username = user.getUsername();
+        this.email=user.getEmail();
         this.roles=this.roles.join(", ", user.getRoles().stream().map(x->x.getName()).collect(Collectors.toList()));
     }
 
@@ -55,4 +56,19 @@ public class UserDTO {
         this.roles = roles;
     }
 
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 }

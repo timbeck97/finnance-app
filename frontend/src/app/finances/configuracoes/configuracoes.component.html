@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+          <app-card-gasto titulo="Saldo Conta Corrente" saldo='17.50'></app-card-gasto>
+        </div>
+    </div>
+    <div class="row box">
+        <div class="col-md-3 box-img">
+            <img src="../../../assets/user.png" class="user-img" alt=""> 
+        </div>
+        <div class="col-md-9 p-4">
+            <form body [formGroup]="formulario"  *ngIf="!alterarSenha">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-4">
+                            <input type="text" class="form-control" id="name" name="name"
+                                formControlName="name" [ngClass]="{'is-invalid':verificaValidTouched('name')}">
+                            <label for="name">Nome</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-4">
+                            <input type="email" class="form-control" id="email" name="email"
+                                formControlName="email" [ngClass]="{'is-invalid':verificaValidTouched('email')}">
+                            <label for="email">Email</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-floating mb-4">
+                    <input type="text" class="form-control" id="username" name="username"
+                        formControlName="username" [ngClass]="{'is-invalid':verificaValidTouched('username')}">
+                    <label for="username">Login</label>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-success" (click)="salvarUsuario()">Alterar Dados</button>
+                        <button class="btn btn-primary" style="margin-left: .6em;" (click)="alterarSenha=true">Alterar Senha</button>
+                    </div>
+                </div>
+               
+
+        </form>
+        <form  body [formGroup]="formularioAlterarSenha"  *ngIf="alterarSenha">
+            <div class="row" > 
+                <div class="col-md-12">
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control" id="oldPassword" name="oldPassword"
+                            formControlName="oldPassword" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('oldPassword')}">
+                        <label for="oldPassword">Senha Antiga</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control" id="newPassword" name="newPassword"
+                            formControlName="newPassword" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword')}">
+                        <label for="newPassword">Nova senha</label>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-floating mb-4">
+                        <input type="password" class="form-control" id="newPassword2" name="newPassword2"
+                            formControlName="newPassword2" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword2')}">
+                        <label for="newPassword2">Confirmar nova senha</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-primary" (click)="salvarSenha()">Confirmar</button>
+                    <button class="btn btn-warning" style="margin-left: .6em;" (click)="alterarSenha=false" >Cancelar</button>
+                </div>
+            </div>
+        </form>
+       
+        </div>
+    </div>
+</div>

@@ -17,7 +17,7 @@
       <i class="bi bi-person-circle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ></i>
       <ul class="dropdown-menu box-user" aria-labelledby="dropdownMenuButton1" >
         <li *ngIf="logado()">
-          <a class="dropdown-item user-item" (click)="logout()">
+          <a class="dropdown-item user-item"  routerLink="/configuracoes" [routerLinkActive]="['active-link']">
             <i class="bi bi-person-fill-gear"></i> Configurações
           </a>
         </li>

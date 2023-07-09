@@ -7,6 +7,7 @@ package com.finance.service;
 
 
 
+import com.finance.dto.ChangePasswordDTO;
 import com.finance.model.Role;
 import com.finance.model.User;
 import com.finance.repository.RoleRepository;
@@ -35,13 +36,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
+    private final Utils utils;
+
     private static Logger log = LoggerFactory.getLogger(UserServiceImp.class);
 
 
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder){
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, Utils utils){
         this.userRepository=userRepository;
         this.roleRepository=roleRepository;
         this.passwordEncoder=passwordEncoder;
+      this.utils = utils;
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -59,14 +63,24 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
     @Override
     public User saveUser(User user) {
-        log.info("Saving new user {} to database",user.getUsername());
+        log.info("Saving user {} to database",user.getUsername());
         Role role=roleRepository.findByName("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(role)));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 
-    @Override
+  @Override
+  public User updateUser(User user) {
+    log.info("Updating user {} to database",user.getUsername());
+    User oldUser=userRepository.findById(user.getId()).get();
+    oldUser.setEmail(user.getEmail());
+    oldUser.setName(user.getName());
+    oldUser.setUsername(user.getUsername());
+    return userRepository.save(oldUser);
+  }
+
+  @Override
     public Role saveRole(Role role) {
         log.info("Saving new role {}",role.getName());
         return roleRepository.save(role);
@@ -94,6 +108,15 @@ public class UserServiceImp implements UserService, UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
+  @Override
+  public User changePassword(ChangePasswordDTO dto) {
+    User user=utils.getUsuarioLogado();
+    if(!passwordEncoder.matches(dto.getOldPassword(),user.getPassword())){
+      throw new IllegalArgumentException("Senha antiga incorreta");
+    }
+    user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
+    return userRepository.save(user);
+  }
 
 
 }
