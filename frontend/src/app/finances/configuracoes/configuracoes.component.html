@@ -1,79 +1,127 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-          <app-card-gasto titulo="Saldo Conta Corrente" saldo='17.50'></app-card-gasto>
+            <app-card-gasto titulo="Saldo Conta Corrente" saldo='17.50'></app-card-gasto>
         </div>
     </div>
     <div class="row box">
         <div class="col-md-3 box-img">
-            <img src="../../../assets/user.png" class="user-img" alt=""> 
+            <img src="../../../assets/user.png" class="user-img" alt="">
         </div>
         <div class="col-md-9 p-4">
-            <form body [formGroup]="formulario"  *ngIf="!alterarSenha">
+            <form body [formGroup]="formulario" *ngIf="!alterarSenha">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-floating mb-4">
-                            <input type="text" class="form-control" id="name" name="name"
-                                formControlName="name" [ngClass]="{'is-invalid':verificaValidTouched('name')}">
+                            <input type="text" class="form-control" id="name" name="name" formControlName="name"
+                                [ngClass]="{'is-invalid':verificaValidTouched('name')}">
                             <label for="name">Nome</label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-floating mb-4">
-                            <input type="email" class="form-control" id="email" name="email"
-                                formControlName="email" [ngClass]="{'is-invalid':verificaValidTouched('email')}">
+                            <input type="email" class="form-control" id="email" name="email" formControlName="email"
+                                [ngClass]="{'is-invalid':verificaValidTouched('email')}">
                             <label for="email">Email</label>
                         </div>
                     </div>
                 </div>
                 <div class="form-floating mb-4">
-                    <input type="text" class="form-control" id="username" name="username"
-                        formControlName="username" [ngClass]="{'is-invalid':verificaValidTouched('username')}">
+                    <input type="text" class="form-control" id="username" name="username" formControlName="username"
+                        [ngClass]="{'is-invalid':verificaValidTouched('username')}">
                     <label for="username">Login</label>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <button class="btn btn-success" (click)="salvarUsuario()">Alterar Dados</button>
-                        <button class="btn btn-primary" style="margin-left: .6em;" (click)="alterarSenha=true">Alterar Senha</button>
+                        <button class="btn btn-primary" style="margin-left: .6em;" (click)="alterarSenha=true">Alterar
+                            Senha</button>
                     </div>
                 </div>
-               
 
-        </form>
-        <form  body [formGroup]="formularioAlterarSenha"  *ngIf="alterarSenha">
-            <div class="row" > 
-                <div class="col-md-12">
-                    <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="oldPassword" name="oldPassword"
-                            formControlName="oldPassword" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('oldPassword')}">
-                        <label for="oldPassword">Senha Antiga</label>
+
+            </form>
+            <form body [formGroup]="formularioAlterarSenha" *ngIf="alterarSenha">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="oldPassword" name="oldPassword"
+                                formControlName="oldPassword" autocomplete="of"
+                                [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('oldPassword')}">
+                            <label for="oldPassword">Senha Antiga</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="newPassword" name="newPassword"
-                            formControlName="newPassword" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword')}">
-                        <label for="newPassword">Nova senha</label>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="newPassword" name="newPassword"
+                                formControlName="newPassword" autocomplete="of"
+                                [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword')}">
+                            <label for="newPassword">Nova senha</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="newPassword2" name="newPassword2"
+                                formControlName="newPassword2" autocomplete="of"
+                                [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword2')}">
+                            <label for="newPassword2">Confirmar nova senha</label>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-floating mb-4">
-                        <input type="password" class="form-control" id="newPassword2" name="newPassword2"
-                            formControlName="newPassword2" autocomplete="of" [ngClass]="{'is-invalid':verificaValidTouchedChangePassword('newPassword2')}">
-                        <label for="newPassword2">Confirmar nova senha</label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary" (click)="salvarSenha()">Confirmar</button>
+                        <button class="btn btn-warning" style="margin-left: .6em;"
+                            (click)="alterarSenha=false">Cancelar</button>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-primary" (click)="salvarSenha()">Confirmar</button>
-                    <button class="btn btn-warning" style="margin-left: .6em;" (click)="alterarSenha=false" >Cancelar</button>
-                </div>
-            </div>
-        </form>
-       
+            </form>
+
         </div>
+    </div>
+    <div class="row box" style="padding: 1em;">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="font-size: 1.3em; font-weight: 400;">Encerramento Mensal</h1>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="tipoIdx">Mês</label>
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="mes">
+                        <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="tipoIdx">Ano</label>
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="ano">
+                        <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12">
+                <div class="form-check form-switch form-switch-md" style="display: flex; align-items: center;">
+                    <input class="form-check-input" type="checkbox" id="gastosFixos" [checked]="gastosFixos"  (change)="gastosFixos=!gastosFixos">
+                    <label class="form-check-label" style="font-size: 1.3em;" for="gastosFixos" style="margin-left: 0.3em; font-size: 1.3em; font-weight: 400;">Gastos Fixos</label>
+                  </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-check form-switch form-switch-md" style="display: flex; align-items: center;">
+                    <input class="form-check-input" type="checkbox" [checked]="cartaoCredito" id="gastosCartao" (change)="cartaoCredito=!cartaoCredito">
+                    <label class="form-check-label" style="font-size: 1.3em;" for="gastosCartao" style="margin-left: 0.3em; font-size: 1.3em; font-weight: 400;">Cartão de Crédito</label>
+                  </div>
+            </div>
+        </div>
+        
     </div>
 </div>
