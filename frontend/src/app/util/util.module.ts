@@ -5,6 +5,8 @@ import { PaginationComponent } from './pagination/pagination.component';
 import { ConfirmComponent } from './confirm/confirm.component';
 import { AutocompleteComponent } from './autocomplete/autocomplete.component';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { InputCompetenciaComponent } from './input-competencia/input-competencia.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,17 +15,20 @@ import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
     CustomPipe,
     PaginationComponent,
     ConfirmComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    InputCompetenciaComponent
   ],
   imports: [
     CommonModule,
     NgbTooltipModule,
+    FormsModule
     
   ],
   exports:[
     CustomPipe,
     PaginationComponent,
-    AutocompleteComponent
+    AutocompleteComponent,
+    InputCompetenciaComponent
   ]
 })
 export class UtilModule { }

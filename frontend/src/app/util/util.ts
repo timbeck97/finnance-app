@@ -27,4 +27,42 @@ export class Util {
 
     return `${year}-${stringMonth}-${stringDay}`
   }
+  static getCompetenciaAtual(){
+    const dataAtual = new Date();
+    const mes = dataAtual.getMonth() + 1;
+    const ano = dataAtual.getFullYear();
+  
+    return `${ano}${mes<10?"0"+mes:mes}`;
+  }
+  static getCompetencia(){
+    const meses = [
+      "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+      "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ];
+    
+    const dataAtual = new Date();
+    const competencias = [];
+  
+    for (let i = -6; i <= 6; i++) {
+      let mes = dataAtual.getMonth() + i;
+      let ano = dataAtual.getFullYear();
+      
+      if (mes < 0) {
+        mes += 12;
+        ano--;
+      } else if (mes >= 12) {
+        mes -= 12;
+        ano++;
+      }
+
+      const mesFormatado = mes < 9 ? `0${mes + 1}` : mes + 1;
+      const competencia = `${meses[mes]}/${ano}`;
+      competencias.push({
+        label: competencia,
+        value: `${ano}${mesFormatado}`
+      });
+    }
+  
+    return competencias;
+  }
 }

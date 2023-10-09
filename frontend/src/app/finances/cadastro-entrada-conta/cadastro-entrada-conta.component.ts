@@ -6,6 +6,7 @@ import { Util } from 'src/app/util/util';
 import { GastoEntrada } from '../model/GastoEntrada';
 import { Observable, take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
+import { SelectOptions } from 'src/app/util/model/SelectOptions';
 
 @Component({
   selector: 'app-cadastro-entrada-conta',
@@ -19,14 +20,16 @@ export class CadastroEntradaContaComponent {
 
   @Input()
   deposito: any;
+  competencias:SelectOptions[]=[];
 
   constructor(private modalRef: NgbActiveModal, private http: HttpClient){
     this.formulario = new FormGroup({
       descricao: new FormControl(null, Validators.required),
       valor: new FormControl(null, Validators.required),
-      data: new FormControl(Util.getDate(new Date()), Validators.required),
+      data: new FormControl(Util.getCompetenciaAtual(), Validators.required),
       gastoVinculado:new FormControl(null)
     })
+    this.competencias=Util.getCompetencia();
   }
   ngOnInit(): void {
     if(this.deposito){

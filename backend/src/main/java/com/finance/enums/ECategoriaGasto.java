@@ -5,7 +5,8 @@ public enum ECategoriaGasto {
   LASER("Laser"),
   GASOLINA("GASOLINA"),
   OUTROS("Outros"),
-  SAUDE("Saúde");
+  SAUDE("Saúde"),
+  CARRO("Carro");
 
   String descricao;
 

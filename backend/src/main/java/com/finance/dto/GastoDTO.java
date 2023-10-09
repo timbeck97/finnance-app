@@ -23,14 +23,14 @@ public class GastoDTO {
 
   private double valor;
 
-  private LocalDate data;
+  private String data;
 
   private String userName;
 
   public GastoDTO() {
   }
 
-  public GastoDTO(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, LocalDate data, String usuario) {
+  public GastoDTO(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, String data, String usuario) {
     this.id = id;
     this.descricao = descricao;
     this.categoria = categoria;
@@ -89,15 +89,6 @@ public class GastoDTO {
   public void setValor(double valor) {
     this.valor = valor;
   }
-
-  public LocalDate getData() {
-    return data;
-  }
-
-  public void setData(LocalDate data) {
-    this.data = data;
-  }
-
   public String getUserName() {
     return userName;
   }
@@ -112,5 +103,13 @@ public class GastoDTO {
 
   public void setTipoGasto(ETipoGasto tipoGasto) {
     this.tipoGasto = tipoGasto;
+  }
+
+  public String getData() {
+    return data;
+  }
+
+  public void setData(String data) {
+    this.data = data;
   }
 }

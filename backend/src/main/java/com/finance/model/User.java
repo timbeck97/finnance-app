@@ -38,7 +38,8 @@ public class User implements Serializable{
 
     //---------------------------------------------------------
 
-
+    @Column(columnDefinition = "numeric(14,2) not null default 0")
+    private double contaCorrente;
 
 
     public User() {
@@ -97,5 +98,13 @@ public class User implements Serializable{
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
+  }
+
+  public double getContaCorrente() {
+    return contaCorrente;
+  }
+
+  public void setContaCorrente(double contaCorrente) {
+    this.contaCorrente = contaCorrente;
   }
 }

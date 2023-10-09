@@ -1,0 +1,8 @@
+<div (class)="className">
+    <div class="form-group">
+      <label for="classificacaoIdx">{{label}}</label>
+      <select class="form-select" id="tipoIdx"  [ngModel]="selectedValue" (ngModelChange)="onChange($event)">
+        <option *ngFor="let option of options"  [value]="option.value">{{option.label}}</option>
+      </select>
+    </div>
+  </div>

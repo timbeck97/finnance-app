@@ -8,7 +8,7 @@ public class DepositoDTO {
   private long id;
   private String descricao;
   private double valor;
-  private LocalDate data;
+  private String data;
 
   private long gastoVinculado;
 
@@ -49,11 +49,11 @@ public class DepositoDTO {
     this.valor = valor;
   }
 
-  public LocalDate getData() {
+  public String getData() {
     return data;
   }
 
-  public void setData(LocalDate data) {
+  public void setData(String data) {
     this.data = data;
   }
 

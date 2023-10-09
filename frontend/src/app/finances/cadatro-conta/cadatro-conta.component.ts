@@ -7,6 +7,7 @@ import { Gasto } from '../model/Gasto';
 import { Observable, take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
 import { ETipoGasto } from '../model/ETipoGasto';
+import { SelectOptions } from 'src/app/util/model/SelectOptions';
 
 @Component({
   selector: 'app-cadatro-conta',
@@ -24,7 +25,20 @@ export class CadatroContaComponent{
 
   @Input()
   tipoGasto:ETipoGasto=ETipoGasto.VARIAVEL;
+
+  categorias: SelectOptions[]=[
+    {value:'LASER',label:'Laser'},
+    {value:'GASOLINA',label:'Gasolina'},
+    {value:'SAUDE',label:'Saúde'},
+    {value:'CARRO',label:'Carro'},
+    {value:'OUTROS',label:'Outros'},
   
+  ]
+  formasPagamento: SelectOptions[]=[
+    {value:'CARTAO', label:'Cartão'},
+    {value:'PIX', label:'PIX'}
+  ]
+  competencias:SelectOptions[]=[];
 
   constructor(private modalRef: NgbActiveModal, private http: HttpClient) {
     this.formulario = new FormGroup({
@@ -33,9 +47,9 @@ export class CadatroContaComponent{
       formaPagamento: new FormControl('CARTAO', Validators.required),
       categoria: new FormControl('LASER', Validators.required),
       tipoGasto: new FormControl(this.tipoGasto, Validators.required),
-      data: new FormControl(Util.getDate(new Date()), Validators.required),
+      data: new FormControl(Util.getCompetenciaAtual(), Validators.required),
     })
-
+    this.competencias=Util.getCompetencia();
 
   }
   ngOnInit(): void {
@@ -59,8 +73,7 @@ export class CadatroContaComponent{
     .subscribe(result=>{
       this.formulario.reset();
       this.modalRef.close();
-      console.log('on save: ',this.onSave);
-      
+    
       this.onSave();
  
       

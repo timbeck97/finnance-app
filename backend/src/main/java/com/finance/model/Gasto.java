@@ -36,17 +36,20 @@ public class Gasto {
     @Column(columnDefinition = "numeric(14,2) not null")
     private double valor;
 
-    @Column(columnDefinition = "date default current_date")
-    private LocalDate data;
+    @Column(columnDefinition = "varchar(6)")
+    private String data;
 
     @ManyToOne
     private User usuario;
+
+    @Column(columnDefinition = "boolean default false")
+    private boolean encerrado;
 
   public Gasto() {
 
   }
 
-  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, LocalDate data, User usuario, ETipoGasto tipoGasto) {
+  public Gasto(Long id, String descricao, ECategoriaGasto categoria, EFormaPagamento formaPagamento, double valor, String data, User usuario, ETipoGasto tipoGasto) {
     this.id = id;
     this.descricao = descricao;
     this.categoria = categoria;
@@ -105,19 +108,27 @@ public class Gasto {
     this.usuario = usuario;
   }
 
-  public LocalDate getData() {
-    return data;
-  }
-
-  public void setData(LocalDate data) {
-    this.data = data;
-  }
-
   public ETipoGasto getTipoGasto() {
     return tipoGasto;
   }
 
   public void setTipoGasto(ETipoGasto tipoGasto) {
     this.tipoGasto = tipoGasto;
+  }
+
+  public boolean isEncerrado() {
+    return encerrado;
+  }
+
+  public void setEncerrado(boolean encerrado) {
+    this.encerrado = encerrado;
+  }
+
+  public String getData() {
+    return data;
+  }
+
+  public void setData(String data) {
+    this.data = data;
   }
 }

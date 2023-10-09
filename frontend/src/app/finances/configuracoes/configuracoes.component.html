@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container main">
     <div class="row">
         <div class="col-md-6">
-            <app-card-gasto titulo="Saldo Conta Corrente" saldo='17.50'></app-card-gasto>
+            <app-card-gasto titulo="Saldo Conta Corrente" [saldo]='saldoContaCorrente | currency:"BRL":"symbol"'></app-card-gasto>
         </div>
     </div>
     <div class="row box">
@@ -87,11 +87,16 @@
                 <h1 style="font-size: 1.3em; font-weight: 400;">Encerramento Mensal</h1>
             </div>
         </div>
+        <div class="row" style="margin-top: 0.2em;">
+            <div class="col-md-12">
+                <p>Utilize essa funcionalidade para encerrar os gastos e atualizar o saldo da conta corrente. </p>
+            </div>
+        </div>
         <div class="row" style="margin-top: 1em;">
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="tipoIdx">Mês</label>
-                    <select class="form-select" id="tipoIdx" [(ngModel)]="mes">
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="mes" (change)="handleAnoMes()">
                         <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
 
                     </select>
@@ -100,7 +105,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label for="tipoIdx">Ano</label>
-                    <select class="form-select" id="tipoIdx" [(ngModel)]="ano">
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="ano" (change)="handleAnoMes()">
                         <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
                     </select>
                 </div>
@@ -108,18 +113,15 @@
         </div>
         <div class="row" style="margin-top: 1em;">
             <div class="col-md-12">
-                <div class="form-check form-switch form-switch-md" style="display: flex; align-items: center;">
-                    <input class="form-check-input" type="checkbox" id="gastosFixos" [checked]="gastosFixos"  (change)="gastosFixos=!gastosFixos">
-                    <label class="form-check-label" style="font-size: 1.3em;" for="gastosFixos" style="margin-left: 0.3em; font-size: 1.3em; font-weight: 400;">Gastos Fixos</label>
-                  </div>
+                    <button [ngClass]="gastosFixos!=='NAO_ENCERRADO'?'btn btn-secondary':'btn btn-success'" [disabled]="gastosFixos!=='NAO_ENCERRADO'" (click)="handleChecked('FIXO')">{{getLabel('FIXO')}}</button>
+                    <span style="font-weight: 400; font-size: 1.1em;">&nbsp;Gastos Fixos (Pix)</span>
+                
             </div>
         </div>
-        <div class="row">
+        <div class="row" style="margin-top: 1em;">
             <div class="col-md-12">
-                <div class="form-check form-switch form-switch-md" style="display: flex; align-items: center;">
-                    <input class="form-check-input" type="checkbox" [checked]="cartaoCredito" id="gastosCartao" (change)="cartaoCredito=!cartaoCredito">
-                    <label class="form-check-label" style="font-size: 1.3em;" for="gastosCartao" style="margin-left: 0.3em; font-size: 1.3em; font-weight: 400;">Cartão de Crédito</label>
-                  </div>
+            <button [ngClass]="gastosVariaveis!=='NAO_ENCERRADO'?'btn btn-secondary':'btn btn-success'" [disabled]="gastosVariaveis!=='NAO_ENCERRADO'" (click)="handleChecked('VARIAVEL')">{{getLabel('VARIAVEL')}}</button>
+            <span style="font-weight: 400; font-size: 1.1em;">&nbsp;Cartão de Crédito</span>
             </div>
         </div>
         

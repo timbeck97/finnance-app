@@ -17,8 +17,8 @@ public class Deposito {
   @Column(columnDefinition = "numeric(14,2) not null")
   private double valor;
 
-  @Column(columnDefinition = "date default current_date")
-  private LocalDate data;
+  @Column(columnDefinition = "varchar(6)")
+  private String data;
 
   @ManyToOne
   private User usuario;
@@ -30,7 +30,7 @@ public class Deposito {
 
   }
 
-  public Deposito(Long id, String descricao, double valor, LocalDate data, User usuario, Gasto gastoVinculado) {
+  public Deposito(Long id, String descricao, double valor, String data, User usuario, Gasto gastoVinculado) {
     this.id = id;
     this.descricao = descricao;
     this.valor = valor;
@@ -63,11 +63,11 @@ public class Deposito {
     this.valor = valor;
   }
 
-  public LocalDate getData() {
+  public String getData() {
     return data;
   }
 
-  public void setData(LocalDate data) {
+  public void setData(String data) {
     this.data = data;
   }
 

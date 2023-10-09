@@ -25,38 +25,13 @@
       </div>
     </div>
     <div class="row input">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="idxData">Data</label>
-          <input type="date" class="form-control" id="idxData" 
-            [ngClass]="{'is-invalid':verificaValidTouched('data')}" formControlName="data">
-          <span class="spanRequired" *ngIf="verificaValidTouched('data')">Required Field</span>
-        </div>
-      </div>
+      <input-competencia formControlName="data" label="Data" className="col-md-12" [options]="competencias" ></input-competencia>
     </div>
     <div class="row input"  *ngIf="isGastoVariavel()">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="tipoIdx">Forma de pagamento</label>
-          <select class="form-select" id="tipoIdx" formControlName="formaPagamento" required>
-            <option [value]="'CARTAO'">Cartão</option>
-            <option [value]="'PIX'">PIX</option>
-          </select>
-        </div>
-      </div>
+      <input-competencia formControlName="formaPagamento" label="Forma de pagamento" className="col-md-12" [options]="formasPagamento" ></input-competencia>
     </div>
     <div class="row input"  *ngIf="isGastoVariavel()">
-      <div class="col-md-12">
-        <div class="form-group">
-          <label for="classificacaoIdx">Categoria</label>
-          <select class="form-select" id="tipoIdx" formControlName="categoria" required>
-            <option [value]="'LASER'">Laser</option>
-            <option [value]="'GASOLINA'">Gasolina</option>
-            <option [value]="'SAUDE'">Saúde</option>
-            <option [value]="'OUTROS'">Outros</option>
-          </select>
-        </div>
-      </div>
+      <input-competencia formControlName="categoria" label="Categoria" className="col-md-12" [options]="categorias" ></input-competencia>
     </div>
     <!-- <div class="row">
       <div class="col-md-12">

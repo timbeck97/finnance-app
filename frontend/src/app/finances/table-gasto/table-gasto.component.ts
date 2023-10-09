@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { CadatroContaService } from '../cadatro-conta/cadatro-conta.service';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Gasto } from '../model/Gasto';
@@ -31,6 +31,9 @@ export class TableGastoComponent implements OnDestroy {
   loading:boolean=true;
 
   url: string = URL;
+
+  @Output()
+  callback: EventEmitter<void> = new EventEmitter<void>();
 
   constructor(private cadastroContaService: CadatroContaService, private http: HttpClient, private modalService: NgbModal) {
     if(this.tipoGasto===ETipoGasto.FIXO){
@@ -70,9 +73,7 @@ export class TableGastoComponent implements OnDestroy {
       .subscribe((result) => {
         this.filtro.maxPages = Math.ceil(Number(result.headers.get('X-Total-Count')) / this.filtro.pageSize);
         this.gastos = result.body
-        if(this.loading){
-          this.loading=false;
-        }
+        this.callback && this.callback.emit()
       })
   }
   onRowClick(row: any) {

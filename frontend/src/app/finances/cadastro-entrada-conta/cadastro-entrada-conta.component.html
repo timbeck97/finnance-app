@@ -25,14 +25,15 @@
         </div>
       </div>
       <div class="row input">
-        <div class="col-md-12">
+        <!-- <div class="col-md-12">
           <div class="form-group">
             <label for="idxData">Data</label>
             <input type="date" class="form-control" id="idxData" 
               [ngClass]="{'is-invalid':verificaValidTouched('data')}" formControlName="data">
             <span class="spanRequired" *ngIf="verificaValidTouched('data')">Required Field</span>
           </div>
-        </div>
+        </div> -->
+        <input-competencia formControlName="data" label="Data" className="col-md-12" [options]="competencias" ></input-competencia>
       </div>
       <div class="row input">
         <div class="col-md-12">

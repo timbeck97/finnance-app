@@ -53,7 +53,8 @@ public class GastoController {
     if(anoMes==null){
       anoMes=util.getAnoMesAtual();
     }
-    List result=gastoRepository.findGastosMensais(anoMes);
+    User usuarioLogado = util.getUsuarioLogado();
+    List result=gastoRepository.findGastosMensais(anoMes, usuarioLogado.getId());
     Map<String, Double> values=new HashMap<>();
     for(Object o: result){
       Object[] columns=(Object[])o;
@@ -89,7 +90,7 @@ public class GastoController {
 
       Gasto gasto=new Gasto();
       gasto.setCategoria(dto.getCategoria());
-      gasto.setData(LocalDate.now());
+      gasto.setData(util.getAnoMesAtual());
       gasto.setDescricao(dto.getDescricao());
       gasto.setUsuario(util.getUsuarioLogado());
       gasto.setFormaPagamento(dto.getFormaPagamento());

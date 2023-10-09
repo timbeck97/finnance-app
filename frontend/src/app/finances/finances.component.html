@@ -18,7 +18,7 @@
   </div>
   <div class="row box-container" style="margin-top: 20px;" *ngIf="showGastosMensais">
     <div class="col-md-12">
-      <app-table-gasto [filtro]="filtro"></app-table-gasto>
+      <app-table-gasto (callback)="carregarGastosMensais()" [filtro]="filtro"></app-table-gasto>
     </div>
   </div>
   <div class="row" style="margin-top: 1em;" *ngIf="!showGastosMensais">
