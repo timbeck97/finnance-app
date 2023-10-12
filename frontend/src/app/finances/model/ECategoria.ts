@@ -2,5 +2,6 @@ export enum ECategoria{
     LASER='LASER',
     GASOLINA='GASOLINA',
     OUTROS='OUTROS',
-    SAUDE='SAUDE'
+    SAUDE='SAUDE',
+    CARRO='CARRO',
 }

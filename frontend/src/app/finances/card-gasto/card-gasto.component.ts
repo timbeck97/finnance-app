@@ -5,7 +5,7 @@ import { Component, Input } from '@angular/core';
   templateUrl: './card-gasto.component.html',
   styleUrls: ['./card-gasto.component.css']
 })
-export class CardGastoComponent {
+export class CardGastoComponent{
 
     @Input()
     titulo:string='';
@@ -14,7 +14,7 @@ export class CardGastoComponent {
     saldo:string|null = '0';
 
     @Input()
-    infoRight:string;
+    infoRight:string | undefined='';
 
   
     constructor() {

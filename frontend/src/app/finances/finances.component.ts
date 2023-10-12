@@ -1,4 +1,4 @@
-import { Component, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormatterDirective } from '../util/formatter.directive';
@@ -16,7 +16,7 @@ import { ETipoGasto } from './model/ETipoGasto';
   templateUrl: './finances.component.html',
   styleUrls: ['./finances.component.css']
 })
-export class FinancesComponent{
+export class FinancesComponent implements AfterViewInit{
 
   formulario:FormGroup;
   conta:{};
@@ -29,12 +29,15 @@ export class FinancesComponent{
 
   showGastosMensais:boolean=true;
 
-  constructor(private service:CadatroContaService, private http: HttpClient) {
+  constructor(private service:CadatroContaService, private http: HttpClient,private cdRef: ChangeDetectorRef) {
     this.formulario = new FormGroup({
       descricao: new FormControl(null,Validators.required),
       valor: new FormControl(null,Validators.required),
       formaPagamento: new FormControl('CARTAO',Validators.required),
     })
+  }
+  ngAfterViewInit(): void {
+      this.cdRef.detectChanges();
   }
   ngOnInit(){
     
@@ -67,5 +70,11 @@ export class FinancesComponent{
       return '';
     }
   }
-
+  getAnoMes(){
+    if(this.filtro){
+      return this.filtro?.ano+'/'+this.filtro?.mes;
+    }else{
+      return '';
+    }
+  }
 }

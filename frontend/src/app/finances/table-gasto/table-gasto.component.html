@@ -4,7 +4,7 @@
     </div>
     <div>
 
-        <div>
+        <div style="padding: 0px 15px;margin-bottom: 1em;">
             <div class="row" style="margin: 10px 0px 5px 0px;" *ngIf="isGastoVariavel()">
                 <div class="col-md-12 d-flex flex-row-reverse">
                     <button class="btn btn-secondary ms-1" (click)="generateReport()">
@@ -18,7 +18,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col" class="col-md-6">Descrição</th>
+                        <th scope="col" class="col-md-6">Descrição <span>teste</span></th>
                         <th scope="col" class="col-md-2" *ngIf="isGastoVariavel()">Categoria</th>
                         <th scope="col" class="col-md-2" *ngIf="isGastoVariavel()">Pagamento</th>
                         <th scope="col" class="col-md-2">Valor</th>

@@ -22,7 +22,8 @@ export class CustomPipe implements PipeTransform {
       case ECategoria.LASER: descricao='Laser'; break;
       case ECategoria.OUTROS: descricao='Outros';break;
       case ECategoria.GASOLINA: descricao='Gasolina';break;
-      case ECategoria.SAUDE: descricao='Saúde';
+      case ECategoria.SAUDE: descricao='Saúde';break;
+      case ECategoria.CARRO: descricao='Carro';break;
 
     }
     return descricao;
