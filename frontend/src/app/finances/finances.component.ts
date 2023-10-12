@@ -56,6 +56,7 @@ export class FinancesComponent{
   }
   filtrar(filtro:Filtro){
     this.filtro=filtro;
+    
     this.carregarGastosMensais();
     
   }

@@ -43,16 +43,22 @@ export class TableGastoComponent implements OnDestroy {
     }
   }
   ngOnInit() {
-    if(this.filtro!==undefined){
-      this.findGastos()
-    }
+    //n precisa chamar aqui pois ele ja faz a chamada no componente de paginação
+    // if(this.filtro!==undefined){
+    //   this.findGastos()
+    // }
    
   }
   ngOnDestroy(): void {
   
   }
   ngOnChanges(param: any) {
-    if (param.filtro.currentValue) {
+    let anterior=param.filtro.previousValue;
+    let atual=param.filtro.currentValue;
+    if (anterior!==undefined && (anterior.ano!==atual.ano || anterior.mes!==atual.mes)) {
+      //mudou filtro de ano ou mes
+      console.log('on change table component');
+      
       this.findGastos()
     }
   }
@@ -73,7 +79,7 @@ export class TableGastoComponent implements OnDestroy {
       .subscribe((result) => {
         this.filtro.maxPages = Math.ceil(Number(result.headers.get('X-Total-Count')) / this.filtro.pageSize);
         this.gastos = result.body
-        this.callback && this.callback.emit()
+        //this.callback && this.callback.emit()
       })
   }
   onRowClick(row: any) {
@@ -111,6 +117,8 @@ export class TableGastoComponent implements OnDestroy {
   }
   handleFiltro(filtro: Filtro) {
     this.filtro = filtro;
+    console.log('handle filtro table component');
+    
     this.findGastos();
   }
   isGastoVariavel(){

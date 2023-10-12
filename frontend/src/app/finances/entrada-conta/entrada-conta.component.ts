@@ -37,7 +37,9 @@ export class EntradaContaComponent {
     this.findDepositos()
   }
   ngOnChanges(param: any) {
-    if (param.filtro.currentValue) {
+    let anterior=param.filtro.previousValue;
+    let atual=param.filtro.currentValue;
+    if (anterior!==undefined && (anterior.ano!==atual.ano || anterior.mes!==atual.mes)) {
       this.findDepositos()
     }
   }

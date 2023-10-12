@@ -37,6 +37,7 @@ export class FiltroGastoComponent {
       mes:mesString
     }
     this.eventFiltro.emit(JSON.parse(JSON.stringify(this.filtro)));
+    
   }
   filtrar(){
     this.filtro.pageNumber=1;
