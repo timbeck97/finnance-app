@@ -17,8 +17,6 @@ com/finance/filter/CustomAuthenticationFilter.class
 com/finance/model/Deposito.class
 com/finance/controller/EncerramentoMensalController.class
 com/finance/repository/UserRepository.class
-com/finance/dto/EncerramentoMensalDTO.class
-com/finance/repository/EncerramentoMensalRepository.class
 com/finance/dto/UserLoginDTO.class
 com/finance/dto/UserDTO.class
 com/finance/enums/EFormaPagamento.class
@@ -35,4 +33,3 @@ com/finance/enums/ECategoriaGasto.class
 com/finance/filter/CustomAuthorizationFilter.class
 com/finance/dto/GastoDTO.class
 com/finance/exceptions/DataNotFoundException.class
-com/finance/model/EncerramentoMensal.class

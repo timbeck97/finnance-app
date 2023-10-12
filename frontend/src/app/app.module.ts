@@ -9,13 +9,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
-import { StudyComponent } from './study/study.component';
 import { InfoComponent } from './info/info.component';
 
 import { LoginComponent } from './login/login.component';
 import { Routing } from './app.routing';
 import { FinancesModule } from './finances/finances.module';
-import { StudyModule } from './study/study.module';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { InterceptorService } from './authentication/interceptor/interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -45,7 +43,6 @@ registerLocaleData(ptBr);
     NgbAlertModule,
     FormsModule,
     ReactiveFormsModule,
-    StudyModule,
     FinancesModule,
     Routing,
     ModalModule.forRoot(),
