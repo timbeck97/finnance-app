@@ -8,9 +8,10 @@ import { ConfiguracoesComponent } from "./finances/configuracoes/configuracoes.c
 
 
 const APP_ROUTES: Routes = [
-    {path: '', redirectTo: '/study', pathMatch: 'full'},
+    {path: '', redirectTo: '/finances', pathMatch: 'full'},
     {path:'info', component: InfoComponent},
     {path:'login', component: LoginComponent},
+    {path:'login/:novo', component: LoginComponent},
     {path:'finances', component: FinancesComponent, canActivate: [AuthGuardService]},
     {path:'configuracoes', component: ConfiguracoesComponent, canActivate: [AuthGuardService]},
 ]

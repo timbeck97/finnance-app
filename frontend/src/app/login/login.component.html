@@ -32,7 +32,7 @@
                                 <button class="btn btn-light" type="button" (click)="login()">Log in</button>
                             </div>
                             <div class="signup my-3">
-                                <p class="text-white">Create account <a href="" class="text-white" (click)="signIn($event)">here</a></p>
+                                <p class="text-white">Criar nova conta <a href="" class="text-white" (click)="signIn($event)">aqui</a></p>
                             </div>
                         </form>
                     </div>
@@ -67,9 +67,12 @@
                                         formControlName="password" [ngClass]="{'is-invalid':verificaValidTouched('password')}">
                                     <label for="password">Password</label>
                                 </div>
-                                <div class="d-grid gap-2 input divbutton">
+                                <div class="d-grid gap-2 ">
                                     <button class="btn btn-light " type="button" (click)="confirmCreateUser()">Cadastrar</button>
                                 </div>
+                                <div class="d-grid gap-2 voltar">
+                                    <button class="btn btn-secondary " type="button" (click)="voltar()">Voltar</button>
+                                </div>  
 
                         </form>
                     </div>
