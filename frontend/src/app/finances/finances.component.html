@@ -1,21 +1,59 @@
 <div class="container main">
   <div class="row">
     <div class="col-md-6">
-      <app-card-gasto titulo="Gastos com cartão" [saldo]='gastosCartao | currency:"BRL":"symbol"' [infoRight]="getAnoMes()"></app-card-gasto>
+      <app-card-gasto titulo="Gastos com cartão" [saldo]='gastosCartao | currency:"BRL":"symbol"'
+        [infoRight]="getAnoMes()"></app-card-gasto>
     </div>
     <div class="col-md-6">
-      <app-card-gasto titulo="Gastos com PIX" [saldo]='gastosPix | currency:"BRL":"symbol"' [infoRight]="getAnoMes()" ></app-card-gasto>
+      <app-card-gasto titulo="Gastos com PIX" [saldo]='gastosPix | currency:"BRL":"symbol"'
+        [infoRight]="getAnoMes()"></app-card-gasto>
     </div>
   </div>
-  <div class="row" style="margin-top: 1em;">
+  <!-- <div class="row" style="margin-top: 1em;">
     <app-filtro-gasto (eventFiltro)="filtrar($event)"></app-filtro-gasto>
-  </div>
-  <div class="row" style="margin-top: 1em;">
-    <div class="btn-group" role="group" aria-label="Basic outlined example">
-      <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais}" (click)="showGastosMensais=true">Gastos Mensais</button>
-      <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':!showGastosMensais}" (click)="showGastosMensais=false">Gastos Fixos e Depósitos</button>
+  </div> -->
+
+  <div class="card" style="margin-top: 0.7em;box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="tipoIdx">Mês</label>
+            <select class="form-select" id="tipoIdx" [ngModel]="filtro.mes" (ngModelChange)="onChange($event,'MES')">
+              <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
+
+            </select>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label for="tipoIdx">Ano</label>
+            <select class="form-select" id="tipoIdx" [ngModel]="filtro.ano" (ngModelChange)="onChange($event, 'ANO')">
+              <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="btn-group grupoBtn" role="group" aria-label="Basic outlined example">
+            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais}"
+              (click)="showGastosMensais=true">Gastos Mensais</button>
+            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':!showGastosMensais}"
+              (click)="showGastosMensais=false">Gastos Fixos e Depósitos</button>
+          </div>
+        </div>
+      </div>
     </div>
+
+
   </div>
+  <!-- <div class="row" style="margin-top: 1em;">
+    <div class="btn-group" role="group" aria-label="Basic outlined example">
+      <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais}"
+        (click)="showGastosMensais=true">Gastos Mensais</button>
+      <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':!showGastosMensais}"
+        (click)="showGastosMensais=false">Gastos Fixos e Depósitos</button>
+    </div>
+  </div> -->
   <div class="row box-container" style="margin-top: 20px;" *ngIf="showGastosMensais">
     <div class="col-md-12">
       <app-table-gasto (callback)="carregarGastosMensais()" [filtro]="filtro"></app-table-gasto>

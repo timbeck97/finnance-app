@@ -29,7 +29,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<?> handleConstraintViolationException(Exception ex, WebRequest request) {
-
+    ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
 
@@ -39,6 +39,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<?> handleBadCretendial(Exception ex, WebRequest request) {
+    ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Login ou senha incorreto" ,details,999);
@@ -46,6 +47,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
         @ExceptionHandler(InvalidTokenException.class)
 	public ResponseEntity<?> InvalidTokenException(Exception ex, WebRequest request) {
+          ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Inválido" ,details);
@@ -53,6 +55,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
         @ExceptionHandler(TokenExpiredException.class)
 	public ResponseEntity<?> TokenExpiredException(Exception ex, WebRequest request) {
+    ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Expirado" ,details, 666);
@@ -60,6 +63,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
         @ExceptionHandler(DataNotFoundException.class)
 	public ResponseEntity<?> dataNotFound(Exception ex, WebRequest request) {
+    ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
 		details.add(ex.getMessage());
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.NOT_FOUND, "Dado não encontrado" ,details);
@@ -67,6 +71,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	}
      @ExceptionHandler(Exception.class)
   public ResponseEntity<?> defaultException(Exception ex, WebRequest request) {
+     ex.printStackTrace();
     List<String> details = new ArrayList<String>();
     details.add(ex.getMessage());
     ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.INTERNAL_SERVER_ERROR, "Erro interno do servidor" ,details);

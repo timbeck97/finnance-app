@@ -1,35 +1,37 @@
 package com.finance.controller;
 
 import com.finance.dto.DepositoDTO;
-import com.finance.dto.GastoDTO;
-import com.finance.exceptions.DataNotFoundException;
 import com.finance.model.Deposito;
-import com.finance.model.Gasto;
+import com.finance.model.User;
 import com.finance.repository.DepositoRepository;
 import com.finance.repository.GastoRepository;
+import com.finance.repository.UserRepository;
+import com.finance.service.SaldoService;
 import com.finance.service.Utils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/depositos")
 public class DepositoController {
 
-  private DepositoRepository depositoRepository;
+  private final DepositoRepository depositoRepository;
 
-  private GastoRepository gastoRepository;
+  private final GastoRepository gastoRepository;
+
+  private final UserRepository userRepository;
   private final Utils util;
 
-  public DepositoController(DepositoRepository depositoRepository, GastoRepository gastoRepository, Utils util) {
+  private final SaldoService saldoService;
+
+  public DepositoController(DepositoRepository depositoRepository, GastoRepository gastoRepository, Utils util, UserRepository userRepository, SaldoService saldoService) {
     this.depositoRepository = depositoRepository;
     this.gastoRepository = gastoRepository;
     this.util = util;
+    this.userRepository=userRepository;
+    this.saldoService = saldoService;
   }
 
   @GetMapping
@@ -49,21 +51,24 @@ public class DepositoController {
     deposito.setUsuario(util.getUsuarioLogado());
     deposito.setValor(dto.getValor());
     deposito.setGastoVinculado(gastoRepository.findById(dto.getGastoVinculado()).orElse(null));
+    deposito=depositoRepository.save(deposito);
+    saldoService.atualizarSaldo(deposito);
 
-
-    return ResponseEntity.ok(new DepositoDTO(depositoRepository.save(deposito)));
+    return ResponseEntity.ok(new DepositoDTO(deposito));
 
   }
   @PutMapping(value = "/{id}")
   public ResponseEntity<DepositoDTO> save(@RequestBody DepositoDTO dto, @PathVariable long id){
     System.out.println("id");
     Deposito deposito=depositoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Recurso não encontrado"));
+    double valorAnterior=deposito.getValor();
     deposito.setData(dto.getData());
     deposito.setDescricao(dto.getDescricao());
     deposito.setValor(dto.getValor());
     deposito.setGastoVinculado(gastoRepository.findById(dto.getGastoVinculado()).orElse(null));
+    deposito=depositoRepository.save(deposito);
+    saldoService.atualizarSaldo(deposito);
 
-
-    return ResponseEntity.ok(new DepositoDTO(depositoRepository.save(deposito)));
+    return ResponseEntity.ok(new DepositoDTO(deposito));
   }
 }

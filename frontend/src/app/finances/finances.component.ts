@@ -11,6 +11,7 @@ import { take } from 'rxjs';
 import { Gasto } from './model/Gasto';
 import { Filtro } from './model/Filtro';
 import { ETipoGasto } from './model/ETipoGasto';
+import { Util } from '../util/util';
 @Component({
   selector: 'app-finances',
   templateUrl: './finances.component.html',
@@ -29,18 +30,33 @@ export class FinancesComponent implements AfterViewInit{
 
   showGastosMensais:boolean=true;
 
+  meses: any = Util.getMeses();
+  anos: any = []
+
   constructor(private service:CadatroContaService, private http: HttpClient,private cdRef: ChangeDetectorRef) {
     this.formulario = new FormGroup({
       descricao: new FormControl(null,Validators.required),
       valor: new FormControl(null,Validators.required),
       formaPagamento: new FormControl('CARTAO',Validators.required),
     })
+    for (let i = 2020; i <= new Date().getFullYear(); i++) {
+      this.anos.push(String(i));
+    }
+    let mes = new Date().getMonth() + 1;
+    let mesString = mes < 10 ? '0' + mes : String(mes);
+    this.filtro={
+      pageNumber:1,
+      pageSize:10,
+      maxPages:1,
+      ano:String(new Date().getFullYear()),
+      mes:mesString
+    }
   }
   ngAfterViewInit(): void {
       this.cdRef.detectChanges();
   }
   ngOnInit(){
-    
+    this.carregarGastosMensais();
   }
   carregarGastosMensais(){
     let anoMes=this.filtro.ano+this.filtro.mes;
@@ -59,7 +75,7 @@ export class FinancesComponent implements AfterViewInit{
   }
   filtrar(filtro:Filtro){
     this.filtro=filtro;
-    
+  
     this.carregarGastosMensais();
     
   }
@@ -76,5 +92,22 @@ export class FinancesComponent implements AfterViewInit{
     }else{
       return '';
     }
+  }
+  onChange(value:any, tipo:string){
+    switch(tipo){
+      case 'ANO':
+        this.filtro={
+          ...this.filtro,
+          ano:value
+        };
+        break;
+      case 'MES':
+        this.filtro={
+          ...this.filtro,
+          mes:value
+        };
+        break;
+    }
+    this.carregarGastosMensais();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, Output, ViewChild } from '@angular/core';
 import { CadatroContaService } from '../cadatro-conta/cadatro-conta.service';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Gasto } from '../model/Gasto';
@@ -15,7 +15,7 @@ import { ConfirmComponent } from 'src/app/util/confirm/confirm.component';
   templateUrl: './table-gasto.component.html',
   styleUrls: ['./table-gasto.component.css']
 })
-export class TableGastoComponent implements OnDestroy {
+export class TableGastoComponent implements OnDestroy, OnChanges {
 
   gastos: Gasto[] | null = []
 
@@ -47,6 +47,9 @@ export class TableGastoComponent implements OnDestroy {
     // if(this.filtro!==undefined){
     //   this.findGastos()
     // }
+    if(this.tipoGasto===ETipoGasto.FIXO){
+      this.findGastos();
+    }
    
   }
   ngOnDestroy(): void {
@@ -55,10 +58,10 @@ export class TableGastoComponent implements OnDestroy {
   ngOnChanges(param: any) {
     let anterior=param.filtro.previousValue;
     let atual=param.filtro.currentValue;
+    console.log(anterior);
+    console.log(atual);
+    
     if (anterior!==undefined && (anterior.ano!==atual.ano || anterior.mes!==atual.mes)) {
-      //mudou filtro de ano ou mes
-      console.log('on change table component');
-      
       this.findGastos()
     }
   }

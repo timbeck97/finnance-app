@@ -1,22 +1,21 @@
 package com.finance.controller;
 
 import com.finance.dto.GastoDTO;
+import com.finance.enums.EFormaPagamento;
 import com.finance.enums.ETipoGasto;
 import com.finance.model.Gasto;
 import com.finance.model.User;
 import com.finance.repository.GastoRepository;
+import com.finance.service.SaldoService;
 import com.finance.service.Utils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.*;
 
 @RestController
@@ -26,9 +25,12 @@ public class GastoController {
   private final Utils util;
   private final GastoRepository gastoRepository;
 
-  public GastoController(GastoRepository gastoRepository, Utils util) {
+  private final SaldoService saldoService;
+
+  public GastoController(GastoRepository gastoRepository, Utils util, SaldoService saldoService) {
     this.gastoRepository = gastoRepository;
     this.util = util;
+    this.saldoService = saldoService;
   }
 
   @GetMapping
@@ -73,10 +75,17 @@ public class GastoController {
     gasto.setData(dto.getData());
     gasto.setDescricao(dto.getDescricao());
     gasto.setUsuario(util.getUsuarioLogado());
+    if(dto.getFormaPagamento().equals(EFormaPagamento.PIX)){
+      gasto.setEncerrado(true);
+    }
     gasto.setFormaPagamento(dto.getFormaPagamento());
     gasto.setValor(dto.getValor());
     gasto.setTipoGasto(dto.getTipoGasto());
-    return ResponseEntity.status(201).body(new GastoDTO(gastoRepository.save(gasto)));
+    gasto=gastoRepository.save(gasto);
+    if(gasto.getFormaPagamento().equals(EFormaPagamento.PIX)){
+      saldoService.atualizarSaldo(gasto);
+    }
+    return ResponseEntity.status(201).body(new GastoDTO(gasto));
 
   }
   @PostMapping(value = "/fixos/copiar")
@@ -110,8 +119,23 @@ public class GastoController {
     gasto.setUsuario(util.getUsuarioLogado());
     gasto.setFormaPagamento(dto.getFormaPagamento());
     gasto.setValor(dto.getValor());
+    if(dto.getFormaPagamento().equals(EFormaPagamento.PIX)){
+      gasto.setEncerrado(true);
+    }
     gasto.setTipoGasto(dto.getTipoGasto());
-    return ResponseEntity.ok(new GastoDTO(gastoRepository.save(gasto)));
+    gasto=gastoRepository.save(gasto);
+    if(gasto.getFormaPagamento().equals(EFormaPagamento.PIX)){ //gasto anterior
+      if(dto.getFormaPagamento().equals(EFormaPagamento.CARTAO)){ //gasto novo atualizado
+        saldoService.reverterGasto(gasto);
+      }else{
+        saldoService.atualizarSaldo(gasto);
+      }
+    }else{
+      if(dto.getFormaPagamento().equals(EFormaPagamento.PIX)){
+        saldoService.atualizarSaldo(gasto);
+      }
+    }
+    return ResponseEntity.ok(new GastoDTO(gasto));
   }
   @GetMapping(value = "/autocomplete")
   public ResponseEntity<List<GastoDTO>> findAllAutoComplete(
