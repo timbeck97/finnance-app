@@ -5,6 +5,7 @@ import com.finance.enums.EFormaPagamento;
 import com.finance.enums.ETipoGasto;
 import com.finance.model.Gasto;
 import com.finance.model.User;
+import com.finance.service.Utils;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -111,5 +112,9 @@ public class GastoDTO {
 
   public void setData(String data) {
     this.data = data;
+  }
+
+  public String getDescricaoAutoComplete() {
+    return Utils.formatDoubleToBRCurrency(valor)+" - "+descricao;
   }
 }

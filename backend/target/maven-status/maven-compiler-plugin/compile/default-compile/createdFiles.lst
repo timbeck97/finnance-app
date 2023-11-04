@@ -1,7 +1,10 @@
 com/finance/repository/RoleRepository.class
+com/finance/enums/ESituacaoEncerramento.class
 com/finance/service/UserServiceImp.class
+com/finance/dto/EncerramentoDTO.class
 com/finance/security/WebConfiguration.class
 com/finance/exceptions/InvalidTokenException.class
+com/finance/model/MovimentacaoSaldo.class
 com/finance/controller/LoginController.class
 com/finance/dto/LoginDTO.class
 com/finance/enums/ETipoGasto.class
@@ -10,7 +13,9 @@ com/finance/controller/DepositoController.class
 com/finance/exceptions/ApiError.class
 com/finance/repository/GastoRepository.class
 com/finance/model/Gasto.class
+com/finance/enums/ETipoMovimentacao.class
 com/finance/service/UserService.class
+com/finance/repository/MovimentacaoSaldoRepository.class
 com/finance/controller/RoleToUserForm.class
 com/finance/exceptions/GlobalExceptionHandler.class
 com/finance/filter/CustomAuthenticationFilter.class
@@ -27,6 +32,7 @@ com/finance/security/SecurityConfig.class
 com/finance/repository/DepositoRepository.class
 com/finance/dto/ChangePasswordDTO.class
 com/finance/model/Role.class
+com/finance/service/SaldoService.class
 com/finance/service/Utils.class
 com/finance/FinanceApplication.class
 com/finance/enums/ECategoriaGasto.class

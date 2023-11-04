@@ -137,8 +137,9 @@ public class GastoController {
     }
     return ResponseEntity.ok(new GastoDTO(gasto));
   }
-  @GetMapping(value = "/autocomplete")
+  @GetMapping(value = "/autocomplete/{competencia}")
   public ResponseEntity<List<GastoDTO>> findAllAutoComplete(
+    @PathVariable String competencia,
     @RequestParam(required = false) String filtro,
     @RequestParam(required = false) Long id,
     HttpServletResponse resp){
@@ -146,9 +147,8 @@ public class GastoController {
     if(id!=null){
       gastos= Arrays.asList(new GastoDTO(gastoRepository.findById(id).get()));
     }else{
-      String anoMes=util.getAnoMesAtual();
       Pageable page=PageRequest.of(0, 5);
-      gastos=gastoRepository.findByData(anoMes,filtro,util.getUsuarioLogado(),ETipoGasto.VARIAVEL, page).getContent();
+      gastos=gastoRepository.findByData(competencia,filtro,util.getUsuarioLogado(),ETipoGasto.VARIAVEL, page).getContent();
     }
     return ResponseEntity.ok(gastos);
 

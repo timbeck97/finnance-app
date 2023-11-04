@@ -65,6 +65,9 @@ export class CadastroEntradaContaComponent {
       }
     }
   }
+  getFormDataValue(){
+    return this.formulario.get('data')?.value;
+  }
   onAutoCompleteEvent(value:any){
     this.formulario.patchValue({
       gastoVinculado:value

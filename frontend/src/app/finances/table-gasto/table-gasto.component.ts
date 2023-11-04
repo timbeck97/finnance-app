@@ -82,7 +82,7 @@ export class TableGastoComponent implements OnDestroy, OnChanges {
       .subscribe((result) => {
         this.filtro.maxPages = Math.ceil(Number(result.headers.get('X-Total-Count')) / this.filtro.pageSize);
         this.gastos = result.body
-        //this.callback && this.callback.emit()
+        this.callback && this.callback.emit()
       })
   }
   onRowClick(row: any) {

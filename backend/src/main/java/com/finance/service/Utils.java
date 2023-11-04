@@ -36,4 +36,7 @@ public class Utils {
     String userName=(String)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     return userRepository.findByUsername(userName);
   }
+  public static String formatDoubleToBRCurrency(double valor){
+    return String.format("R$ %.2f",valor);
+  }
 }

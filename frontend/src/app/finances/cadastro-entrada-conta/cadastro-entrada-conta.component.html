@@ -42,17 +42,18 @@
             msgToolTip="Definir um tipo de gasto para abater com o valor do depósito cadastrado"
             (event)="onAutoCompleteEvent($event)"
             [data]='getGastoVinculado()'
+            [filtro]="getFormDataValue()"
           ></app-autocomplete>
         </div>
       </div>
     
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-md-12">
           <pre>
             {{formulario.value | json}}
           </pre>
         </div>
-      </div>    -->
+      </div>   
     </form>
   </div>
   <div class="modal-footer">

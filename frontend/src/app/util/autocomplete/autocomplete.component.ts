@@ -27,7 +27,7 @@ export class AutocompleteComponent {
   label:string='Autocomplete'
 
   @Input()
-  key:string='descricao';
+  key:string='descricaoAutoComplete';
 
   @Input()
   value:string='id'
@@ -38,10 +38,13 @@ export class AutocompleteComponent {
   @Input()
   msgToolTip:string|null=null;
   
-  dataSelected:any={descricao:''}
+  dataSelected:any={descricaoAutoComplete:''}
 
   @Input()
   data:any;
+
+  @Input()
+  filtro:string='';
 
   @Output()
   event:EventEmitter<any>=new EventEmitter<any>();
@@ -82,7 +85,6 @@ export class AutocompleteComponent {
     return this.dataSelected[this.key]?this.dataSelected[this.key]:''
   }
   onClick(data:any){
-    console.log(data)
     this.dataSelected=data;
     this.showItens=false;
     this.event.emit(data[this.value])
@@ -103,7 +105,7 @@ export class AutocompleteComponent {
         filtro:value
       }
     })
-    this.http.get<Gasto[]>(URL + this.urlParam, { params: params, observe: 'response' })
+    this.http.get<Gasto[]>(URL + this.urlParam+'/'+this.filtro, { params: params, observe: 'response' })
       .pipe(
         take(1)
       )

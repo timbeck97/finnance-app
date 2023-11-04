@@ -9,8 +9,8 @@ import java.time.LocalDate;
 public class MovimentacaoSaldo {
 
   @Id
-  @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="encerramento_sequence")
-  @SequenceGenerator(name="encerramento_sequence", sequenceName="encerramento_mensal_seq")
+  @GeneratedValue(strategy= GenerationType.SEQUENCE, generator="movimento_saldo_sequence")
+  @SequenceGenerator(name="movimento_saldo_sequence", sequenceName="movimento_saldo_seq")
   private long id;
   @ManyToOne
   private User user;
