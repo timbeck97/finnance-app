@@ -15,6 +15,7 @@ import { CadastroEntradaContaComponent } from './cadastro-entrada-conta/cadastro
 import { PaginationComponent } from '../util/pagination/pagination.component';
 import { UtilModule } from '../util/util.module';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
+import { RegistroMensalComponent } from './registro-mensal/registro-mensal.component';
 
 
 
@@ -30,6 +31,7 @@ import { ConfiguracoesComponent } from './configuracoes/configuracoes.component'
     FiltroGastoComponent,
     CadastroEntradaContaComponent,
     ConfiguracoesComponent,
+    RegistroMensalComponent,
   ],
   exports: [],
   imports: [

@@ -55,7 +55,12 @@ public class EncerramentoMensalController {
   @PutMapping("/{competencia}/{tipo}")
   public Map encerrarMes(@PathVariable String competencia,@PathVariable String tipo){
     ETipoGasto tipoGasto=ETipoGasto.valueOf(tipo);
-    List<Gasto> gastos=gastoRepository.findAllEncerrados(utils.getUsuarioLogado(), competencia, tipoGasto);
+    List<Gasto> gastos=null;
+    if(tipoGasto==ETipoGasto.FIXO){
+      gastos=gastoRepository.findAllGastoFixo(utils.getUsuarioLogado(), competencia);
+    }else{
+      gastos=gastoRepository.findAllGastoVariavelCartao(utils.getUsuarioLogado(), competencia);
+    }
     for(Gasto gasto: gastos){
       gasto.setEncerrado(true);
       gastoRepository.save(gasto);

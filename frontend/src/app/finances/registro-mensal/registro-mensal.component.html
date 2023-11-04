@@ -1,0 +1,73 @@
+<div class="container main">
+    <div class="row box" style="padding: 1em;">
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="tipoIdx">Mês</label>
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="mes" (change)="handleAnoMes()">
+                        <option *ngFor="let mes of meses" [value]="mes.valor">{{mes.nome}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="tipoIdx">Ano</label>
+                    <select class="form-select" id="tipoIdx" [(ngModel)]="ano" (change)="handleAnoMes()">
+                        <option *ngFor="let ano of anos" [value]="ano">{{ano}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row box" style="padding: 1em;">
+
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="font-size: 1.3em; font-weight: 400;">Encerramento Mensal</h1>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 0.2em;">
+            <div class="col-md-12">
+                <p>Utilize essa funcionalidade para encerrar os gastos e atualizar o saldo da conta corrente. </p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12">
+                <button [ngClass]="gastosFixos!=='NAO_ENCERRADO'?'btn btn-secondary':'btn btn-success'"
+                    [disabled]="gastosFixos!=='NAO_ENCERRADO'"
+                    (click)="handleChecked('FIXO')">{{getLabel('FIXO')}}</button>
+                <span style="font-weight: 400; font-size: 1.1em;">&nbsp;Gastos Fixos do Mês</span>
+
+            </div>
+        </div>
+        <div class="row" style="margin-top: 1em;">
+            <div class="col-md-12">
+                <button [ngClass]="gastosVariaveis!=='NAO_ENCERRADO'?'btn btn-secondary':'btn btn-success'"
+                    [disabled]="gastosVariaveis!=='NAO_ENCERRADO'"
+                    (click)="handleChecked('VARIAVEL')">{{getLabel('VARIAVEL')}}</button>
+                <span style="font-weight: 400; font-size: 1.1em;">&nbsp;Cartão de Crédito</span>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 2em;">
+            <div class="col-md-12">
+                <h1 style="font-size: 1.3em; font-weight: 400;">Salário do mês</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3" style="margin-top: 0.5em;">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="idxValor" currencyMask [(ngModel)]="salario"
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                    <div class="input-group-append">
+                         <button class="btn btn-primary" (click)="salvarSalario()">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

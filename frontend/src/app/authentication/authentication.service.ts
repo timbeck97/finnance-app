@@ -116,6 +116,9 @@ export class AuthenticationService {
     return this.getToken() !== null && this.getToken() !== undefined;
   }
   getUser() {
+    if(!this.user){
+      this.loadUser();
+    }
     return this.user;
   }
 

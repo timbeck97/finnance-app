@@ -21,13 +21,8 @@ export class ConfiguracoesComponent {
   user: UserComplete;
   alterarSenha: boolean = false;
 
-  meses: any = Util.getMeses();
-  anos: any = []
-  ano:string;
-  mes:string;
 
-  gastosFixos:string='';
-  gastosVariaveis:string='';
+
 
   saldoContaCorrente: number = 0;
 
@@ -45,19 +40,12 @@ export class ConfiguracoesComponent {
       newPassword2: new FormControl('', Validators.required),
 
     })
-    for (let i = 2020; i <= new Date().getFullYear(); i++) {
-      this.anos.push(String(i));
-    }
-    let mes = new Date().getMonth()+1;
-    let mesString = mes < 10 ? '0' + mes : String(mes);
-    this.ano=String(new Date().getFullYear()),
-    this.mes=mesString
+   
 
   }
   ngOnInit() {
     this.user = this.auth.getUser();
     this.formulario.patchValue(this.user);
-    this.carregaEncerramentosMensais();
     this.carregarSaldoContacorrente();
 
   }
@@ -98,40 +86,8 @@ export class ConfiguracoesComponent {
   verificaValidTouchedChangePassword(campo: string) {
     return !this.formularioAlterarSenha.get(campo)?.valid && this.formularioAlterarSenha.get(campo)?.touched;
   }
-  carregaEncerramentosMensais(){
-    const url = URL;
-    const anoMes=this.ano+this.mes;
-    this.http.get<Encerramentos>(url + '/encerramentoMensal/'+anoMes)
-      .pipe(take(1))
-      .subscribe(result => {
-        this.gastosFixos=result.fixo;
-        this.gastosVariaveis=result.variavel;
 
-      });
-  }
-  handleChecked(tipo:string){
-    console.log(tipo);
-    const url = URL;
-    const anoMes=this.ano+this.mes;
-    this.http.put<Encerramentos>(url + '/encerramentoMensal/'+anoMes+'/'+tipo,{})
-      .pipe(take(1))
-      .subscribe(result => {
-        this.gastosFixos=result.fixo;
-        this.gastosVariaveis=result.variavel;
-        this.carregarSaldoContacorrente();
-      });
-    
-  }
-  handleAnoMes(){
-    this.carregaEncerramentosMensais();
-    
-  }
-  getLabel(tipo:string){
-    let dado=tipo==='FIXO'?this.gastosFixos:this.gastosVariaveis;
-    switch(dado){
-      case 'ENCERRADO': return 'Encerrado';
-      case 'NAO_ENCERRADO': return 'Encerrar';
-      default: return 'Sem Gastos Cadastrados';
-    }
-  }
+
+ 
+
 }

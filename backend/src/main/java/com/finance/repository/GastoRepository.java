@@ -48,6 +48,8 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
   @Query(value = "select g from Gasto g where g.usuario=:usuario  and g.data=:competencia and g.tipoGasto=:tipoGasto")
   List<Gasto> findAllEncerramento(@Param("usuario") User user, @Param("competencia")String competencia, @Param("tipoGasto")ETipoGasto tipoGasto);
 
-  @Query(value = "select g from Gasto g where g.usuario=:usuario and encerrado is true  and g.data =:competencia and g.tipoGasto=:tipoGasto")
-  List<Gasto> findAllEncerrados(@Param("usuario") User user, @Param("competencia")String competencia, @Param("tipoGasto")ETipoGasto tipoGasto);
+  @Query(value = "select g from Gasto g where g.usuario=:usuario and encerrado is false  and g.data =:competencia and g.tipoGasto='FIXO'")
+  List<Gasto> findAllGastoFixo(@Param("usuario") User user, @Param("competencia")String competencia);
+  @Query(value = "select g from Gasto g where g.usuario=:usuario and encerrado is false  and g.data =:competencia and g.tipoGasto='VARIAVEL' and g.formaPagamento='CARTAO' ")
+  List<Gasto> findAllGastoVariavelCartao(@Param("usuario") User user, @Param("competencia")String competencia);
 }

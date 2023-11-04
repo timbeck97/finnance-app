@@ -23,6 +23,11 @@
           </a>
         </li>
         <li *ngIf="logado()">
+          <a class="dropdown-item user-item"  routerLink="/registroMensal" [routerLinkActive]="['active-link']">
+            <i class="bi bi-calendar"></i> Registro Mensal
+          </a>
+        </li>
+        <li *ngIf="logado()">
           <a class="dropdown-item user-item" (click)="logout()">
             <i class="bi bi-box-arrow-right"></i> Sair
           </a>
