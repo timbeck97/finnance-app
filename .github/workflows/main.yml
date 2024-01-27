@@ -13,7 +13,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
-
             - name: Setup Java
               uses: actions/setup-java@v3
               with:
@@ -28,14 +27,15 @@ jobs:
             - name: Push image docker
               run: docker push timbeck1997/finnanceapp
               
-    deploy:
-        needs: build
-        runs-on: self-hosted
-        steps:
-            - name: Pull image from docker hub
-              run: docker pull timbeck1997/finnanceapp:latest
-            - name: Remove docker container
-              run: docker rm -f finnanceapp
-            - name: Run docker container
-              run: docker run -d -p 8080:8080  --name deploy_ghacfinnanceapptions timbeck1997/finnanceapp
+    # deploy:
+    #     needs: build
+    #     runs-on: self-hosted
+    #     steps:
+    #         - name: Pull image from docker hub
+    #           run: docker pull timbeck1997/finnanceapp:latest
+    #         - name: Remove docker container
+    #           run: docker rm -f finnanceapp
+    #         - name: Run docker container
+    #           run: docker run -d -p 8080:8080  --name deploy_ghacfinnanceapptions timbeck1997/finnanceapp
+
    
