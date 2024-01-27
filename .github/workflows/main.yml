@@ -21,12 +21,17 @@ jobs:
             - name: Build project
               working-directory: backend/
               run: mvn clean install -DskipTests
-            - name: Login Docker Hub
-              run: docker login -u ${{secrets.DOCKER_USERNAME}} -p ${{secrets.DOCKER_PASSWORD}}
-            - name: Build docker image
-              run: docker build -t timbeck1997/finnanceapp ./backend/
-            - name: Push image docker
-              run: docker push timbeck1997/finnanceapp
+            - name: Docker Login
+              uses: docker/login-action@v2.1.0
+              with:
+                username: ${{ secrets.DOCKER_LOGIN }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
+            - name: Build and push Docker image
+              uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+              with:
+                context: backend/
+                push: true
+                tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number}}
               
     # deploy:
     #     needs: build
