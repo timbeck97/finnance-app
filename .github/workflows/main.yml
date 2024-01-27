@@ -42,6 +42,6 @@ jobs:
             - name: Remove docker container
               run: docker rm -f finnanceapp
             - name: Run docker container
-              run: docker run -d -p 8080:8080  --name finnanceapp timbeck1997/finnanceapp
+              run: docker run -d -p 8080:8080 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --network=appnetwork -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL=${{secrets.DATABASE_URL}} -e SPRING_PROFILES_ACTIVE=prod   --name finnanceapp timbeck1997/finnanceapp
 
    
