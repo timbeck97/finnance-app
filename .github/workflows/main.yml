@@ -11,14 +11,14 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout code
+            - name: Checkout backend
               uses: actions/checkout@v3
             - name: Setup Java
               uses: actions/setup-java@v3
               with:
                 distribution: 'temurin'
                 java-version: '8'
-            - name: Build project
+            - name: Build backend
               working-directory: backend/
               run: mvn clean install -DskipTests
             - name: Docker Login
@@ -26,12 +26,30 @@ jobs:
               with:
                 username: ${{ secrets.DOCKER_LOGIN }}
                 password: ${{ secrets.DOCKER_PASSWORD }}
-            - name: Build and push Docker image
+            - name: Build and push Docker image backend
               uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
               with:
                 context: backend/
                 push: true
                 tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number}}
+            - name: Setup Node.js
+              working-directory: frontend/
+              uses: actions/setup-node@v2
+              with:
+                node-version: '16'
+
+            - name: Install dependencies
+              run: npm install
+
+            - name: Run tests
+              run: npm run test:headless
+
+            - name: Build
+              run: npm run build:prod
+              with:
+                context: frontend/
+                push: true
+                tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number}}
               
     deploy:
         needs: build
