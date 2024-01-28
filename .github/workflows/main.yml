@@ -33,13 +33,14 @@ jobs:
                 push: true
                 tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number}}
             - name: Setup Node.js
-              working-directory: frontend/
               uses: actions/setup-node@v1
               with:
                 node-version: 10.16
             - name: Install dependencies
+              working-directory: frontend/
               run: npm install
             - name: Build
+              working-directory: frontend/
               run: npm run build
               with:
                 context: frontend/
