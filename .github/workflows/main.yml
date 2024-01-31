@@ -53,11 +53,19 @@ jobs:
         needs: build
         runs-on: self-hosted
         steps:
-            - name: Pull image from docker hub
+            - name: BACKEND - PULL IMAGE FROM DOCKERHUB
               run: docker pull timbeck1997/finnanceapp:latest
-            - name: Remove docker container
+            - name: BACKEND - Remove docker container
               run: docker rm -f finnanceapp
-            - name: Run docker container
+            - name: BACKEND - Run docker container
               run: docker run -d -p 8080:8080 -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --network=appnetwork -e DATABASE_PASSWORD='${{secrets.DATABASE_PASSWORD}}' -e DATABASE_URL=${{secrets.DATABASE_URL}} -e SPRING_PROFILES_ACTIVE=prod   --name finnanceapp timbeck1997/finnanceapp
+            
+            - name: FRONT - PULL IMAGE FROM DOCKERHUB
+              run: docker pull timbeck1997/finnance-app-front:latest
+            - name: FRONT - Remove docker container
+              run: docker rm -f finnance-app-front
+            - name: FRONT - Run docker container
+              run: docker run -d -p 80:80  --name finnance-app-front timbeck1997/finnance-app-front
 
    
+
