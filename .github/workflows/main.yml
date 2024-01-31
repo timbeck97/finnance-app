@@ -65,7 +65,7 @@ jobs:
             - name: FRONT - Remove docker container
               run: docker container rm -f finnance-app-front
             - name: FRONT - Run docker container
-              run: docker run -d -p 80:80  --name finnance-app-front timbeck1997/finnance-app-front
+              run: docker run -d -p 80:80  --network=appnetwork -e NETWORKNAME=appnetwork  --name finnance-app-front timbeck1997/finnance-app-front
 
    
 
