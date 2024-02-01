@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    url: '/services'
+    url: '/services/api'
 };
