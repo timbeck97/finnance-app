@@ -1,20 +1,22 @@
-<nav class="navcontainer">
-  <div class="logo">
+<nav [class]="{'navcontainer':true, 'mobile':isMobile, 'desktop':!isMobile, 'hideMenuBar':showMenuMobile}">
+  <div class="logo" *ngIf="!isMobile">
     <img src="../../assets/finance.png"  height="50">
     <!-- <img src="../assets/logo-nav@2x.png" title="Home" alt="Home" class="ng-star-inserted" width="150" height="40"> -->
     <span>Finnances App</span>
   </div>
-  <div class="menus">
+  <div *ngIf="!isMobile" class="menus">
     <a routerLink="/finances" [routerLinkActive]="['active-link']" >Lançamentos</a>
     <a routerLink="/info" [routerLinkActive]="['active-link']">INFO</a>
   </div>
-
+  <div *ngIf="isMobile" class="logoMobileMenu" (click)="showMenuMobile=!showMenuMobile">
+    <i class="bi bi-justify"></i>
+  </div>
   <div style="display: flex;align-items: center; align-self: stretch; justify-content: flex-end;">
     <span class="logado name-login">
       {{(logado()?getUserName():'') | CustomPipe:'nomeUsuario'}}
     </span>
     <div class="dropdown no-arrow" >
-    
+
       <i class="bi bi-person-circle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" ></i>
       <ul class="dropdown-menu box-user" aria-labelledby="dropdownMenuButton1" >
         <li *ngIf="logado()">
@@ -42,8 +44,14 @@
       </ul>
     </div>
   </div>
-
 </nav>
+<div [class]="{'showmenu':showMenuMobile, 'none':!showMenuMobile}">
+  <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+    <a routerLink="/finances" (click)="showMenuMobile=!showMenuMobile" style="align-self: auto; margin: 3px 0px" [routerLinkActive]="['active-link']" >Lançamentos</a>
+    <a routerLink="/info" (click)="showMenuMobile=!showMenuMobile" style="align-self: auto; margin: 3px 0px;" [routerLinkActive]="['active-link']">INFO</a>
+  </div>
+  <i class="bi bi-x-lg" style="position: absolute; top: 3px; right: 3px; cursor: pointer;" (click)="showMenuMobile=!showMenuMobile"></i>
+</div>
 <div style="height: 100%; overflow-y: auto; background-color: aliceblue;">
   <router-outlet></router-outlet>
 </div>

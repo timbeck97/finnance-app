@@ -23,7 +23,7 @@ export class InterceptorService implements HttpInterceptor {
           if(error.error.customCode==999){
             alert('Usuário ou senha inválidos');
           }else if(error.status==0){
-            alert('Erro no servidor')
+            alert('Erro na comunicação com o servidor, possivelmente o servidor está fora do ar');
           }
          
           return EMPTY;

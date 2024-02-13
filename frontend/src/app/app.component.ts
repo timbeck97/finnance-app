@@ -14,8 +14,11 @@ export class AppComponent {
   ngIfShowHide:boolean=false;
   menuSelecionado:string='STUDY';
 
-  constructor(private auth:AuthenticationService, private router:Router){
+  isMobile:boolean=false;
+  showMenuMobile:boolean=false;
 
+  constructor(private auth:AuthenticationService, private router:Router){
+    this.isMobile=window.innerWidth<768;
   }
   onMudaValor(evento:any){
     this.valorContadorPai=evento.novoValor;

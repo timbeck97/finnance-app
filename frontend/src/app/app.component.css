@@ -2,11 +2,24 @@
 .navcontainer{
     background-color: #734bfe;
     display: grid;
-	grid-template-columns: repeat(3, 1fr);
     color: #FFF;
     overflow: -moz-hidden-unscrollable;
     align-items: start;
-    
+    transition: all 4s;
+}
+.mobile{
+    grid-template-columns: repeat(2, 1fr);
+}
+.desktop{
+    grid-template-columns: repeat(3, 1fr);
+}
+.logoMobileMenu{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.hideMenuBar{
+    height: 0px;
 }
 .logo{
     padding: 5px 10px;
@@ -56,7 +69,36 @@ i{
     font-size: 1.6em;
 }
 
-
+.showmenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(83, 83, 83);
+    background: linear-gradient(90deg, rgba(83, 83, 83, 1) 0%, rgb(54, 54, 54) 95%);
+    z-index: 9999;
+    transition: .3s;
+    opacity: 100;
+    pointer-events: all;
+}
+.none{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgb(83, 83, 83);
+    background: linear-gradient(90deg, rgba(83, 83, 83, 1) 0%, rgb(54, 54, 54) 95%);
+    z-index: 9999;
+    transition: .3s;
+    opacity: 100;
+    pointer-events: all;
+    opacity: 0;
+    pointer-events: none;
+}
 @media (max-width:600px){
 	.name-login{
         display: none;
