@@ -7,7 +7,6 @@ package com.finance.security;
 
 
 
-import com.finance.filter.CustomAuthenticationFilter;
 import com.finance.filter.CustomAuthorizationFilter;
 import com.finance.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,8 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        CustomAuthenticationFilter customAuthenticationFilter=new CustomAuthenticationFilter(authenticationManagerBean(), userRepository,handlerExceptionResolver,tokenExpiration,SECRET);
-        customAuthenticationFilter.setFilterProcessesUrl("/login");
+
         http.cors();
         http.csrf().disable();
 
@@ -88,7 +86,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/token/refreshtoken").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
-        http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(handlerExceptionResolver, SECRET),UsernamePasswordAuthenticationFilter.class);
 
         http.authorizeRequests().anyRequest().authenticated();
