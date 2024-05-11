@@ -6,8 +6,10 @@ RUN npm install
 RUN npm run build --prod
 # Stage 2
 FROM nginx:alpine
-COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY --from=node /app/dist/finnances-app /usr/share/nginx/html
+RUN mkdir -p /opt/finnances-app
+COPY ./nginx.conf /etc/nginx/default.conf
+#COPY ./nginxconfig.conf /etc/nginx/conf.d/default.conf
+COPY --from=node /app/dist/finnances-app /opt/finnances-app
 
 # Expose port 80
 EXPOSE 80
