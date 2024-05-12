@@ -5,7 +5,7 @@
  insert into user_table(id, name, password, username) values (777, 'Usuario Dois', '$2a$10$BxJ9e/Hm7GFhTv5MgIuHNeyenrljcKB38T2RhmZCEfHyThIImNdXK', 'teste123');
 
  insert into user_table_roles(user_id, roles_id) values (666,3), (666,4);
- insert into user_table_roles(user_id, roles_id) values (777,3), (777,4);
+ insert into user_table_roles(user_id, roles_id) values  (777,4);
 
  insert into gasto(id, descricao, categoria, forma_pagamento,tipo_gasto, valor, usuario_id, data) values
  (nextval('gasto_seq'),'Cerveja BDL','LASER','CARTAO','VARIAVEL', 30.50, 666, to_char(now(),'yyyyMM') ),

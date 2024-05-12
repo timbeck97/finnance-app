@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, ViewChild } from '@angular/core';
 import { EMPTY, Observable, catchError } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../authentication.service';
@@ -7,13 +7,14 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/util/alert/alert.component';
 import { CancelrequestService } from '../cancelrequest/cancelrequest.service';
+import { ModalService } from 'src/app/util/modal.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterceptorService implements HttpInterceptor {
-  
-  constructor(private auth: AuthenticationService, private router: Router, private modalService: NgbModal, private cancelReq:CancelrequestService) { }
+
+  constructor(private auth: AuthenticationService, private router: Router, private modalService: ModalService, private cancelReq:CancelrequestService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login');
     if (isRefreshTokenRequest) {
@@ -21,9 +22,9 @@ export class InterceptorService implements HttpInterceptor {
       .pipe(
         catchError((error: any) => {
           if(error.error.customCode==999){
-            alert('Usuário ou senha inválidos');
+            this.modalService.openModal('Erro no login', 'Login ou senha incorretos')
           }else if(error.status==0){
-            alert('Erro na comunicação com o servidor, possivelmente o servidor está fora do ar');
+            this.modalService.openModal('Erro na comunicação com o servidor', 'Ocorreu um erro na comunicação com o servidor, por favor tente novamente mais tarde',)
           }
          
           return EMPTY;
@@ -52,30 +53,26 @@ export class InterceptorService implements HttpInterceptor {
         catchError((error: any) => {
           this.cancelReq.cancelPendingRequests()
           if (error.error.customCode == 666) {
-
-
-            this.modalService.dismissAll();
-            const modalRef=this.modalService.open(AlertComponent);
-            modalRef.componentInstance.titleText='Sessão expirada';
-            modalRef.componentInstance.bodyText='Sua sessão expirou, por favor faça login novamente';
-            modalRef.dismissed.subscribe(()=>{
+            this.modalService.openModal('Sessão expirada', 'Sua sessão expirou, por favor faça login novamente',()=>{
               this.auth.logout();
             })
 
           } else if (error.error.code == 403) {
-            alert('SEM AUTORIZAÇÃO PARA ESSE RECURSO: ' + error.url)
+            this.modalService.openModal('Sem autorização', 'Você não tem permissão para acessar este recurso')
           }else if(error.error.code==404){
-            alert('RECURSO NÃO ENCONTRADO: '+error.url)
+            this.modalService.openModal('Recurso não encontrado', 'O recurso solicitado não foi encontrado: '+error.url)
           }else if(error.error.code==500){
-            alert(error.error.erros[0])
+            this.modalService.openModal('Erro interno no servidor', 'Ocorreu um erro interno no servidor, por favor tente novamente mais tarde',)
           }else if(error.error.code==401){
-            alert('ERRO DE REQUISIÇÃO: '+error.url)
+            this.modalService.openModal('Sem autorização', 'Você não tem permissão para acessar este recurso')
           }else{
-            alert('Erro na comunicação com o servidor')
+           this.modalService.openModal('Erro na comunicação com o servidor', 'Ocorreu um erro na comunicação com o servidor, por favor tente novamente mais tarde',)
+          
           }
        
           return EMPTY;
         })
       )
   }
+  
 }

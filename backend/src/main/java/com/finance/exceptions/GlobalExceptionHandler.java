@@ -9,6 +9,7 @@ import com.auth0.jwt.exceptions.TokenExpiredException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,6 +38,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 		return ResponseEntityBuilder.build(err);
 	}
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<?> handleAccesDenied(Exception ex, WebRequest request) {
+    ex.printStackTrace();
+    List<String> details = new ArrayList<String>();
+    details.add(ex.getMessage());
+    ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Você não possui permissão para acessar esse recurso" ,details,403);
+    return ResponseEntityBuilder.build(err);
+  }
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<?> handleBadCretendial(Exception ex, WebRequest request) {
     ex.printStackTrace();

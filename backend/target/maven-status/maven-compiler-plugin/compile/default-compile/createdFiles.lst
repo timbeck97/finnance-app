@@ -18,7 +18,6 @@ com/finance/service/UserService.class
 com/finance/repository/MovimentacaoSaldoRepository.class
 com/finance/controller/RoleToUserForm.class
 com/finance/exceptions/GlobalExceptionHandler.class
-com/finance/filter/CustomAuthenticationFilter.class
 com/finance/model/Deposito.class
 com/finance/controller/EncerramentoMensalController.class
 com/finance/repository/UserRepository.class

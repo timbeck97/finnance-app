@@ -6,7 +6,6 @@
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/repository/UserRepository.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/repository/RoleRepository.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/repository/GastoRepository.java
-/home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/filter/CustomAuthenticationFilter.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/security/WebConfiguration.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/model/Gasto.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/controller/DepositoController.java
@@ -32,6 +31,7 @@
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/repository/MovimentacaoSaldoRepository.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/dto/GastoDTO.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/dto/ChangePasswordDTO.java
+/home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/security/AutenticationService.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/service/SaldoService.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/exceptions/DataNotFoundException.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/controller/GastoController.java

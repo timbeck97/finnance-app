@@ -32,17 +32,15 @@ public class AutenticationService {
 
   private UserRepository userRepository;
   private final AuthenticationManager authenticationManager;
-  private final HandlerExceptionResolver handlerExceptionResolver;
 
   @Value("${token.expiration.minutes}")
   private String tokenExpiration;
   @Value("${jwt.secret}")
   private String secret;
 
-  public AutenticationService(AuthenticationManager authenticationManager, UserRepository userRepository, HandlerExceptionResolver handlerExceptionResolver) {
+  public AutenticationService(AuthenticationManager authenticationManager, UserRepository userRepository) {
     this.authenticationManager = authenticationManager;
     this.userRepository = userRepository;
-    this.handlerExceptionResolver = handlerExceptionResolver;
   }
 
   public Map<String, String> autenticate( LoginDTO usuario, HttpServletRequest request, HttpServletResponse response) {
@@ -50,38 +48,39 @@ public class AutenticationService {
     Authentication authentication = null;
     try {
       authentication = authenticationManager.authenticate(authenticationToken);
+      User user = (User)authentication.getPrincipal();
+      Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+      Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
+      Long token_ref_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*2*60*1000);
+
+      String access_token = JWT.create()
+        .withSubject(user.getUsername())
+        .withExpiresAt(new Date(token_exp))
+        .withIssuer(request.getRequestURL().toString())
+        .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+
+
+        .sign(algorithm);
+      String refresh_token = JWT.create()
+        .withSubject(user.getUsername())
+        .withExpiresAt(new Date(token_ref_exp))
+        .withClaim("refreshToken", Boolean.TRUE)
+        .withIssuer(request.getRequestURL().toString())
+        .sign(algorithm);
+
+
+      Map<String, String> tokens=new HashMap<>();
+      tokens.put("access_token", access_token);
+      tokens.put("access_token_expiration", String.valueOf(token_exp));
+      tokens.put("refresh_token_expiration",String.valueOf(token_ref_exp));
+      tokens.put("refresh_token", refresh_token);
+      response.setContentType(APPLICATION_JSON_VALUE);
+      this.liberacaoCors(response);
+      return tokens;
     } catch (BadCredentialsException e) {
-      handlerExceptionResolver.resolveException(request, response, null, e);
+      throw e;
     }
-    User user = (User)authentication.getPrincipal();
-    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
-    Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
-    Long token_ref_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*2*60*1000);
 
-    String access_token = JWT.create()
-      .withSubject(user.getUsername())
-      .withExpiresAt(new Date(token_exp))
-      .withIssuer(request.getRequestURL().toString())
-      .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
-
-
-      .sign(algorithm);
-    String refresh_token = JWT.create()
-      .withSubject(user.getUsername())
-      .withExpiresAt(new Date(token_ref_exp))
-      .withClaim("refreshToken", Boolean.TRUE)
-      .withIssuer(request.getRequestURL().toString())
-      .sign(algorithm);
-
-
-    Map<String, String> tokens=new HashMap<>();
-    tokens.put("access_token", access_token);
-    tokens.put("access_token_expiration", String.valueOf(token_exp));
-    tokens.put("refresh_token_expiration",String.valueOf(token_ref_exp));
-    tokens.put("refresh_token", refresh_token);
-    response.setContentType(APPLICATION_JSON_VALUE);
-    this.liberacaoCors(response);
-    return tokens;
 
   }
   private void liberacaoCors(HttpServletResponse response) {
