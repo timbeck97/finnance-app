@@ -63,7 +63,7 @@ export class ConfiguracoesComponent {
   }
   salvarUsuario() {
     const url = URL;
-    this.http.put<UserComplete>(url + '/users', this.formulario.value)
+    this.http.put<UserComplete>(url + '/users/'+this.user.id, this.formulario.value)
       .pipe(take(1))
       .subscribe(result => {
         this.auth.setUser(result)
