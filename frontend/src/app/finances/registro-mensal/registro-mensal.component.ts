@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from 'src/app/authentication/authentication.service';
 import { UserComplete } from 'src/app/authentication/model/UserComplete';
 import { Util } from 'src/app/util/util';
-import { Encerramentos } from '../model/Encerramentos';
+import { Encerramentos, Pagamento } from '../model/Encerramentos';
 import { take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
 
@@ -22,8 +22,11 @@ export class RegistroMensalComponent {
   gastosFixos: string = '';
   gastosVariaveis: string = '';
 
+  pagamento: Pagamento = {
+    valor: 0,
+    data: ''
+  };
   salario: number = 0;
-
   constructor(private http: HttpClient) {
     for (let i = 2020; i <= new Date().getFullYear(); i++) {
       this.anos.push(String(i));
@@ -31,20 +34,51 @@ export class RegistroMensalComponent {
     let mes = new Date().getMonth() + 1;
     let mesString = mes < 10 ? '0' + mes : String(mes);
     this.ano = String(new Date().getFullYear()),
-      this.mes = mesString
+    this.mes = mesString
 
+    
   }
   ngOnInit() {
     this.carregaEncerramentosMensais();
+    this.carregarSalario();
 
   }
+  carregarSalario() {
+    const url = URL;
+    const anoMes = this.ano + this.mes;
+    this.http.get<Pagamento>(url + '/pagamentos/' + anoMes)
+      .pipe(take(1))
+      .subscribe(result => {
+        if(result){
+          this.pagamento = result;
+        }
+      });
+  
+  }
   salvarSalario(){
-    // const url = URL;
-    // this.http.put<Number>(url + '/salario',{})
-    //   .pipe(take(1))
-    //   .subscribe(result => {
-    //     alert('Salario salvo')
-    //   });
+    if(this.pagamento && this.pagamento.id){
+      this.updateSalario();
+    }else{
+      this.postSalario();
+    
+    }
+  }
+  updateSalario() {
+    const url = URL;
+    this.http.put<Pagamento>(url + '/pagamentos/' + this.pagamento?.id , { valor: this.pagamento.valor})
+      .pipe(take(1))
+      .subscribe(result => {
+          this.pagamento = result;
+      });
+  }
+  postSalario() {
+    const url = URL;
+    const anoMes = this.ano + this.mes;
+    this.http.post<Pagamento>(url + '/pagamentos' , { valor: this.pagamento.valor, data: anoMes})
+      .pipe(take(1))
+      .subscribe(result => {
+        this.pagamento = result;
+      });
   }
   carregaEncerramentosMensais() {
     const url = URL;
@@ -71,6 +105,10 @@ export class RegistroMensalComponent {
   }
   handleAnoMes() {
     this.carregaEncerramentosMensais();
+
+  }
+  changeValor(event: any) {
+    console.log(event);
 
   }
   getLabel(tipo: string) {

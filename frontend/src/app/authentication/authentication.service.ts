@@ -51,12 +51,10 @@ export class AuthenticationService {
   refreshToken() {
     const url = URL;
     let refreshToken = this.getRefreshToken();
-    this.http.get<Token>(url + '/token/refreshtoken', { headers: { 'Authorization': 'Bearer ' + refreshToken } })
+    this.http.post<Token>(url + '/token/refreshtoken', { refreshToken: refreshToken  })
       .pipe(take(1))
       .subscribe(result => {
         this.setTokenRefresh(result)
-        //this.router.navigate(['/finances'])
-
       }, error => {
         console.log(error)
       });

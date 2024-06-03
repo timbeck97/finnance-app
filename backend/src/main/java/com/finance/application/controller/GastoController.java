@@ -71,17 +71,16 @@ public class GastoController {
   }
   @PostMapping
   public ResponseEntity<GastoDTO> save(@RequestBody GastoDTO dto){
-    Gasto gasto=new Gasto();
-    gasto.setCategoria(dto.getCategoria());
-    gasto.setData(dto.getData());
-    gasto.setDescricao(dto.getDescricao());
-    gasto.setUsuario(util.getUsuarioLogado());
-    if(dto.getFormaPagamento().equals(EFormaPagamento.PIX)){
-      gasto.setEncerrado(true);
-    }
-    gasto.setFormaPagamento(dto.getFormaPagamento());
-    gasto.setValor(dto.getValor());
-    gasto.setTipoGasto(dto.getTipoGasto());
+    Gasto gasto=GastoBuilder.create()
+      .withCategoria(dto.getCategoria())
+      .withData(dto.getData())
+      .withDescricao(dto.getDescricao())
+      .withUsuario(util.getUsuarioLogado())
+      .withFormaPagamento(dto.getFormaPagamento())
+      .withValor(dto.getValor())
+      .withTipoGasto(dto.getTipoGasto())
+      .withEncerrado(dto.getFormaPagamento().equals(EFormaPagamento.PIX))
+      .build();
     gasto=gastoRepository.save(gasto);
     if(gasto.getFormaPagamento().equals(EFormaPagamento.PIX)){
       saldoService.atualizarSaldo(gasto);

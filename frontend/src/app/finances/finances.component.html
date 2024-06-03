@@ -33,7 +33,8 @@
             </select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" style="display: flex;justify-content: end;flex-direction: column;">
+          <label>Tipo de Gasto</label>
           <div class="btn-group grupoBtn" role="group" aria-label="Basic outlined example">
             <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais}"
               (click)="showGastosMensais=true">Gastos Mensais</button>

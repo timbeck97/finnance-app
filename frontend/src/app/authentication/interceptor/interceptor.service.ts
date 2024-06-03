@@ -21,7 +21,7 @@ export class InterceptorService implements HttpInterceptor {
       return next.handle(req)
       .pipe(
         catchError((error: any) => {
-          if(error.error.customCode==999){
+          if(error?.error?.customCode==999){
             this.modalService.openModal('Erro no login', 'Login ou senha incorretos')
           }else if(error.status==0){
             this.modalService.openModal('Erro na comunicação com o servidor', 'Ocorreu um erro na comunicação com o servidor, por favor tente novamente mais tarde',)
@@ -39,6 +39,7 @@ export class InterceptorService implements HttpInterceptor {
     let refreshToken=this.auth.getRefreshToken();
     if(tokenExpired && refreshToken){
       if(!this.auth.validateRefreshTokenExpiration()){
+        this.cancelReq.cancelPendingRequests()
         this.auth.refreshToken();
         return EMPTY;
       }

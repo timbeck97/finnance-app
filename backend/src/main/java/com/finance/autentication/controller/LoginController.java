@@ -11,10 +11,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.finance.autentication.dto.ChangePasswordDTO;
-import com.finance.autentication.dto.LoginDTO;
-import com.finance.autentication.dto.ReceiveUserDTO;
-import com.finance.autentication.dto.UserDTO;
+import com.finance.autentication.dto.*;
 import com.finance.autentication.model.Role;
 import com.finance.autentication.model.User;
 import com.finance.autentication.security.AutenticationService;
@@ -109,17 +106,14 @@ public class LoginController {
     return ResponseEntity.ok().build();
   }
 
-  @GetMapping(value = "/token/refreshtoken")
-  public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  @PostMapping(value = "/token/refreshtoken")
+  public void refreshToken(@RequestBody Map mapToken, HttpServletRequest request, HttpServletResponse response) throws IOException {
     Long token_exp = System.currentTimeMillis() + (Integer.valueOf(4) * 60 * 1000);
-    String refresh_token = request.getHeader("Authorization");
-    String token = refresh_token.split("Bearer")[1].trim();
-
-
-    if (refresh_token != null) {
+    String refreshToken = (String) mapToken.get("refreshToken");
+    if (refreshToken != null) {
       Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
       JWTVerifier verifier = JWT.require(algorithm).build();
-      DecodedJWT decodedJWT = verifier.verify(token);
+      DecodedJWT decodedJWT = verifier.verify(refreshToken);
 
       String username = decodedJWT.getSubject();
       String isRefreshToken = decodedJWT.getClaim("refreshToken").as(String.class);
@@ -145,25 +139,3 @@ public class LoginController {
 
 }
 
-class RoleToUserForm {
-  private String username;
-  private String roleName;
-
-  public String getUsername() {
-    return username;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public String getRoleName() {
-    return roleName;
-  }
-
-  public void setRoleName(String roleName) {
-    this.roleName = roleName;
-  }
-
-
-}
