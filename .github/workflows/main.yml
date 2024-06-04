@@ -5,7 +5,7 @@ name: Deploy projeto no dockerhub / integracao com aws
 on:
   push:
     branches: 
-      - master
+      - production
 
 jobs:
     build:
