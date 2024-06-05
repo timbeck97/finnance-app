@@ -5,7 +5,8 @@
  */
 package com.finance.configuration.exceptions;
 
-import com.auth0.jwt.exceptions.TokenExpiredException;
+
+import io.jsonwebtoken.ExpiredJwtException;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -62,7 +63,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Inválido" ,details);
 		return ResponseEntityBuilder.build(err);
 	}
-        @ExceptionHandler(TokenExpiredException.class)
+        //@ExceptionHandler(TokenExpiredException.class)
+        @ExceptionHandler(ExpiredJwtException.class)
 	public ResponseEntity<?> TokenExpiredException(Exception ex, WebRequest request) {
     ex.printStackTrace();
 		List<String> details = new ArrayList<String>();

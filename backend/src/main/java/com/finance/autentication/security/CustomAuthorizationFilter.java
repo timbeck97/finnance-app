@@ -6,15 +6,10 @@
 package com.finance.autentication.security;
 
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+
 
 import com.finance.configuration.exceptions.InvalidTokenException;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,8 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import static java.util.Arrays.stream;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 /**
@@ -57,36 +50,38 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter{
             String authorizationHeader=request.getHeader(AUTHORIZATION);
             if(authorizationHeader !=null && authorizationHeader.startsWith("Bearer ")){
                 try{
-                    String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
-                    JWTVerifier verifier=JWT.require(algorithm).build();
-                    DecodedJWT decodedJWT = verifier.verify(token);
-                    String username=decodedJWT.getSubject();
-                    String isRefreshToken=decodedJWT.getClaim("refreshToken").as(String.class);
-                    if(Boolean.parseBoolean(isRefreshToken)){
-                        throw new RuntimeException("Forbbiden access with refresh token");
-                    }
+                  String token = authorizationHeader.substring("Bearer ".length());
 
-                    String[] roles= decodedJWT.getClaim("roles").asArray(String.class);
-                    Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
+                  Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
 
-                    stream(roles).forEach(role->authorities.add(new SimpleGrantedAuthority(role)));
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
+                  String username=claims.getBody().getSubject();
+                  String isRefreshToken=claims.getBody().get("refreshToken",String.class);
+                  if(Boolean.parseBoolean(isRefreshToken)){
+                      throw new RuntimeException("Forbbiden access with refresh token");
+                  }
 
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                  ArrayList<String> roles=claims.getBody().get("roles",ArrayList.class);
+                  Collection<SimpleGrantedAuthority> authorities=new ArrayList<>();
 
-                    response.addHeader("Access-Control-Expose-Headers","X-Total-Count");
-                    filterChain.doFilter(request, response);
+                  roles.forEach(role->authorities.add(new SimpleGrantedAuthority(role)));
+                  UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,null, authorities);
+                  authenticationToken.setDetails(claims);
+                  SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-                }catch(SignatureVerificationException e){
+                  response.addHeader("Access-Control-Expose-Headers","X-Total-Count");
+                  filterChain.doFilter(request, response);
+
+                }catch(SignatureException e){
                     log.error("Error loging in: {}",e.getMessage());
                     handlerExceptionResolver.resolveException(request,response,null,new InvalidTokenException("The token is not válid"));
 
                 }
-                catch(JWTDecodeException e){
+
+                catch(MalformedJwtException e){
                     handlerExceptionResolver.resolveException(request,response,null,new InvalidTokenException("The token is not a valid string"));
                 }
-                catch(TokenExpiredException e){
+
+                catch(ExpiredJwtException e){
                     handlerExceptionResolver.resolveException(request,response,null,e);
                 }
 

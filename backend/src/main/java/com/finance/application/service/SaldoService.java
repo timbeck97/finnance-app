@@ -4,6 +4,7 @@ import com.finance.application.model.Deposito;
 import com.finance.application.model.Gasto;
 import com.finance.application.model.MovimentacaoSaldo;
 import com.finance.autentication.model.User;
+import com.finance.autentication.service.UserService;
 import com.finance.configuration.Utils;
 import com.finance.configuration.enums.ETipoMovimentacao;
 import com.finance.application.repository.MovimentacaoSaldoRepository;
@@ -19,21 +20,21 @@ public class SaldoService {
 
 
   private final MovimentacaoSaldoRepository movimentacaoSaldoRepository;
-
+  private final UserService userService;
   private final UserRepository userRepository;
 
-  private final Utils utils;
 
-  public SaldoService(MovimentacaoSaldoRepository movimentacaoSaldoRepository, UserRepository userRepository, Utils utils) {
+
+  public SaldoService(MovimentacaoSaldoRepository movimentacaoSaldoRepository, UserRepository userRepository, UserService userService) {
     this.movimentacaoSaldoRepository = movimentacaoSaldoRepository;
     this.userRepository = userRepository;
-    this.utils = utils;
+    this.userService = userService;
   }
 
   @Transactional
   public void atualizarSaldo(Gasto gasto){
     reverterGasto(gasto);//se existir um movimento de saldo para esse gasto, ele é removido
-    User user=utils.getUsuarioLogado();
+    User user=userService.getUsuarioLogado();
     MovimentacaoSaldo dto=getMovimentoSaldoDefault(gasto.getValor(),user,false);
     dto.setGasto(gasto);
     dto.setTipoMovimentacao(ETipoMovimentacao.GASTO);
@@ -45,7 +46,7 @@ public class SaldoService {
   @Transactional
   public void atualizarSaldo(Deposito deposito){
     reverterDeposito(deposito);
-    User user=utils.getUsuarioLogado();
+    User user=userService.getUsuarioLogado();
     MovimentacaoSaldo dto= getMovimentoSaldoDefault(deposito.getValor(),user, true);
     dto.setDeposito(deposito);
     dto.setTipoMovimentacao(ETipoMovimentacao.DEPOSITO);
@@ -81,7 +82,7 @@ public class SaldoService {
       if(dto!=null){
         double valor=dto.getValor();
         movimentacaoSaldoRepository.delete(dto);
-        atualizaSaldoContaCorrente(valor,utils.getUsuarioLogado(),true);
+        atualizaSaldoContaCorrente(valor,userService.getUsuarioLogado(),true);
       }
     }
   }
@@ -91,7 +92,7 @@ public class SaldoService {
       if(dto!=null){
         double valor=dto.getValor();
         movimentacaoSaldoRepository.delete(dto);
-        atualizaSaldoContaCorrente(valor,utils.getUsuarioLogado(),false);
+        atualizaSaldoContaCorrente(valor,userService.getUsuarioLogado(),false);
       }
     }
   }

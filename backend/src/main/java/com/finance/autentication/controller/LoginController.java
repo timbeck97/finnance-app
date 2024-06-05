@@ -5,18 +5,16 @@
  */
 package com.finance.autentication.controller;
 
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finance.autentication.dto.*;
 import com.finance.autentication.model.Role;
 import com.finance.autentication.model.User;
 import com.finance.autentication.security.AutenticationService;
 import com.finance.autentication.service.UserService;
-import com.finance.configuration.Utils;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,7 +37,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class LoginController {
 
   private final UserService userService;
-  private final Utils util;
+
   private final AutenticationService autenticationService;
 
 
@@ -48,9 +46,8 @@ public class LoginController {
   @Value("${jwt.secret}")
   private String secret;
 
-  public LoginController(UserService userService, Utils util, AutenticationService autenticationService) {
+  public LoginController(UserService userService , AutenticationService autenticationService) {
     this.userService = userService;
-    this.util = util;
     this.autenticationService = autenticationService;
   }
 
@@ -62,9 +59,8 @@ public class LoginController {
 
   @GetMapping(value = "/users/me")
   public ResponseEntity<UserDTO> getUser() {
-    User usuarioLogado = util.getUsuarioLogado();
-    UserDTO dtos = Optional.of(userService.getUser(usuarioLogado.getUsername())).map(user -> new UserDTO(user)).orElse(null);
-    return ResponseEntity.ok().body(dtos);
+    User usuarioLogado = userService.getUsuarioLogado();
+    return ResponseEntity.ok().body(new UserDTO(usuarioLogado));
   }
 
   @PostMapping(value = "/login")
@@ -111,22 +107,23 @@ public class LoginController {
     Long token_exp = System.currentTimeMillis() + (Integer.valueOf(4) * 60 * 1000);
     String refreshToken = (String) mapToken.get("refreshToken");
     if (refreshToken != null) {
-      Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
-      JWTVerifier verifier = JWT.require(algorithm).build();
-      DecodedJWT decodedJWT = verifier.verify(refreshToken);
-
-      String username = decodedJWT.getSubject();
-      String isRefreshToken = decodedJWT.getClaim("refreshToken").as(String.class);
+      Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(refreshToken);
+      String username = claims.getBody().getSubject();
+      String isRefreshToken = claims.getBody().get("refreshToken", String.class);
       if (!Boolean.parseBoolean(isRefreshToken)) {
         throw new RuntimeException("Forbbiden revalidate token with normal token");
       }
       User user = userService.getUser(username);
-      String access_token = JWT.create()
-        .withSubject(user.getUsername())
-        .withExpiresAt(new Date(token_exp))
-        .withIssuer(request.getRequestURL().toString())
-        .withClaim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
-        .sign(algorithm);
+
+      String access_token= Jwts
+        .builder()
+        .setSubject(user.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(token_exp))
+        .claim("roles", user.getRoles().stream().map(Role::getName).collect(Collectors.toList()))
+        .claim("userId",user.getId())
+        .signWith(SignatureAlgorithm.HS256, secret)
+        .compact();
 
       Map<String, String> tokens = new HashMap<>();
       tokens.put("access_token", access_token);

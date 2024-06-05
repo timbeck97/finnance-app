@@ -1,9 +1,9 @@
 package com.finance.autentication.security;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
+
 import com.finance.autentication.dto.LoginDTO;
-import com.finance.autentication.repository.UserRepository;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -25,7 +25,6 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Service
 public class AutenticationService {
 
-  private UserRepository userRepository;
   private final AuthenticationManager authenticationManager;
 
   @Value("${token.expiration.minutes}")
@@ -33,9 +32,8 @@ public class AutenticationService {
   @Value("${jwt.secret}")
   private String secret;
 
-  public AutenticationService(AuthenticationManager authenticationManager, UserRepository userRepository) {
+  public AutenticationService(AuthenticationManager authenticationManager) {
     this.authenticationManager = authenticationManager;
-    this.userRepository = userRepository;
   }
 
   public Map<String, String> autenticate( LoginDTO usuario, HttpServletRequest request, HttpServletResponse response) {
@@ -44,24 +42,29 @@ public class AutenticationService {
     try {
       authentication = authenticationManager.authenticate(authenticationToken);
       User user = (User)authentication.getPrincipal();
-      Algorithm algorithm = Algorithm.HMAC256(secret.getBytes());
+
       Long token_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*60*1000);
       Long token_ref_exp=System.currentTimeMillis()+(Integer.valueOf(tokenExpiration)*2*60*1000);
 
-      String access_token = JWT.create()
-        .withSubject(user.getUsername())
-        .withExpiresAt(new Date(token_exp))
-        .withIssuer(request.getRequestURL().toString())
-        .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+
+      String access_token= Jwts
+        .builder()
+        .setSubject(user.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(token_exp))
+        .claim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+        .signWith(SignatureAlgorithm.HS256, secret)
+        .compact();
 
 
-        .sign(algorithm);
-      String refresh_token = JWT.create()
-        .withSubject(user.getUsername())
-        .withExpiresAt(new Date(token_ref_exp))
-        .withClaim("refreshToken", Boolean.TRUE)
-        .withIssuer(request.getRequestURL().toString())
-        .sign(algorithm);
+      String refresh_token= Jwts
+        .builder()
+        .setSubject(user.getUsername())
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(token_ref_exp))
+        .claim("refreshToken", Boolean.TRUE)
+        .signWith(SignatureAlgorithm.HS256, secret)
+        .compact();
 
 
       Map<String, String> tokens=new HashMap<>();

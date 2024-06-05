@@ -9,6 +9,7 @@ package com.finance.autentication.service;
 
 import com.finance.autentication.dto.ChangePasswordDTO;
 import com.finance.autentication.dto.ReceiveUserDTO;
+import com.finance.autentication.dto.UserDTO;
 import com.finance.autentication.model.Role;
 import com.finance.autentication.model.User;
 import com.finance.autentication.repository.RoleRepository;
@@ -17,7 +18,9 @@ import com.finance.configuration.Utils;
 import com.finance.configuration.exceptions.DataNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,16 +42,15 @@ public class UserServiceImp implements UserService, UserDetailsService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    private final Utils utils;
 
     private static Logger log = LoggerFactory.getLogger(UserServiceImp.class);
 
 
-    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, Utils utils){
+    public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder){
         this.userRepository=userRepository;
         this.roleRepository=roleRepository;
         this.passwordEncoder=passwordEncoder;
-      this.utils = utils;
+
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -116,12 +118,19 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
   @Override
   public User changePassword(ChangePasswordDTO dto) {
-    User user=utils.getUsuarioLogado();
+    User user=getUsuarioLogado();
     if(!passwordEncoder.matches(dto.getOldPassword(),user.getPassword())){
       throw new IllegalArgumentException("Senha antiga incorreta");
     }
     user.setPassword(passwordEncoder.encode(dto.getNewPassword()));
     return userRepository.save(user);
+  }
+
+  @Override
+  public User getUsuarioLogado() {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    String userName=(String) authentication.getPrincipal();
+    return getUser(userName);
   }
 
 

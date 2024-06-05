@@ -2,6 +2,7 @@ package com.finance.application.controller;
 
 import com.finance.application.builder.GastoBuilder;
 import com.finance.application.dto.GastoDTO;
+import com.finance.autentication.service.UserService;
 import com.finance.configuration.enums.EFormaPagamento;
 import com.finance.configuration.enums.ETipoGasto;
 import com.finance.application.model.Gasto;
@@ -23,14 +24,13 @@ import java.util.*;
 @RequestMapping("/gastos")
 public class GastoController {
 
-  private final Utils util;
   private final GastoRepository gastoRepository;
-
+  private final UserService userService;
   private final SaldoService saldoService;
 
-  public GastoController(GastoRepository gastoRepository, Utils util, SaldoService saldoService) {
+  public GastoController(GastoRepository gastoRepository, UserService userService, SaldoService saldoService) {
     this.gastoRepository = gastoRepository;
-    this.util = util;
+    this.userService = userService;
     this.saldoService = saldoService;
   }
 
@@ -43,10 +43,10 @@ public class GastoController {
     @RequestParam(required = false) String filtro,
     HttpServletResponse resp){
     if(anoMes==null){
-      anoMes=util.getAnoMesAtual();
+      anoMes=Utils.getAnoMesAtual();
     }
     Pageable page=PageRequest.of(pageNumber-1, pageSize);
-    Page<GastoDTO> gastos=gastoRepository.findByData(anoMes,filtro,util.getUsuarioLogado(),tipoGasto, page);
+    Page<GastoDTO> gastos=gastoRepository.findByData(anoMes,filtro, userService.getUsuarioLogado(),tipoGasto, page);
     resp.setHeader("X-Total-Count",String.valueOf(gastos.getTotalElements()));
     return ResponseEntity.ok(gastos.getContent());
 
@@ -54,9 +54,9 @@ public class GastoController {
   @GetMapping(value = "/mensal")
   public ResponseEntity<Map<String, Double>> findAllMensal(@RequestParam(required = false) String anoMes){
     if(anoMes==null){
-      anoMes=util.getAnoMesAtual();
+      anoMes=Utils.getAnoMesAtual();
     }
-    User usuarioLogado = util.getUsuarioLogado();
+    User usuarioLogado = userService.getUsuarioLogado();
     List result=gastoRepository.findGastosMensais(anoMes, usuarioLogado.getId());
     Map<String, Double> values=new HashMap<>();
     for(Object o: result){
@@ -75,7 +75,7 @@ public class GastoController {
       .withCategoria(dto.getCategoria())
       .withData(dto.getData())
       .withDescricao(dto.getDescricao())
-      .withUsuario(util.getUsuarioLogado())
+      .withUsuario(userService.getUsuarioLogado())
       .withFormaPagamento(dto.getFormaPagamento())
       .withValor(dto.getValor())
       .withTipoGasto(dto.getTipoGasto())
@@ -90,8 +90,8 @@ public class GastoController {
   }
   @PostMapping(value = "/fixos/copiar")
   public ResponseEntity<Void> copy(){
-    User user=util.getUsuarioLogado();
-    String mesAnterior=util.getAnoMesAnterior();
+    User user=userService.getUsuarioLogado();
+    String mesAnterior=Utils.getAnoMesAnterior();
     List<Gasto> gastos=gastoRepository.findByData(mesAnterior, user, ETipoGasto.FIXO);
     for(Gasto dto:gastos){
       List<Gasto> existentes=gastoRepository.findByDescricao(dto.getDescricao());
@@ -99,9 +99,9 @@ public class GastoController {
       Gasto gasto= GastoBuilder.
         create().
         withCategoria(dto.getCategoria()).
-        withData(util.getAnoMesAtual()).
+        withData(Utils.getAnoMesAtual()).
         withDescricao(dto.getDescricao()).
-        withUsuario(util.getUsuarioLogado()).
+        withUsuario(userService.getUsuarioLogado()).
         withFormaPagamento(dto.getFormaPagamento()).
         withValor(dto.getValor()).
         withTipoGasto(dto.getTipoGasto()).
@@ -118,7 +118,7 @@ public class GastoController {
       withCategoria(dto.getCategoria()).
       withData(dto.getData()).
       withDescricao(dto.getDescricao()).
-      withUsuario(util.getUsuarioLogado()).
+      withUsuario(userService.getUsuarioLogado()).
       withFormaPagamento(dto.getFormaPagamento()).
       withValor(dto.getValor()).
       withTipoGasto(dto.getTipoGasto()).
@@ -150,7 +150,7 @@ public class GastoController {
       gastos= Arrays.asList(new GastoDTO(gastoRepository.findById(id).get()));
     }else{
       Pageable page=PageRequest.of(0, 5);
-      gastos=gastoRepository.findByData(competencia,filtro,util.getUsuarioLogado(),ETipoGasto.VARIAVEL, page).getContent();
+      gastos=gastoRepository.findByData(competencia,filtro, userService.getUsuarioLogado(),ETipoGasto.VARIAVEL, page).getContent();
     }
     return ResponseEntity.ok(gastos);
 

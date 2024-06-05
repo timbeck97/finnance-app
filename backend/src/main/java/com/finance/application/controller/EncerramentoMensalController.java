@@ -1,5 +1,6 @@
 package com.finance.application.controller;
 
+import com.finance.autentication.service.UserService;
 import com.finance.configuration.enums.ESituacaoEncerramento;
 import com.finance.configuration.enums.ETipoGasto;
 import com.finance.application.model.Gasto;
@@ -19,20 +20,19 @@ public class EncerramentoMensalController {
 
 
   private final GastoRepository gastoRepository;
-  private final Utils utils;
   private final SaldoService saldoService;
+  private final UserService userService;
 
-
-  public EncerramentoMensalController( GastoRepository gastoRepository, Utils utils, SaldoService saldoService) {
+  public EncerramentoMensalController(GastoRepository gastoRepository, SaldoService saldoService, UserService userService) {
     this.gastoRepository = gastoRepository;
-    this.utils = utils;
     this.saldoService = saldoService;
+    this.userService = userService;
   }
 
   @GetMapping("/{competencia}")
   public Map findOne(@PathVariable String competencia){
     Map<String, ESituacaoEncerramento> result=new HashMap<>();
-    List<Gasto> gastos=gastoRepository.findAllEncerramento(utils.getUsuarioLogado(), competencia, ETipoGasto.FIXO);
+    List<Gasto> gastos=gastoRepository.findAllEncerramento(userService.getUsuarioLogado(), competencia, ETipoGasto.FIXO);
     if(gastos.isEmpty()){
       result.put("fixo", ESituacaoEncerramento.SEM_VALORES);
     } else if (gastos.stream().allMatch(gasto->gasto.isEncerrado())) {
@@ -41,7 +41,7 @@ public class EncerramentoMensalController {
       result.put("fixo", ESituacaoEncerramento.NAO_ENCERRADO);
     }
 
-    List<Gasto> gastoVariavel=gastoRepository.findAllEncerramento(utils.getUsuarioLogado(), competencia, ETipoGasto.VARIAVEL);
+    List<Gasto> gastoVariavel=gastoRepository.findAllEncerramento(userService.getUsuarioLogado(), competencia, ETipoGasto.VARIAVEL);
     if(gastoVariavel.isEmpty()){
       result.put("variavel", ESituacaoEncerramento.SEM_VALORES);
     } else if (gastoVariavel.stream().allMatch(gasto->gasto.isEncerrado())) {
@@ -57,9 +57,9 @@ public class EncerramentoMensalController {
     ETipoGasto tipoGasto=ETipoGasto.valueOf(tipo);
     List<Gasto> gastos=null;
     if(tipoGasto==ETipoGasto.FIXO){
-      gastos=gastoRepository.findAllGastoFixo(utils.getUsuarioLogado(), competencia);
+      gastos=gastoRepository.findAllGastoFixo(userService.getUsuarioLogado(), competencia);
     }else{
-      gastos=gastoRepository.findAllGastoVariavelCartao(utils.getUsuarioLogado(), competencia);
+      gastos=gastoRepository.findAllGastoVariavelCartao(userService.getUsuarioLogado(), competencia);
     }
     for(Gasto gasto: gastos){
       gasto.setEncerrado(true);
@@ -71,7 +71,7 @@ public class EncerramentoMensalController {
   }
   @GetMapping("/saldo")
   public Double getSaldoAtual(){
-    return utils.getUsuarioLogado().getContaCorrente();
+    return userService.getUsuarioLogado().getContaCorrente();
   }
 
 

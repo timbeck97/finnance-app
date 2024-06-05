@@ -8,6 +8,7 @@ package com.finance.autentication.service;
 
 import com.finance.autentication.dto.ChangePasswordDTO;
 import com.finance.autentication.dto.ReceiveUserDTO;
+import com.finance.autentication.dto.UserDTO;
 import com.finance.autentication.model.Role;
 import com.finance.autentication.model.User;
 
@@ -27,4 +28,6 @@ public interface UserService {
     User getUser(String username);
 
     User changePassword(ChangePasswordDTO dto);
+
+    User getUsuarioLogado();
 }
