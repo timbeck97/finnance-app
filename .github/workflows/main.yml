@@ -31,8 +31,7 @@ jobs:
               with:
                 context: backend/
                 push: true
-                cache-from: type=gha
-                cache-to: type=gha,mode=max
+                cache: enabled
                 tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number}}
             - name: Setup Node.js
               uses: actions/setup-node@v1
@@ -49,8 +48,7 @@ jobs:
               with:
                 context: frontend/
                 push: true
-                cache-from: type=gha
-                cache-to: type=gha,mode=max
+                cache: enabled
                 tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number}}
               
     deploy:
