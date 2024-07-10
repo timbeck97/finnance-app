@@ -18,6 +18,7 @@
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/application/repository/GastoRepository.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/application/model/Deposito.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/application/dto/DepositoDTO.java
+/home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/application/controller/StatusController.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/application/controller/EncerramentoMensalController.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/configuration/enums/ESituacaoEncerramento.java
 /home/tim/Tim/angular/finnance-app/backend/src/main/java/com/finance/autentication/service/UserServiceImp.java
