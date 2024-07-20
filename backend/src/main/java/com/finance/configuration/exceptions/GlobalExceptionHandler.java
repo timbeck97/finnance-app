@@ -8,18 +8,22 @@ package com.finance.configuration.exceptions;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -55,7 +59,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Login ou senha incorreto" ,details,999);
 		return ResponseEntityBuilder.build(err);
 	}
-        @ExceptionHandler(InvalidTokenException.class)
+  @ExceptionHandler(InvalidTokenException.class)
 	public ResponseEntity<?> InvalidTokenException(Exception ex, WebRequest request) {
           ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
@@ -63,8 +67,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Inválido" ,details);
 		return ResponseEntityBuilder.build(err);
 	}
-        //@ExceptionHandler(TokenExpiredException.class)
-        @ExceptionHandler(ExpiredJwtException.class)
+  //@ExceptionHandler(TokenExpiredException.class)
+  @ExceptionHandler(ExpiredJwtException.class)
 	public ResponseEntity<?> TokenExpiredException(Exception ex, WebRequest request) {
     ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
@@ -72,7 +76,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.UNAUTHORIZED, "Token Expirado" ,details, 666);
 		return ResponseEntityBuilder.build(err);
 	}
-        @ExceptionHandler(DataNotFoundException.class)
+  @ExceptionHandler(DataNotFoundException.class)
 	public ResponseEntity<?> dataNotFound(Exception ex, WebRequest request) {
     ex.printStackTrace();
 		List<String> details = new ArrayList<String>();
@@ -80,7 +84,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 		ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.NOT_FOUND, "Dado não encontrado" ,details);
 		return ResponseEntityBuilder.build(err);
 	}
-     @ExceptionHandler(Exception.class)
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(
+    MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    ex.printStackTrace();
+    List<String> details = ex
+      .getBindingResult()
+      .getFieldErrors()
+      .stream()
+      .map(fieldError -> fieldError.getDefaultMessage())
+      .collect(Collectors.toList());
+    ApiError err = new ApiError(LocalDateTime.now(),HttpStatus.BAD_REQUEST, "Dados invalidos" ,details,444);
+    return ResponseEntityBuilder.build(err);
+  }
+   @ExceptionHandler(Exception.class)
   public ResponseEntity<?> defaultException(Exception ex, WebRequest request) {
      ex.printStackTrace();
     List<String> details = new ArrayList<String>();

@@ -19,6 +19,7 @@ import { InterceptorService } from './authentication/interceptor/interceptor.ser
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AlertComponent } from './util/alert/alert.component';
 import { UtilModule } from './util/util.module';
+import { ToastrModule } from 'ngx-toastr';
 
 
 
@@ -48,7 +49,8 @@ registerLocaleData(ptBr);
     ModalModule.forRoot(),
     HttpClientModule,
     BrowserAnimationsModule,
-    UtilModule
+    UtilModule,
+    ToastrModule.forRoot()
 
   ],
   providers: [

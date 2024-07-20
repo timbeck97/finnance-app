@@ -99,6 +99,7 @@ i{
     opacity: 0;
     pointer-events: none;
 }
+
 @media (max-width:600px){
 	.name-login{
         display: none;

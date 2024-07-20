@@ -3,9 +3,15 @@ package com.finance.application.dto;
 import com.finance.application.model.Pagamento;
 import com.finance.autentication.dto.UserDTO;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+
 public class PagamentoDTO {
     private long id;
+
+    @DecimalMin(value = "0.1", message = "O valor do pagamento deve ser maior que zero")
     private double valor;
+    @NotBlank(message = "A data do pagamento é obrigatória")
     private String data;
 
     public PagamentoDTO() {

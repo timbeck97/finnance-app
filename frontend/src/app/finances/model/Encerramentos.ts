@@ -6,8 +6,8 @@ interface Encerramentos{
 }
 interface Pagamento{
     id?: number,
-    valor?: number,
-    data?: string,
+    valor: number,
+    data: string,
 }
 
 export { Encerramentos, Pagamento }

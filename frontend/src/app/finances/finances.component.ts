@@ -12,6 +12,7 @@ import { Gasto } from './model/Gasto';
 import { Filtro } from './model/Filtro';
 import { ETipoGasto } from './model/ETipoGasto';
 import { Util } from '../util/util';
+import { media } from '../util/media';
 @Component({
   selector: 'app-finances',
   templateUrl: './finances.component.html',
@@ -32,6 +33,8 @@ export class FinancesComponent implements AfterViewInit{
 
   meses: any = Util.getMeses();
   anos: any = []
+  
+  isMobile:boolean=false;
 
   constructor(private service:CadatroContaService, private http: HttpClient,private cdRef: ChangeDetectorRef) {
     this.formulario = new FormGroup({
@@ -57,6 +60,9 @@ export class FinancesComponent implements AfterViewInit{
   }
   ngOnInit(){
     this.carregarGastosMensais();
+    media('(max-width: 767px)').subscribe((matches) =>
+      this.isMobile=matches
+    );
   }
   carregarGastosMensais(){
     let anoMes=this.filtro.ano+this.filtro.mes;

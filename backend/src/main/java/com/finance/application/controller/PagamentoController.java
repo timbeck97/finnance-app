@@ -6,6 +6,8 @@ import com.finance.application.service.PagamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/pagamentos")
 public class PagamentoController {
@@ -21,7 +23,7 @@ public class PagamentoController {
     return ResponseEntity.ok().body(pagamentoService.findByData(data));
   }
   @PostMapping
-  public ResponseEntity<PagamentoDTO> savePagamento(@RequestBody PagamentoDTO pagamentoDTO){
+  public ResponseEntity<PagamentoDTO> savePagamento(@RequestBody @Valid  PagamentoDTO pagamentoDTO){
     return ResponseEntity.status(201).body(new PagamentoDTO(pagamentoService.save(pagamentoDTO)));
   }
   @PutMapping(value = "/{id}")

@@ -15,13 +15,7 @@ export class AutocompleteComponent {
 
   timer:any;
 
-  dados:any=[
-    {id:1, descricao:'Churrasco'},
-    {id:2, descricao:'BDL'},
-    {id:3, descricao:'Aniver X'},
-    {id:4, descricao:'Festa Y'},
-    {id:5, descricao:'Presente Z'},
-  ];
+  dados:any=[];
 
   @Input()
   label:string='Autocomplete'
@@ -55,10 +49,14 @@ export class AutocompleteComponent {
 
   @HostListener('document:click', ['$event'])
   documentClick(event: any): void {
+    console.log('hehe');
+    
     if(event.target.nodeName!=='LI' && this.showItens){
-      this.dataSelected={descricao:''}
+      this.dataSelected={descricaoAutoComplete:''}
+      this.dados=[];
       this.showItens=false;
       this.event.emit(null)
+      
     }
   }
 
@@ -102,10 +100,11 @@ export class AutocompleteComponent {
   findGastos(value:string) {
     let params = new HttpParams({
       fromObject: {
-        filtro:value
+        filtro:value,
+        competencia:this.filtro
       }
     })
-    this.http.get<Gasto[]>(URL + this.urlParam+'/'+this.filtro, { params: params, observe: 'response' })
+    this.http.get<Gasto[]>(URL + this.urlParam, { params: params, observe: 'response' })
       .pipe(
         take(1)
       )

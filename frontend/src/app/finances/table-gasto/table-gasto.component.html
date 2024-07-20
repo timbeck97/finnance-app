@@ -7,10 +7,10 @@
         <div style="padding: 0px 15px;margin-bottom: 1em; margin-top: 1em;">
             <div class="row" style="margin: 10px 0px 5px 0px;" *ngIf="isGastoVariavel()">
                 <div class="col-md-12 d-flex flex-row-reverse">
-                    <button class="btn btn-secondary ms-1" (click)="generateReport()">
+                    <button [ngClass]="['btn btn-secondary ms-1',isMobile?'btn-sm':'']" (click)="generateReport()">
                         <i class="bi bi-printer"></i>
                     </button>
-                    <button class="btn btn-primary" (click)="adicionarConta()">
+                    <button [ngClass]="['btn btn-primary',isMobile?'btn-sm':'']" (click)="adicionarConta()">
                         <span>Adicionar</span>
                     </button>
                 </div>

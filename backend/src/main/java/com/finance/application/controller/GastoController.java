@@ -52,9 +52,9 @@ public class GastoController {
 
     return ResponseEntity.ok(new GastoDTO(gastoService.updateGasto(dto, id)));
   }
-  @GetMapping(value = "/autocomplete/{competencia}")
+  @GetMapping(value = "/autocomplete")
   public ResponseEntity<List<GastoDTO>> findAllAutoComplete(
-    @PathVariable String competencia,
+    @RequestParam(required = false) String competencia,
     @RequestParam(required = false) String filtro,
     @RequestParam(required = false) Long id,
     HttpServletResponse resp){

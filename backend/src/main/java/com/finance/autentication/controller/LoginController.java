@@ -109,8 +109,8 @@ public class LoginController {
     if (refreshToken != null) {
       Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(refreshToken);
       String username = claims.getBody().getSubject();
-      String isRefreshToken = claims.getBody().get("refreshToken", String.class);
-      if (!Boolean.parseBoolean(isRefreshToken)) {
+      Boolean isRefreshToken = claims.getBody().get("refreshToken", Boolean.class);
+      if (!isRefreshToken) {
         throw new RuntimeException("Forbbiden revalidate token with normal token");
       }
       User user = userService.getUser(username);

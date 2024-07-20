@@ -33,7 +33,7 @@
             </div>
         </div>
 
-        <div class="row" style="margin-top: 1em;">
+        <!-- <div class="row" style="margin-top: 1em;">
             <div class="col-md-12">
                 <button [ngClass]="gastosFixos!=='NAO_ENCERRADO'?'btn btn-secondary':'btn btn-success'"
                     [disabled]="gastosFixos!=='NAO_ENCERRADO'"
@@ -49,8 +49,49 @@
                     (click)="handleChecked('VARIAVEL')">{{getLabel('VARIAVEL')}}</button>
                 <span style="font-weight: 400; font-size: 1.1em;">&nbsp;Cartão de Crédito</span>
             </div>
+        </div> -->
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-12 mt-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title fw-normal">Gastos Fixos</h5>
+                    </div>
+                    <div class="card-body d-flex justify-content-center flex-column">
+                        <p class="card-text">
+                            <i [ngClass]="getIcon('FIXO')"></i>
+                            <span [ngClass]="getTextColor('FIXO')">&nbsp;{{getText('FIXO')}}</span>
+                        </p>
+                        <div style="padding: .3em; margin-top: .4em;">
+                            <button class="btn btn-secondary btn-sm"
+                            *ngIf="gastosFixos==='NAO_ENCERRADO'"
+                            (click)="handleChecked('FIXO')">
+                            Encerrar Mês</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-4 col-sm-12 mt-3">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title fw-normal">Cartão de Crédito</h5>
+                    </div>
+                    <div class="card-body d-flex justify-content-center flex-column">
+                        <p class="card-text">
+                            <i [ngClass]="getIcon('VARIAVEL')"></i>
+                            <span [ngClass]="getTextColor('VARIAVEL')">&nbsp;{{getText('VARIAVEL')}}</span>
+                        </p>
+                    </div>
+                    <div style="padding: .3em;">
+                        <button class="btn btn-secondary btn-sm"
+                        *ngIf="gastosVariaveis==='NAO_ENCERRADO'"
+                        (click)="handleChecked('VARIAVEL')">
+                        Encerrar Mês</button>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
-
         <div class="row" style="margin-top: 2em;">
             <div class="col-md-12">
                 <h1 style="font-size: 1.3em; font-weight: 400;">Salário do mês</h1>
@@ -59,10 +100,10 @@
         <div class="row">
             <div class="col-md-3" style="margin-top: 0.5em;">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="idxValor" currencyMask   [(ngModel)]="pagamento.valor"
-                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }"/>
+                    <input type="text" class="form-control" id="idxValor" currencyMask [(ngModel)]="pagamento.valor"
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
                     <div class="input-group-append">
-                         <button class="btn btn-primary"  (click)="salvarSalario()">Salvar</button>
+                        <button class="btn btn-primary" (click)="salvarSalario()">Salvar</button>
                     </div>
                 </div>
             </div>

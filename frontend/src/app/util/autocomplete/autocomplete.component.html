@@ -1,7 +1,7 @@
 <div class="form-group" style="position: relative;">
     <label for="idxDescricao">{{label}}</label>
      <i class="bi bi-info-circle icon-info" *ngIf="msgToolTip" placement="top" [ngbTooltip]="msgToolTip"></i>
-    <input type="text" class="form-control" [value]="dataSelected.descricaoAutoComplete"  (keyup)="handleChange($event)"  id="idxDescricao"/>
+    <input type="text" class="form-control" [(ngModel)]="dataSelected.descricaoAutoComplete"  (keyup)="handleChange($event)"  id="idxDescricao"/>
   
     <ul class="list-group" style="position: absolute; width: 100%;" *ngIf="showItens">
         <li class="list-group-item" (click)="onClick(i)" *ngFor="let i of dados">{{i.descricaoAutoComplete}}</li>

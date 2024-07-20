@@ -9,6 +9,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AlertComponent } from 'src/app/util/alert/alert.component';
 import { ETipoGasto } from '../model/ETipoGasto';
 import { ConfirmComponent } from 'src/app/util/confirm/confirm.component';
+import { media } from 'src/app/util/media';
 
 @Component({
   selector: 'app-table-gasto',
@@ -35,6 +36,8 @@ export class TableGastoComponent implements OnDestroy, OnChanges {
   @Output()
   callback: EventEmitter<void> = new EventEmitter<void>();
 
+  isMobile:boolean=false;
+
   constructor(private cadastroContaService: CadatroContaService, private http: HttpClient, private modalService: NgbModal) {
     if(this.tipoGasto===ETipoGasto.FIXO){
       this.url+='/gastos/fixos'
@@ -50,6 +53,9 @@ export class TableGastoComponent implements OnDestroy, OnChanges {
     if(this.tipoGasto===ETipoGasto.FIXO){
       this.findGastos();
     }
+    media('(max-width: 767px)').subscribe((matches) =>
+      this.isMobile=matches
+    );
    
   }
   ngOnDestroy(): void {

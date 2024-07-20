@@ -36,9 +36,9 @@
         <div class="col-md-6" style="display: flex;justify-content: end;flex-direction: column;">
           <label>Tipo de Gasto</label>
           <div class="btn-group grupoBtn" role="group" aria-label="Basic outlined example">
-            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais}"
+            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':showGastosMensais, 'btn-sm':isMobile}"
               (click)="showGastosMensais=true">Gastos Mensais</button>
-            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':!showGastosMensais}"
+            <button type="button" style="flex: 1;" [ngClass]="{'btn btn-outline-primary':true, 'active':!showGastosMensais, 'btn-sm':isMobile}"
               (click)="showGastosMensais=false">Gastos Fixos e Depósitos</button>
           </div>
         </div>

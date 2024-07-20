@@ -53,11 +53,13 @@ export class InterceptorService implements HttpInterceptor {
         takeUntil(this.cancelReq.onCancelPendingRequests()),
         catchError((error: any) => {
           this.cancelReq.cancelPendingRequests()
-          if (error.error.customCode == 666) {
+          if (error?.error?.customCode == 666) {
             this.modalService.openModal('Sessão expirada', 'Sua sessão expirou, por favor faça login novamente',()=>{
               this.auth.logout();
             })
 
+          }else if(error?.error?.customCode == 444){
+            this.modalService.openModal('Dados Inválidos', error.error.erros.join(', '))
           } else if (error.error.code == 403) {
             this.modalService.openModal('Sem autorização', 'Você não tem permissão para acessar este recurso')
           }else if(error.error.code==404){
