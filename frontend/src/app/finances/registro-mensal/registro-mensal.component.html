@@ -81,12 +81,13 @@
                             <i [ngClass]="getIcon('VARIAVEL')"></i>
                             <span [ngClass]="getTextColor('VARIAVEL')">&nbsp;{{getText('VARIAVEL')}}</span>
                         </p>
-                    </div>
-                    <div style="padding: .3em;">
-                        <button class="btn btn-secondary btn-sm"
-                        *ngIf="gastosVariaveis==='NAO_ENCERRADO'"
-                        (click)="handleChecked('VARIAVEL')">
-                        Encerrar Mês</button>
+                    
+                        <div style="padding: .3em;">
+                            <button class="btn btn-secondary btn-sm"
+                            *ngIf="gastosVariaveis==='NAO_ENCERRADO'"
+                            (click)="handleChecked('VARIAVEL')">
+                            Encerrar Mês</button>
+                        </div>
                     </div>
                     
                 </div>
