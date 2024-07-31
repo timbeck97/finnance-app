@@ -20,7 +20,7 @@ jobs:
                 java-version: '8'
             - name: Build backend
               working-directory: backend/
-              run: mvn clean install -DskipTests
+              run: mvn clean install
             - name: Docker Login
               uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
               with:
@@ -36,7 +36,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v1
               with:
-                node-version: 16.13
+                node-version: 16.14
             - name: Install dependencies
               working-directory: frontend/
               run: npm install
