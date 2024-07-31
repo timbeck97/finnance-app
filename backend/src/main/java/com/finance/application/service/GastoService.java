@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -81,8 +82,10 @@ public class GastoService {
     return gasto;
   }
 
+  @Transactional
   public Gasto updateGasto(GastoDTO dto, long id) {
     Gasto gasto = gastoRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Recurso não encontrado"));
+    EFormaPagamento formaPagamentoAntiga=gasto.getFormaPagamento();
     gasto = GastoBuilder.create(gasto).
       withCategoria(dto.getCategoria()).
       withData(dto.getData()).
@@ -95,15 +98,17 @@ public class GastoService {
       build();
 
     gasto = gastoRepository.save(gasto);
-    if (gasto.getFormaPagamento().equals(EFormaPagamento.PIX)) { //gasto anterior
-      if (dto.getFormaPagamento().equals(EFormaPagamento.CARTAO)) { //gasto novo atualizado
+    if (formaPagamentoAntiga == EFormaPagamento.PIX) { //gasto anterior
+      if (dto.getFormaPagamento()==EFormaPagamento.CARTAO) { //gasto novo atualizado
         saldoService.reverterGasto(gasto);
       } else {
         saldoService.atualizarSaldo(gasto);
       }
     } else {
-      if (dto.getFormaPagamento().equals(EFormaPagamento.PIX)) {
+      if (dto.getFormaPagamento()== EFormaPagamento.PIX) {
         saldoService.atualizarSaldo(gasto);
+      }else{
+        saldoService.reverterGasto(gasto);
       }
     }
     return gasto;

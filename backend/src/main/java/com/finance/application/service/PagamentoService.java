@@ -34,7 +34,7 @@ public class PagamentoService {
   public Pagamento updatePagamento(PagamentoDTO pagamentoDTO, Long id){
     Pagamento existente=pagamentoRepository.findById(id).orElseThrow(()->new DataNotFoundException("Pagamento não encontrado"));
     User usuarioLogado = userService.getUsuarioLogado();
-    if(!existente.getUsuario().getEmail().equals(usuarioLogado.getEmail())){
+    if(!existente.getUsuario().getUsername().equals(usuarioLogado.getUsername())){
       throw new IllegalArgumentException("Pagamento não pertence ao usuário logado");
     }
     Pagamento novo= PagamentoBuilder.create(existente)

@@ -69,6 +69,9 @@ public class SaldoService {
   }
 
   public void atualizaSaldoContaCorrente(double valor, User user, boolean adiciona){
+    if(valor<0){
+      throw new IllegalArgumentException("Valor não pode ser negativo");
+    }
     if(adiciona){
       user.setContaCorrente(user.getContaCorrente()+valor);
     }else{

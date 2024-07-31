@@ -17,6 +17,10 @@ public class DepositoBuilder {
     deposito.setData(data);
     return this;
   }
+  public DepositoBuilder withId(Long id){
+    deposito.setId(id);
+    return this;
+  }
   public DepositoBuilder withDescricao(String descricao){
     deposito.setDescricao(descricao);
     return this;
