@@ -16,7 +16,7 @@ export class InterceptorService implements HttpInterceptor {
 
   constructor(private auth: AuthenticationService, private router: Router, private modalService: ModalService, private cancelReq:CancelrequestService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login');
+    let isRefreshTokenRequest = req.url.includes('token/refreshtoken') || req.url.includes('login') || req.url.includes('signin');
     if (isRefreshTokenRequest) {
       return next.handle(req)
       .pipe(
