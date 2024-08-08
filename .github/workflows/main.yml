@@ -50,6 +50,8 @@ jobs:
                 push: true
                 cache: enabled
                 tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number}}
+            - name: Docker system prune
+              run: docker system prune -af
               
     deploy:
         needs: build
