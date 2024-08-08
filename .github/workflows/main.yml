@@ -68,6 +68,7 @@ jobs:
               run: docker container rm -f finnance-app-front
             - name: FRONT - Run docker container
               run: docker run -d -p 80:80  --network=appnetwork -e NETWORKNAME=appnetwork -v /opt/nginx:/etc/nginx/conf.d/  --name finnance-app-front timbeck1997/finnance-app-front
-
-   
+            - name: Docker system prune
+              run: docker system prune -af
+     
 
