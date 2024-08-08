@@ -13,6 +13,13 @@ jobs:
         steps:
             - name: Checkout backend
               uses: actions/checkout@v3
+            - name: Cache Maven packages
+              uses: actions/cache@v3
+              with:
+                path: ~/.m2/repository
+                key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+                restore-keys: |
+                  ${{ runner.os }}-maven-
             - name: Setup Java
               uses: actions/setup-java@v3
               with:
@@ -31,12 +38,20 @@ jobs:
               with:
                 context: backend/
                 push: true
-                cache: enabled
-                tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number}}
+                cache-from: type=registry,ref=timbeck1997/finnanceapp:cache
+                cache-to: type=registry,ref=timbeck1997/finnanceapp:cache,mode=max
+                tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number }}
             - name: Setup Node.js
               uses: actions/setup-node@v1
               with:
                 node-version: 16.14
+            - name: Cache npm packages
+              uses: actions/cache@v3
+              with:
+                path: frontend/node_modules
+                key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+                restore-keys: |
+                  ${{ runner.os }}-node-
             - name: Install dependencies
               working-directory: frontend/
               run: npm install
@@ -48,11 +63,10 @@ jobs:
               with:
                 context: frontend/
                 push: true
-                cache: enabled
-                tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number}}
-            - name: Docker system prune
-              run: docker system prune -af
-              
+                cache-from: type=registry,ref=timbeck1997/finnance-app-front:cache
+                cache-to: type=registry,ref=timbeck1997/finnance-app-front:cache,mode=max
+                tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number }}
+
     deploy:
         needs: build
         runs-on: self-hosted
@@ -73,4 +87,3 @@ jobs:
             - name: Docker system prune
               run: docker system prune -af
      
-
