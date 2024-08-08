@@ -38,9 +38,8 @@ jobs:
               with:
                 context: backend/
                 push: true
-                cache-from: type=registry,ref=timbeck1997/finnanceapp:cache
-                cache-to: type=registry,ref=timbeck1997/finnanceapp:cache,mode=max
                 tags: timbeck1997/finnanceapp:latest, timbeck1997/finnanceapp:${{ github.run_number }}
+
             - name: Setup Node.js
               uses: actions/setup-node@v1
               with:
@@ -63,9 +62,8 @@ jobs:
               with:
                 context: frontend/
                 push: true
-                cache-from: type=registry,ref=timbeck1997/finnance-app-front:cache
-                cache-to: type=registry,ref=timbeck1997/finnance-app-front:cache,mode=max
                 tags: timbeck1997/finnance-app-front:latest, timbeck1997/finnance-app-front:${{ github.run_number }}
+
 
     deploy:
         needs: build
