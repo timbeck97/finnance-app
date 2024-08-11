@@ -161,5 +161,9 @@ export class RegistroMensalComponent {
       default: return '';
     }
   }
+  selectContent(event: any) {
+    const inputElement = event.target as HTMLInputElement;
+    inputElement.select();
+  }
  
 }

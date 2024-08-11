@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-md-3" style="margin-top: 0.5em;">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="idxValor" currencyMask [(ngModel)]="pagamento.valor"
+                    <input type="text" class="form-control" id="idxValor" currencyMask [(ngModel)]="pagamento.valor" (click)="selectContent($event)"
                         [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
                     <div class="input-group-append">
                         <button class="btn btn-primary" (click)="salvarSalario()">Salvar</button>

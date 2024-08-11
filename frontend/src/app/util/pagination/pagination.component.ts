@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Filtro } from 'src/app/finances/model/Filtro';
+import { media } from '../media';
 
 @Component({
   selector: 'app-pagination',
@@ -14,11 +15,16 @@ export class PaginationComponent {
   @Output()
   handleFiltro:EventEmitter<Filtro> = new EventEmitter<Filtro>();
 
+  isMobile:boolean=false;
+
   constructor() {
 
   }
   ngOnInit(): void {
     this.handleFiltro.emit(this.filtro);
+    media('(max-width: 767px)').subscribe((matches) =>
+      this.isMobile=matches
+    );
   }
   handlePagination(next: boolean) {
     if (next) {

@@ -1,19 +1,19 @@
 <nav aria-label="Page navigation example">
 
-    <ul class="pagination justify-content-between">
+    <ul class="pagination justify-content-between" [ngClass]="{'pagination-sm':isMobile}">
         <div style="width: 12em;">
             <div class="input-group">
                 <div class="input-group-prepend" style="height: '30px';">
-                    <button class="btn btn-outline-primary btn-sm" type="button"
+                    <button class="btn btn-outline-primary btn-sm" [ngClass]="{'mobileButton':isMobile}" type="button"
                         (click)="handlePageSizeChange(false)">-</button>
                 </div>
 
                 <input type="text" class="form-control" placeholder=""
                     [value]="filtro.pageSize+' registros'"
-                    style="height: 1.9em !important; font-weight: 200;" aria-label=""
+                    style="height: 1.9em !important; font-weight: 200;" aria-label="" [ngStyle]="{'font-size': isMobile ? '0.8em' : '1em'}"
                     aria-describedby="basic-addon1">
                 <div class="input-group-prepend" style="height: '30px';">
-                    <button class="btn btn-outline-primary btn-sm" type="button"
+                    <button class="btn btn-outline-primary btn-sm" type="button" [ngClass]="{'mobileButton':isMobile}"
                         (click)="handlePageSizeChange(true)">+</button>
                 </div>
             </div>

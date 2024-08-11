@@ -21,3 +21,10 @@ table thead{
     top: 0.3em;
     right: 0.3em;
 }
+
+@media (max-width: 768px) {
+    table th,  td{
+        font-size: .7em;
+    } 
+
+}

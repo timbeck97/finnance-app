@@ -5,6 +5,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Deposito } from '../model/Deposito';
 import { take } from 'rxjs';
 import { URL } from 'src/app/util/environment';
+import { media } from 'src/app/util/media';
 
 @Component({
   selector: 'app-entrada-conta',
@@ -21,6 +22,9 @@ export class EntradaContaComponent {
 
   loading:boolean=true;
 
+  isMobile:boolean=false;
+
+
   constructor(private service:CadastroEntradaContaService,private http: HttpClient){
 
   }
@@ -35,6 +39,9 @@ export class EntradaContaComponent {
       mes: mesString
     }
     this.findDepositos()
+    media('(max-width: 767px)').subscribe((matches) =>
+      this.isMobile=matches
+    );
   }
   ngOnChanges(param: any) {
     let anterior=param.filtro.previousValue;

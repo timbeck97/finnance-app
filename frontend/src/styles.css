@@ -52,3 +52,8 @@ table {
 }
 html, body { height: 100%; }
 
+.mobileButton{
+    --bs-btn-padding-y: .1rem; 
+    --bs-btn-padding-x: .4rem; 
+    --bs-btn-font-size: .75rem;
+}
