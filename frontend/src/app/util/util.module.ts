@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { CustomPipe } from './custom.pipe';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ConfirmComponent } from './confirm/confirm.component';
@@ -30,6 +30,7 @@ import { FormsModule } from '@angular/forms';
     PaginationComponent,
     AutocompleteComponent,
     InputCompetenciaComponent
-  ]
+  ],
+  providers: [DecimalPipe],
 })
 export class UtilModule { }

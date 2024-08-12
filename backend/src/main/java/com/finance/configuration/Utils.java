@@ -29,7 +29,18 @@ public class Utils {
     SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");
     return sdf.format(Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant()));
   }
-
+  public static String getAnoMesAnterior(String ano, String mes){
+    LocalDate data=LocalDate.of(Integer.parseInt(ano),Integer.parseInt(mes),1);
+    data=data.minusMonths(1);
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");
+    return sdf.format(Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+  }
+  public static String getAnoAnterior(String ano){
+    LocalDate data=LocalDate.of(Integer.parseInt(ano),1,1);
+    data=data.minusYears(1);
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy");
+    return sdf.format(Date.from(data.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+  }
   public static String formatDoubleToBRCurrency(double valor){
     return String.format("R$ %.2f",valor);
   }

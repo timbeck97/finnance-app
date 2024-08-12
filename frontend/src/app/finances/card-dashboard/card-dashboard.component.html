@@ -1,0 +1,27 @@
+<div class="card shadow-sm box marg" [ngClass]="{'box-danger':!positivo, 'box-success':positivo}">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-6">
+                <div class="titulo">
+                    <h2>{{titulo}}</h2>
+                </div>
+                <div class="saldo">
+                    <p>R$ <span class="saldo">{{saldo  | currency:"BRL":"":"1.2-2"}}</span></p>
+                </div>
+            </div>
+            <div class="col-md-6 col-6">
+                <div class="d-flex justify-content-center align-items-center gap-1">
+                    <!-- <img src='{{"../../assets/"+getImg()+".svg"}}' class="logo" alt=""> -->
+                     <span [ngClass]="getArrow().classe" [ngStyle]="getArrow().style" style="font-size: 1.8em;"></span>
+                    <span class="percentual">
+                        {{percentual  | currency:"BRL":"":"1.2-2"}} %
+                    </span>
+                </div>
+                <div class="d-flex justify-content-center align-items-center mt-2">
+                    <p>{{getPeriodo()}} anterior</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

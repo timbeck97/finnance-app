@@ -3,7 +3,7 @@ package com.finance.configuration.enums;
 public enum ECategoriaGasto {
 
   LASER("Laser"),
-  GASOLINA("GASOLINA"),
+  GASOLINA("Gasolina"),
   OUTROS("Outros"),
   SAUDE("Saúde"),
   CARRO("Carro");
@@ -12,5 +12,9 @@ public enum ECategoriaGasto {
 
   ECategoriaGasto(String desc){
     this.descricao=desc;
+  }
+
+  public String getDescricao() {
+    return descricao;
   }
 }

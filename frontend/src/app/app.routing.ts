@@ -6,6 +6,7 @@ import { FinancesComponent } from "./finances/finances.component"
 import { AuthGuardService } from "./guards/auth-guard.service"
 import { ConfiguracoesComponent } from "./finances/configuracoes/configuracoes.component"
 import { RegistroMensalComponent } from "./finances/registro-mensal/registro-mensal.component"
+import { DashboardComponent } from "./finances/dashboard/dashboard.component"
 
 
 const APP_ROUTES: Routes = [
@@ -16,6 +17,7 @@ const APP_ROUTES: Routes = [
     {path:'finances', component: FinancesComponent, canActivate: [AuthGuardService]},
     {path:'configuracoes', component: ConfiguracoesComponent, canActivate: [AuthGuardService]},
     {path:'registroMensal', component: RegistroMensalComponent, canActivate: [AuthGuardService]},
+    {path:'dashboard', component:DashboardComponent, canActivate: [AuthGuardService]}
 ]
 
 export const Routing:ModuleWithProviders<RouterModule>=RouterModule.forRoot(APP_ROUTES);

@@ -27,7 +27,7 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
   @Query(value = "Select g from Gasto g where " +
     " g.data=:data " +
     "and usuario=:usuario " +
-    "and g.tipoGasto=:tipoGasto  " +
+    "and (:tipoGasto is null or g.tipoGasto=:tipoGasto)  " +
     "order by g.data desc, g.id asc")
   List<Gasto> findByData(@Param("data")String data, @Param("usuario") User user, @Param("tipoGasto") ETipoGasto tipoGasto);
 
@@ -51,4 +51,9 @@ public interface GastoRepository extends JpaRepository<Gasto, Long> {
   List<Gasto> findAllGastoFixo(@Param("usuario") User user, @Param("competencia")String competencia);
   @Query(value = "select g from Gasto g where g.usuario=:usuario and encerrado is false  and g.data =:competencia and g.tipoGasto='VARIAVEL' and g.formaPagamento='CARTAO' ")
   List<Gasto> findAllGastoVariavelCartao(@Param("usuario") User user, @Param("competencia")String competencia);
+  @Query(value = "Select g from Gasto g where " +
+    " substring(g.data,0,5)=:data " +
+    "and usuario=:usuario " +
+    "order by g.data desc, g.id asc")
+  List<Gasto> findByAno(@Param("data")String data, @Param("usuario") User user);
 }

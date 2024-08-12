@@ -14,6 +14,8 @@ export class CustomPipe implements PipeTransform {
       return this.formatPagameto(value);
     }else if(args[0]=='nomeUsuario'){
       return this.formatNomeIniciais(value);
+    }else if(args[0]=='competencia'){
+      return this.formatCompetencia(value);
     }
   }
   formatCategoria(categoria:ECategoria){
@@ -45,5 +47,16 @@ export class CustomPipe implements PipeTransform {
       novaPalavra=novaPalavra+" "+p;
     }
     return novaPalavra;
+  }
+  formatCompetencia(competencia:string){
+    //format competencia yyyymm para mes/ano
+    let mes=competencia.slice(4);
+    let ano=competencia.slice(0,4);
+    return `${this.getNomeMes(mes)}/${ano}`;
+  }
+
+  getNomeMes(mes:string){
+    let meses=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+    return meses[Number(mes)-1];
   }
 }

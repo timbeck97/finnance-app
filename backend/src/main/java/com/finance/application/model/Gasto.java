@@ -8,6 +8,12 @@ import com.finance.configuration.enums.ETipoGasto;
 import javax.persistence.*;
 
 @Entity
+@Table(
+  indexes = {
+    @Index(name = "idx_gasto_data", columnList = "data"),
+    @Index(name = "idx_gasto_usuario", columnList = "usuario_id")
+  }
+)
 public class Gasto {
 
     @Id
@@ -41,6 +47,9 @@ public class Gasto {
 
     @Column(columnDefinition = "boolean default false")
     private boolean encerrado;
+
+    @OneToOne(mappedBy = "gastoVinculado", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Deposito deposito;
 
   public Gasto() {
 
@@ -127,5 +136,13 @@ public class Gasto {
 
   public void setData(String data) {
     this.data = data;
+  }
+
+  public Deposito getDeposito() {
+    return deposito;
+  }
+
+  public void setDeposito(Deposito deposito) {
+    this.deposito = deposito;
   }
 }

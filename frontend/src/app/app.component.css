@@ -6,6 +6,9 @@
     overflow: -moz-hidden-unscrollable;
     align-items: start;
     transition: all 4s;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
 }
 .mobile{
     grid-template-columns: repeat(2, 1fr);

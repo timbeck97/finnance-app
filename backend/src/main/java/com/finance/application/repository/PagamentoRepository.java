@@ -6,7 +6,12 @@ import com.finance.autentication.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface PagamentoRepository extends JpaRepository<Pagamento, Long>{
   @Query("SELECT new com.finance.application.dto.PagamentoDTO(p) FROM Pagamento p WHERE p.data = ?1 and p.usuario=?2")
   PagamentoDTO findByDataAndUsuario(String data, User usuario);
+
+  @Query("SELECT new com.finance.application.dto.PagamentoDTO(p) FROM Pagamento p WHERE substring(p.data,0,5) = ?1 and p.usuario=?2")
+  List<PagamentoDTO> findByAnoAndUsuario(String data, User usuario);
 }

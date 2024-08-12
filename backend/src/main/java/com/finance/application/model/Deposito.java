@@ -24,7 +24,7 @@ public class Deposito {
   @ManyToOne
   private User usuario;
 
-  @ManyToOne(optional = true)
+  @OneToOne(optional = true)
   private Gasto gastoVinculado;
 
   public Deposito() {

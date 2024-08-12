@@ -16,6 +16,10 @@ import { PaginationComponent } from '../util/pagination/pagination.component';
 import { UtilModule } from '../util/util.module';
 import { ConfiguracoesComponent } from './configuracoes/configuracoes.component';
 import { RegistroMensalComponent } from './registro-mensal/registro-mensal.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { CardDashboardComponent } from './card-dashboard/card-dashboard.component';
 
 
 
@@ -26,12 +30,14 @@ import { RegistroMensalComponent } from './registro-mensal/registro-mensal.compo
     CadatroContaComponent,
     CardGastoComponent,
     TableGastoComponent,
-
+    DashboardComponent,
     EntradaContaComponent,
     FiltroGastoComponent,
     CadastroEntradaContaComponent,
     ConfiguracoesComponent,
     RegistroMensalComponent,
+    DashboardComponent,
+    CardDashboardComponent,
   ],
   exports: [],
   imports: [
@@ -41,8 +47,9 @@ import { RegistroMensalComponent } from './registro-mensal/registro-mensal.compo
     NgbCollapseModule,
     CurrencyMaskModule,
     NgbTooltipModule,
-    UtilModule
-    
+    UtilModule,
+    BrowserAnimationsModule,  
+    NgxChartsModule  
     
   ]
 })
