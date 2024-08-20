@@ -18,6 +18,8 @@ import com.finance.configuration.Utils;
 import com.finance.configuration.exceptions.DataNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -54,11 +56,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if(user==null){
-            log.info("User not found");
-            throw new UsernameNotFoundException("User not found");
-        }
+        User user=userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found"));
         log.info("User found in the database: {}",username);
 
         Collection<SimpleGrantedAuthority> autorities = new ArrayList<>();
@@ -68,6 +66,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     }
     @Override
     public User saveUser(ReceiveUserDTO user) {
+        userRepository.findByUsername(user.getUsername()).ifPresent((i)->new IllegalArgumentException("Username already exists: "+i.getUsername()));
         log.info("Saving user {} to database",user.getUsername());
         Role role=roleRepository.findByName("USER");
         User newUser=new User();
@@ -99,7 +98,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
     public void addRoleToUser(String username, String roleName) {
         log.info("Adding role {} to user {}",roleName, username);
         Role role=roleRepository.findByName(roleName);
-        User user=userRepository.findByUsername(username);
+        User user=userRepository.findByUsername(username).orElseThrow(()->new DataNotFoundException("User not found"));
         user.getRoles().add(role);
         userRepository.save(user);
 
@@ -113,7 +112,7 @@ public class UserServiceImp implements UserService, UserDetailsService {
 
     @Override
     public User getUser(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(()->new DataNotFoundException("User not found"));
     }
 
   @Override
@@ -131,6 +130,28 @@ public class UserServiceImp implements UserService, UserDetailsService {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String userName=(String) authentication.getPrincipal();
     return getUser(userName);
+  }
+
+  @Bean
+  public CommandLineRunner loadData() {
+    return args -> {
+      if (roleRepository.findByName("USER") == null) {
+        roleRepository.save(new Role("USER"));
+      }
+      if (roleRepository.findByName("ADMIN") == null) {
+        roleRepository.save(new Role("ADMIN"));
+      }
+      if (userRepository.findByUsername("admin") == null) {
+        User user = new User();
+        user.setUsername("admin");
+        user.setPassword(passwordEncoder.encode("admin"));
+        user.setEmail("admin@admin.com");
+        user.setName("Administrador");
+        user.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByName("ADMIN"))));
+        userRepository.save(user);
+      }
+      ;
+    };
   }
 
 
