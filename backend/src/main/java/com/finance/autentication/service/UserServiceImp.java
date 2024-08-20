@@ -141,8 +141,9 @@ public class UserServiceImp implements UserService, UserDetailsService {
       if (roleRepository.findByName("ADMIN") == null) {
         roleRepository.save(new Role("ADMIN"));
       }
-      if (userRepository.findByUsername("admin") == null) {
-        User user = new User();
+      User user = userRepository.findByUsername("admin").orElse(null);
+      if ( user == null) {
+        user=new User();
         user.setUsername("admin");
         user.setPassword(passwordEncoder.encode("admin"));
         user.setEmail("admin@admin.com");
@@ -150,6 +151,8 @@ public class UserServiceImp implements UserService, UserDetailsService {
         user.setRoles(new HashSet<Role>(Arrays.asList(roleRepository.findByName("ADMIN"))));
         userRepository.save(user);
       }
+
+
       ;
     };
   }
